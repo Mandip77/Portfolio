@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AnimatePresence } from 'framer-motion';
-
+import { motion } from 'framer-motion';
 import profile from '../assets/profile.jpg';
 
 const AboutSection = styled.section`
@@ -25,11 +24,11 @@ const Row = styled.div`
   gap: 20px;
 `;
 
-const Column = styled(AnimatePresence.div)`
+const Column = styled(motion.div)`
   padding: 20px;
 `;
 
-const ProfileImage = styled(AnimatePresence.img)`
+const ProfileImage = styled(motion.img)`
   width: 100%;
   max-width: 300px;
   border-radius: 50%;
