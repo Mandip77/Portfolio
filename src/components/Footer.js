@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
+
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 
 const FooterContainer = styled.footer`
@@ -10,7 +11,7 @@ const FooterContainer = styled.footer`
   text-align: center;
 `;
 
-const Container = styled(motion.div)`
+const Container = styled(AnimatePresence.div)`
   max-width: 960px;
   margin: 0 auto;
   display: flex;
@@ -23,7 +24,7 @@ const Container = styled(motion.div)`
   }
 `;
 
-const SocialIcons = styled(motion.ul)`
+const SocialIcons = styled(AnimatePresence.ul)`
   margin: 0;
   padding: 0;
   list-style: none;
@@ -32,7 +33,7 @@ const SocialIcons = styled(motion.ul)`
   align-items: center;
 `;
 
-const SocialIcon = styled(motion.li)`
+const SocialIcon = styled(AnimatePresence.li)`
   margin: 0 8px;
 `;
 
