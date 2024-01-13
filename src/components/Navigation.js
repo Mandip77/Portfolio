@@ -86,52 +86,46 @@ const NavLink = styled.a`
   }
 `;
 
-
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const navigationItems = [
+    { name: 'Home', sectionId: 'home' },
+    { name: 'Projects', sectionId: 'projects' },
+    { name: 'Skills', sectionId: 'skills' },
+    { name: 'Contact', sectionId: 'contact' }
+  ];
 
-  // Function to toggle the navigation menu
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleMenu = () => setIsOpen(!isOpen);
 
   const navigateToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsOpen(false); // Close the menu after navigation
+    section?.scrollIntoView({ behavior: 'smooth' });
+    setIsOpen(false);
   };
 
   return (
-    <>
-      <NavContainer isOpen={isOpen}>
-        <Logo>
-          <img src={logo} alt="MA Logo" style={{ width: '50px', height: '50px' }} />
-        </Logo>
-        <NavLinks>
-          <NavLinkItem>
-            <NavLink href="#" onClick={() => navigateToSection('home')}>Home</NavLink>
-          </NavLinkItem>   
-          <NavLinkItem>
-            <NavLink href="#" onClick={() => navigateToSection('projects')}>Projects</NavLink>
-          </NavLinkItem>
-          <NavLinkItem>
-            <NavLink href="#" onClick={() => navigateToSection('skills')}>Skills</NavLink>
-          </NavLinkItem>
-          <NavLinkItem>
-            <NavLink href="#" onClick={() => navigateToSection('contact')}>Contact</NavLink>
-          </NavLinkItem>
-        </NavLinks>
-      </NavContainer>
-      <HamburgerMenu onClick={toggleMenu}>
-        <HamburgerIcon isOpen={isOpen} />
-        <HamburgerIcon isOpen={isOpen} />
-        <HamburgerIcon isOpen={isOpen} />
-      </HamburgerMenu>
-    </>
+      <>
+        <NavContainer isOpen={isOpen}>
+          <Logo>
+            <img src={logo} alt="MA Logo" style={{ width: '50px', height: '50px' }} />
+          </Logo>
+          <NavLinks>
+            {navigationItems.map((item) => (
+                <NavLinkItem key={item.sectionId}>
+                  <NavLink to="#" onClick={() => navigateToSection(item.sectionId)}>
+                    {item.name}
+                  </NavLink>
+                </NavLinkItem>
+            ))}
+          </NavLinks>
+        </NavContainer>
+        <HamburgerMenu onClick={toggleMenu} aria-label="Menu">
+          <HamburgerIcon isOpen={isOpen} />
+          <HamburgerIcon isOpen={isOpen} />
+          <HamburgerIcon isOpen={isOpen} />
+        </HamburgerMenu>
+      </>
   );
-
 }
 
 export default Navigation;

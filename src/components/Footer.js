@@ -62,7 +62,7 @@ function Footer() {
         variants={containerVariants}
       >
         <SocialIcons>
-          {[{icon: FaGithub, href: "#"}, {icon: FaLinkedin, href: "#"}, {icon: FaTwitter, href: "#"}].map((social, index) => (
+          {[{icon: FaGithub, href: "https://github.com/Mandip77"}, {icon: FaLinkedin, href: "https://www.linkedin.com/public-profile/settings?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_self_edit_contact-info%3BAm%2F0Y%2BdCSUqnET6EflxAyw%3D%3D"}, {icon: FaTwitter, href: "https://twitter.com/renderingsoul8"}].map((social, index) => (
             <SocialIcon key={index} variants={socialIconVariants}>
               <SocialLink href={social.href}>
                 <social.icon />
