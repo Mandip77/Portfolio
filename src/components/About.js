@@ -2,8 +2,8 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { motion } from 'framer-motion';
 import profile from '../assets/profile.jpg';
-import googleCertBadge from '../assets/google_badge.png'; // Import Google IT Support badge image
-import postmanCertBadge from '../assets/postman_badge.png'; // Import Postman API Fundamentals badge image
+import googleCertBadge from 'https://www.credly.com/earner/earned/badge/7c4858f2-62ae-445d-800e-9e0e74080818'; // Import Google IT Support badge image
+import postmanCertBadge from 'https://api.badgr.io/public/assertions/qv-uiLWhS6GRZe2DVZbywg?identity__email=mandip.amgain123%40gmail.com'; // Import Postman API Fundamentals badge image
 
 // Background fade-in animation
 const fadeIn = keyframes`
