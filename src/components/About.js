@@ -67,22 +67,9 @@ const About = () => {
             animate={{ scale: 1 }}
             transition={{ duration: 0.5 }}
         />
-          <AboutText>
-              Greetings, I am Mandip Amgain, a dedicated professional in the field of computer science and software development. Holding an Associate in Science in Computer Science from Bunker Hill Community College, I am currently enhancing my expertise with a Bachelor of Science in Information Technology at Northeastern University.
-
-              My academic foundation is enriched with practical skills in software development, with a specialized focus on artificial intelligence. This expertise is backed by a strong proficiency in [mention specific skills or programming languages], developed through rigorous academic training and practical application.
-
-              Throughout my career, I have engaged in [mention any significant projects or achievements], showcasing my ability for technical innovation, strategic problem-solving, and effective project execution. I am keenly interested in applying these skills in diverse professional settings, contributing to impactful technological advancements.
-
-              I am actively seeking opportunities for freelancing and collaborations in the realm of software development. My objective is to engage in projects that challenge my skills and expand my horizons, especially those at the forefront of software development and artificial intelligence.
-
-              I welcome the opportunity to collaborate with like-minded professionals and organizations on innovative projects. If you are seeking a committed, technically skilled, and forward-thinking professional for your next project, let’s connect and explore the possibilities of working together.
-          </AboutText>
-
-          <BadgesContainer>
-              <BadgeImage src={googleCertBadge} alt="Google IT Support Badge" />
-              <BadgeImage src={postmanCertBadge} alt="Postman API Fundamentals Badge" />
-          </BadgesContainer>
+<AboutText>
+    Hello! I'm Mandip Amgain, a dedicated computer science student with a passion for software development. I hold an Associate in Science in Computer Science from Bunker Hill Community College and am currently pursuing a B.S. in Information Technology at Northeastern University. I'm seeking opportunities in software development with a special interest in artificial intelligence.
+</AboutText>
       </AboutSection>
   );
 };
