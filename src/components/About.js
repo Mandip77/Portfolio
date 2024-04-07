@@ -69,9 +69,13 @@ const About = () => {
             animate={{ scale: 1 }}
             transition={{ duration: 0.5 }}
         />
-<AboutText>
-    Hello! I'm Mandip Amgain, a dedicated computer science student with a passion for software development. I hold an Associate in Science in Computer Science from Bunker Hill Community College and am currently pursuing a B.S. in Information Technology at Northeastern University. I'm seeking opportunities in software development with a special interest in artificial intelligence.
-</AboutText>
+        <AboutText>
+          Hello! I'm Mandip Amgain, a dedicated computer science student with a passion for software development. I hold an Associate in Science in Computer Science from Bunker Hill Community College and am currently pursuing a B.S. in Information Technology at Northeastern University. I'm seeking opportunities in software development with a special interest in artificial intelligence.
+        </AboutText>
+          <BadgesContainer>
+              <BadgeImage src={googleCertBadge} alt="Google IT Support Badge" />
+              <BadgeImage src={postmanCertBadge} alt="Postman API Fundamentals Badge" />
+          </BadgesContainer>
       </AboutSection>
   );
 };
