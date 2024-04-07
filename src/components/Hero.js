@@ -75,7 +75,8 @@ const HeroButton = styled.a`
 `;
 
 function Hero() {
-    const resumeLink = "path_to_your_resume.pdf"; // Replace with the actual link to your resume
+// Ensure the correct resume link is used
+const resumeLink = resumeLink; // Using the imported resumeLink variable
 
     return (
         <HeroSection>
