@@ -9,7 +9,8 @@ import jsIcon from '../assets/js-svgrepo-com.svg';
 import mysqlIcon from '../assets/sql-server-icon-png-11359.png';
 import kotlinIcon from '../assets/kotlin.svg'; 
 import firebaseIcon from '../assets/firebase.svg'; 
-import reactIcon from '../assets/react.svg'; 
+import reactIcon from '../assets/react.svg';
+import postmanIcon from '../assets/postman.svg';
 
 const TechStackSection = styled.section`
   background-color: #000000;
@@ -137,6 +138,13 @@ function TechStack() {
             <TechName>React</TechName>
             <TechProgress>
               <TechBar progress={50}></TechBar> {/* Adjust the progress */}
+            </TechProgress>
+          </TechItem>
+          <TechItem>
+            <TechIcon src={postmanIcon} alt="Postman" />
+            <TechName>Postman</TechName>
+            <TechProgress>
+              <TechBar progress={70}></TechBar> {/* Adjust the progress */}
             </TechProgress>
           </TechItem>
         </TechStackList>

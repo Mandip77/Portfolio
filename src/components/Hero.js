@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import backgroundVideo from '../assets/video (2160p).mp4';
-
+import resumeLink from '../assets/Resume.pdf';
 // Fade-in animation
 const fadeIn = keyframes`
     from { opacity: 0; }
@@ -75,7 +75,7 @@ const HeroButton = styled.a`
 `;
 
 function Hero() {
-    const resumeLink = "path_to_your_resume.pdf"; // Replace with the actual link to your resume
+   
 
     return (
         <HeroSection>
@@ -83,7 +83,7 @@ function Hero() {
             <HeroContainer>
                 <HeroTitle>Welcome to My Website</HeroTitle>
                 <HeroDescription>Learn about my skills and projects.</HeroDescription>
-                <HeroButton href={resumeLink} download="YourName_Resume">
+                <HeroButton href={resumeLink} download="Mandip's_Resume">
                     Download My Resume
                 </HeroButton>
             </HeroContainer>
