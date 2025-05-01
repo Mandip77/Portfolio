@@ -20,7 +20,18 @@ Welcome to my personal developer portfolio! This is a responsive web application
 
 ## 📁 Project Structure
 
-├── src/ │ ├── components/ │ │ ├── About.js │ │ ├── Contact.js │ │ ├── Footer.js │ │ ├── Hero.js │ │ ├── Navigation.js │ │ ├── Projects.js │ │ ├── Skills.js │ ├── App.js │ ├── App.css │ ├── GlobalStyles.js
+├── src/ │ 
+├── components/ │ │
+            ├── About.js │ │ 
+            ├── Contact.js │ │ 
+            ├── Footer.js │ │ 
+            ├── Hero.js │ │ 
+            ├── Navigation.js │ 
+            │ ├── Projects.js │ 
+            │ ├── Skills.js │
+            ├── App.js │ 
+            ├── App.css │ 
+            ├── GlobalStyles.js
 
 
 ## 🚀 Getting Started
