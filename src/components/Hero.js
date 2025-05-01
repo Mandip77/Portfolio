@@ -1,7 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import backgroundVideo from '../assets/video (2160p).mp4';
-import resumeLink from '../assets/Resume.pdf';
 // Fade-in animation
 const fadeIn = keyframes`
     from { opacity: 0; }
@@ -76,7 +75,7 @@ const HeroButton = styled.a`
 
 function Hero() {
 // Ensure the correct resume link is used
-const resumeLink = resumeLink; // Using the imported resumeLink variable
+const resumeLink = "../assets/Resume.pdf"; // Using the imported resumeLink variable
 
     return (
         <HeroSection>
