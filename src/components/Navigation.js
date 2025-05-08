@@ -103,11 +103,16 @@ function Navigation() {
     setIsOpen(false);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setIsOpen(false);
+  };
+
   return (
       <>
         <NavContainer isOpen={isOpen}>
-          <Logo>
-            <img src={logo} alt="MA Logo" style={{ width: '50px', height: '50px' }} />
+          <Logo onClick={scrollToTop}>
+            <img src={logo} alt="MA Logo" style={{ width: '50px', height: '50px', cursor: 'pointer' }} />
           </Logo>
           <NavLinks>
             {navigationItems.map((item) => (

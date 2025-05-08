@@ -74,8 +74,7 @@ const HeroButton = styled.a`
 `;
 
 function Hero() {
-    // Updated resume link to use the public folder
-    const resumeLink = "/Resume.pdf";
+    const resumeLink = "/Resume.pdf"; // Ensure the resume is in the public folder
 
     return (
         <HeroSection>
