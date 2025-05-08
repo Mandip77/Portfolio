@@ -98,8 +98,13 @@ function Navigation() {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const navigateToSection = (sectionId) => {
-    const section = document.getElementById(sectionId);
-    section?.scrollIntoView({ behavior: 'smooth' });
+    if (sectionId === 'home') {
+        // Scroll to the top of the page
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        const section = document.getElementById(sectionId);
+        section?.scrollIntoView({ behavior: 'smooth' });
+    }
     setIsOpen(false);
   };
 

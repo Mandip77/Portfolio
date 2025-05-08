@@ -74,8 +74,8 @@ const HeroButton = styled.a`
 `;
 
 function Hero() {
-// Ensure the correct resume link is used
-const resumeLink = "../assets/Resume.pdf"; // Using the imported resumeLink variable
+    // Updated resume link to use the public folder
+    const resumeLink = "/Resume.pdf";
 
     return (
         <HeroSection>
