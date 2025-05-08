@@ -89,7 +89,7 @@ const NavLink = styled.a`
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const navigationItems = [
-    { name: 'Home', sectionId: 'home' },
+    { name: 'About Me', sectionId: 'about' },
     { name: 'Projects', sectionId: 'projects' },
     { name: 'Skills', sectionId: 'skills' },
     { name: 'Contact', sectionId: 'contact' }
@@ -98,13 +98,8 @@ function Navigation() {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const navigateToSection = (sectionId) => {
-    if (sectionId === 'home') {
-        // Scroll to the top of the page
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-        const section = document.getElementById(sectionId);
-        section?.scrollIntoView({ behavior: 'smooth' });
-    }
+    const section = document.getElementById(sectionId);
+    section?.scrollIntoView({ behavior: 'smooth' });
     setIsOpen(false);
   };
 
