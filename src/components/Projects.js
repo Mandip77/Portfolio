@@ -63,25 +63,48 @@ function Projects() {
       <div className="container">
         <SectionTitle>Projects</SectionTitle>
         <ProjectsList>
+          {/* Budget Management project card */}
           <Project>
-            <ProjectImage src={process.env.PUBLIC_URL + '/path/to/project-image-1'} alt="Project 1" />
+            <ProjectImage
+              src={process.env.PUBLIC_URL + '/images/budget-management.png'}
+              alt="Budget Management"
+            />
             <ProjectDetails>
-              <ProjectTitle>Project 1</ProjectTitle>
+              <ProjectTitle>Budget Management</ProjectTitle>
               <ProjectDescription>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum commodo risus a cursus ultricies.
+                Spring Boot web app for creating budget categories, tracking allocations and
+                transactions, and visualizing spending in an interactive dashboard:contentReference[oaicite:1]{index=1}.
               </ProjectDescription>
+              <a
+                href="https://github.com/Mandip77/Budget_Management"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View on GitHub
+              </a>
             </ProjectDetails>
           </Project>
+
+          {/* Simple Text Editor project card */}
           <Project>
-            <ProjectImage src={process.env.PUBLIC_URL + '/path/to/project-image-2'} alt="Project 2" />
+            <ProjectImage
+              src={process.env.PUBLIC_URL + '/images/simple-text-editor.png'}
+              alt="Simple Text Editor"
+            />
             <ProjectDetails>
-              <ProjectTitle>Project 2</ProjectTitle>
+              <ProjectTitle>Simple Text Editor</ProjectTitle>
               <ProjectDescription>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum commodo risus a cursus ultricies.
+                Lightweight Java Swing text editor that supports opening/saving files and basic editing operations like cut, copy and paste.
               </ProjectDescription>
+              <a
+                href="https://github.com/Mandip77/Simple-TextEditor-Java"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View on GitHub
+              </a>
             </ProjectDetails>
           </Project>
-          {/* Add more projects */}
         </ProjectsList>
       </div>
     </ProjectsSection>
