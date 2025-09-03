@@ -66,7 +66,7 @@ function Projects() {
           {/* Budget Management project card */}
           <Project>
             <ProjectImage
-              src={process.env.PUBLIC_URL + '/images/budget-management.png'}
+              src={process.env.PUBLIC_URL + '/assets/budget-management.png'}
               alt="Budget Management"
             />
             <ProjectDetails>
@@ -88,13 +88,14 @@ function Projects() {
           {/* Simple Text Editor project card */}
           <Project>
             <ProjectImage
-              src={process.env.PUBLIC_URL + '/images/simple-text-editor.png'}
-              alt="Simple Text Editor"
+              src={process.env.PUBLIC_URL + '/assets/text-editor-demo.gif'}
+              alt="Text Editor Demo"
             />
             <ProjectDetails>
               <ProjectTitle>Simple Text Editor</ProjectTitle>
               <ProjectDescription>
-                Lightweight Java Swing text editor that supports opening/saving files and basic editing operations like cut, copy and paste.
+                Lightweight Java Swing text editor with open/save, cut/copy/paste and
+                custom formatting.
               </ProjectDescription>
               <a
                 href="https://github.com/Mandip77/Simple-TextEditor-Java"
@@ -105,6 +106,7 @@ function Projects() {
               </a>
             </ProjectDetails>
           </Project>
+
         </ProjectsList>
       </div>
     </ProjectsSection>
