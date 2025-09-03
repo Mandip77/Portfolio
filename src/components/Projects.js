@@ -68,12 +68,13 @@ function Projects() {
             <ProjectImage
               src={process.env.PUBLIC_URL + '/assets/budget-management.png'}
               alt="Budget Management"
+              loading="lazy"
             />
             <ProjectDetails>
               <ProjectTitle>Budget Management</ProjectTitle>
               <ProjectDescription>
-                Spring Boot web app for creating budget categories, tracking allocations and
-                transactions, and visualizing spending in an interactive dashboard:contentReference[oaicite:1]{index=1}.
+                Spring Boot web app for creating budget categories, tracking allocations,
+                transactions, and visualizing spending in an interactive dashboard.
               </ProjectDescription>
               <a
                 href="https://github.com/Mandip77/Budget_Management"
@@ -90,6 +91,7 @@ function Projects() {
             <ProjectImage
               src={process.env.PUBLIC_URL + '/assets/text-editor-demo.gif'}
               alt="Text Editor Demo"
+              loading="lazy"
             />
             <ProjectDetails>
               <ProjectTitle>Simple Text Editor</ProjectTitle>
@@ -106,7 +108,6 @@ function Projects() {
               </a>
             </ProjectDetails>
           </Project>
-
         </ProjectsList>
       </div>
     </ProjectsSection>
