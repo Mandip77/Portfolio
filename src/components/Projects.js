@@ -89,7 +89,7 @@ function Projects() {
           {/* Simple Text Editor project card */}
           <Project>
             <ProjectImage
-              src={process.env.PUBLIC_URL + '/assets/text-editor-demo.gif'}
+              src={process.env.PUBLIC_URL + '/assets/text_editor.gif'}
               alt="Text Editor Demo"
               loading="lazy"
             />
