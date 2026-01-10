@@ -163,9 +163,10 @@ function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
 
-  const serviceId = process.env.REACT_APP_EMAILJS_SERVICE_ID;
-  const templateId = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
-  const publicKey = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
+  // Client-side EmailJS configuration (if using EmailJS service)
+  const emailServiceId = process.env.REACT_APP_EMAILJS_SERVICE_ID;
+  const emailTemplateId = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
+  const emailPublicKey = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
 
   // Validate form fields
   const validateField = (name, value) => {
@@ -251,32 +252,36 @@ function Contact() {
       return;
     }
 
-    if (!serviceId || !templateId || !publicKey) {
-      setStatus({ type: 'error', message: 'Email service is not configured yet.' });
-      return;
-    }
-
     setIsSending(true);
     setStatus({ type: null, message: '' });
 
+    if (!emailServiceId || !emailTemplateId || !emailPublicKey) {
+      setStatus({ type: 'error', message: 'Email service not configured. Please set EmailJS env vars.' });
+      setIsSending(false);
+      return;
+    }
+
     try {
+      const payload = {
+        service_id: emailServiceId,
+        template_id: emailTemplateId,
+        user_id: emailPublicKey,
+        template_params: {
+          name: updatedFormData.name,
+          email: updatedFormData.email,
+          message: updatedFormData.message,
+        },
+      };
+
       const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          service_id: serviceId,
-          template_id: templateId,
-          user_id: publicKey,
-          template_params: {
-            from_name: updatedFormData.name,
-            reply_to: updatedFormData.email,
-            message: updatedFormData.message,
-          },
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to send message');
+        const text = await response.text().catch(() => '');
+        throw new Error(text || 'Failed to send message');
       }
 
       setStatus({ type: 'success', message: 'Message sent! I will get back to you soon.' });
