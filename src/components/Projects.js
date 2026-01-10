@@ -1,19 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
+import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
-const ProjectsSection = styled.section`
+const ProjectsSection = styled(motion.section)`
   background-color: #000;
   padding: 100px;
   text-align: center;
+  
+  @media (max-width: 768px) {
+    padding: 50px 20px;
+  }
 `;
 
-const SectionTitle = styled.h2`
+const SectionTitle = styled(motion.h2)`
   font-size: 36px;
   margin-bottom: 40px;
   color: #03fffb;
 `;
 
-const ProjectsList = styled.div`
+const ProjectsList = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 30px;
@@ -21,16 +27,18 @@ const ProjectsList = styled.div`
   margin-bottom: 50px;
 `;
 
-const Project = styled.div`
+const Project = styled(motion.div)`
   max-width: 300px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid #333;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  background-color: #0a0a0a;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
+    box-shadow: 0 8px 16px rgba(3, 255, 251, 0.2);
   }
 `;
 
@@ -54,60 +62,109 @@ const ProjectDescription = styled.p`
   font-size: 18px;
   line-height: 1.6;
   margin-bottom: 20px;
-  color: #555;
+  color: #ccc;
 `;
 
-function Projects() {
-  return (
-    <ProjectsSection id="projects">
-      <div className="container">
-        <SectionTitle>Projects</SectionTitle>
-        <ProjectsList>
-          {/* Budget Management project card */}
-          <Project>
-            <ProjectImage
-              src={process.env.PUBLIC_URL + '/assets/budget-management.png'}
-              alt="Budget Management"
-              loading="lazy"
-            />
-            <ProjectDetails>
-              <ProjectTitle>Budget Management</ProjectTitle>
-              <ProjectDescription>
-                Spring Boot web app for creating budget categories, tracking allocations,
-                transactions, and visualizing spending in an interactive dashboard.
-              </ProjectDescription>
-              <a
-                href="https://github.com/Mandip77/Budget_Management"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View on GitHub
-              </a>
-            </ProjectDetails>
-          </Project>
+const ProjectLink = styled.a`
+  display: inline-block;
+  color: #03fffb;
+  text-decoration: none;
+  padding: 10px 20px;
+  border: 2px solid #03fffb;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  font-weight: 600;
 
-          {/* Simple Text Editor project card */}
-          <Project>
-            <ProjectImage
-              src={process.env.PUBLIC_URL + '/assets/text_editor.gif'}
-              alt="Text Editor Demo"
-              loading="lazy"
-            />
-            <ProjectDetails>
-              <ProjectTitle>Simple Text Editor</ProjectTitle>
-              <ProjectDescription>
-                Lightweight Java Swing text editor with open/save, cut/copy/paste and
-                custom formatting.
-              </ProjectDescription>
-              <a
-                href="https://github.com/Mandip77/Simple-TextEditor-Java"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View on GitHub
-              </a>
-            </ProjectDetails>
-          </Project>
+  &:hover,
+  &:focus {
+    background-color: #03fffb;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(3, 255, 251, 0.3);
+  }
+
+  &:focus {
+    outline: 2px solid #03fffb;
+    outline-offset: 2px;
+  }
+`;
+
+const projects = [
+  {
+    title: 'Budget Management',
+    description: 'Spring Boot web app for creating budget categories, tracking allocations, transactions, and visualizing spending in an interactive dashboard.',
+    image: process.env.PUBLIC_URL + '/assets/budget-management.png',
+    githubUrl: 'https://github.com/Mandip77/Budget_Management',
+    imageAlt: 'Budget Management',
+  },
+  {
+    title: 'Simple Text Editor',
+    description: 'Lightweight Java Swing text editor with open/save, cut/copy/paste and custom formatting.',
+    image: process.env.PUBLIC_URL + '/assets/text_editor.gif',
+    githubUrl: 'https://github.com/Mandip77/Simple-TextEditor-Java',
+    imageAlt: 'Text Editor Demo',
+  },
+];
+
+function Projects() {
+  const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 50, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.5 },
+    },
+  };
+
+  return (
+    <ProjectsSection 
+      id="projects"
+      ref={sectionRef}
+      variants={containerVariants}
+      initial="hidden"
+      animate={isSectionVisible ? "visible" : "hidden"}
+    >
+      <div className="container">
+        <SectionTitle variants={itemVariants}>Projects</SectionTitle>
+        <ProjectsList variants={containerVariants}>
+          {projects.map((project) => (
+            <Project key={project.title} variants={itemVariants}>
+              <ProjectImage
+                src={project.image}
+                alt={project.imageAlt}
+                loading="lazy"
+              />
+              <ProjectDetails>
+                <ProjectTitle>{project.title}</ProjectTitle>
+                <ProjectDescription>
+                  {project.description}
+                </ProjectDescription>
+                <ProjectLink
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`View ${project.title} project on GitHub`}
+                >
+                  View on GitHub
+                </ProjectLink>
+              </ProjectDetails>
+            </Project>
+          ))}
         </ProjectsList>
       </div>
     </ProjectsSection>

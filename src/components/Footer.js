@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 const FooterContainer = styled.footer`
   background-color: #000;
@@ -41,36 +42,77 @@ const SocialLink = styled.a`
   text-decoration: none;
   display: flex;
   align-items: center;
+  font-size: 24px;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+
+  &:hover,
+  &:focus {
+    color: #04c3c5;
+    transform: translateY(-3px) scale(1.1);
+    outline: 2px solid #03fffb;
+    outline-offset: 4px;
+  }
+`;
+
+const FooterText = styled.p`
+  margin: 20px 0 0 0;
+  color: #ccc;
+  font-size: 14px;
+
+  @media (min-width: 768px) {
+    margin: 0 0 0 40px;
+  }
 `;
 
 function Footer() {
+  const [footerRef, isFooterVisible] = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
+
   const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { delay: 0.5, duration: 1, ease: 'easeInOut' } },
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        duration: 0.6, 
+        ease: 'easeInOut',
+        staggerChildren: 0.1,
+      } 
+    },
   };
 
   const socialIconVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: 1, ease: 'easeInOut' } },
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      transition: { duration: 0.4, ease: 'easeInOut' } 
+    },
   };
 
   return (
-    <FooterContainer>
+    <FooterContainer ref={footerRef}>
       <Container
         initial="hidden"
-        animate="visible"
+        animate={isFooterVisible ? "visible" : "hidden"}
         variants={containerVariants}
       >
         <SocialIcons>
           {[{icon: FaGithub, href: "https://github.com/Mandip77"}, {icon: FaLinkedin, href: "https://www.linkedin.com/public-profile/settings?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_self_edit_contact-info%3BAm%2F0Y%2BdCSUqnET6EflxAyw%3D%3D"}, {icon: FaTwitter, href: "https://twitter.com/renderingsoul8"}].map((social, index) => (
             <SocialIcon key={index} variants={socialIconVariants}>
-              <SocialLink href={social.href}>
+              <SocialLink 
+                href={social.href} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label={`Visit my ${social.icon.name === 'FaGithub' ? 'GitHub' : social.icon.name === 'FaLinkedin' ? 'LinkedIn' : 'Twitter'} profile`}
+              >
                 <social.icon />
               </SocialLink>
             </SocialIcon>
           ))}
         </SocialIcons>
-        <p>&copy; 2023 Mandip - Portfolio. All rights reserved.</p>
+        <FooterText>&copy; {new Date().getFullYear()} Mandip Amgain - Portfolio. All rights reserved.</FooterText>
       </Container>
     </FooterContainer>
   );

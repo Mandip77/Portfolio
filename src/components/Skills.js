@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
+import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 import javaIcon from '../assets/java-svgrepo-com.svg';
 import pythonIcon from '../assets/python.png';
@@ -12,26 +14,29 @@ import firebaseIcon from '../assets/firebase.svg';
 import reactIcon from '../assets/react.svg';
 import postmanIcon from '../assets/postman.svg';
 
-const TechStackSection = styled.section`
+const TechStackSection = styled(motion.section)`
   background-color: #000000;
   padding: 100px;
   text-align: center;
+  @media (max-width: 768px) {
+    padding: 50px 20px;
+  }
 `;
 
-const SectionTitle = styled.h2`
+const SectionTitle = styled(motion.h2)`
   font-size: 36px;
   margin-bottom: 40px;
   color: #03fffb;
 `;
 
-const TechStackList = styled.div`
+const TechStackList = styled(motion.div)`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 50px;
 `;
 
-const TechItem = styled.div`
+const TechItem = styled(motion.div)`
   width: 200px;
   margin: 10px;
   padding: 20px;
@@ -59,94 +64,92 @@ const TechName = styled.h3`
 
 const TechProgress = styled.div`
   height: 10px;
-  background-color: #ddd;
+  background-color: #333;
   border-radius: 4px;
+  overflow: hidden;
 `;
 
-const TechBar = styled.div`
+const TechBar = styled(motion.div)`
   height: 100%;
   background-color: #00af91;
   border-radius: 4px;
-  transition: width 0.3s ease;
-  width: ${({ progress }) => progress}%;
 `;
 
+const skills = [
+  { name: 'Java', icon: javaIcon, progress: 90 },
+  { name: 'Python', icon: pythonIcon, progress: 60 },
+  { name: 'HTML', icon: htmlIcon, progress: 80 },
+  { name: 'CSS', icon: cssIcon, progress: 80 },
+  { name: 'JavaScript', icon: jsIcon, progress: 50 },
+  { name: 'MySQL', icon: mysqlIcon, progress: 75 },
+  { name: 'Kotlin', icon: kotlinIcon, progress: 70 },
+  { name: 'Firebase', icon: firebaseIcon, progress: 80 },
+  { name: 'React', icon: reactIcon, progress: 50 },
+  { name: 'Postman', icon: postmanIcon, progress: 70 },
+];
+
 function TechStack() {
+  const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
+  const [animatedProgress, setAnimatedProgress] = useState({});
+
+  useEffect(() => {
+    if (isSectionVisible) {
+      skills.forEach((skill, index) => {
+        setTimeout(() => {
+          setAnimatedProgress(prev => ({
+            ...prev,
+            [skill.name]: skill.progress,
+          }));
+        }, index * 100);
+      });
+    }
+  }, [isSectionVisible]);
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
+  };
+
   return (
-    <TechStackSection id="skills">
+    <TechStackSection 
+      id="skills"
+      ref={sectionRef}
+      variants={containerVariants}
+      initial="hidden"
+      animate={isSectionVisible ? "visible" : "hidden"}
+    >
       <div className="container">
-        <SectionTitle>Tech Stack</SectionTitle>
-        <TechStackList>
-          <TechItem>
-            <TechIcon src={javaIcon} alt="Java" />
-            <TechName>Java</TechName>
-            <TechProgress>
-              <TechBar progress={90}></TechBar>
-            </TechProgress>
-          </TechItem>
-          <TechItem>
-            <TechIcon src={pythonIcon} alt="Python" />
-            <TechName>Python</TechName>
-            <TechProgress>
-              <TechBar progress={60}></TechBar>
-            </TechProgress>
-          </TechItem>
-          <TechItem>
-            <TechIcon src={htmlIcon} alt="HTML" />
-            <TechName>HTML</TechName>
-            <TechProgress>
-              <TechBar progress={80}></TechBar>
-            </TechProgress>
-          </TechItem>
-          <TechItem>
-            <TechIcon src={cssIcon} alt="CSS" />
-            <TechName>CSS</TechName>
-            <TechProgress>
-              <TechBar progress={80}></TechBar>
-            </TechProgress>
-          </TechItem>
-          <TechItem>
-            <TechIcon src={jsIcon} alt="JavaScript" />
-            <TechName>JavaScript</TechName>
-            <TechProgress>
-              <TechBar progress={50}></TechBar>
-            </TechProgress>
-          </TechItem>
-          <TechItem>
-            <TechIcon src={mysqlIcon} alt="MySQL" />
-            <TechName>MySQL</TechName>
-            <TechProgress>
-              <TechBar progress={75}></TechBar>
-            </TechProgress>
-          </TechItem>
-          <TechItem>
-            <TechIcon src={kotlinIcon} alt="Kotlin" />
-            <TechName>Kotlin</TechName>
-            <TechProgress>
-              <TechBar progress={70}></TechBar> {/* Adjust the progress */}
-            </TechProgress>
-          </TechItem>
-          <TechItem>
-            <TechIcon src={firebaseIcon} alt="Firebase" />
-            <TechName>Firebase</TechName>
-            <TechProgress>
-              <TechBar progress={80}></TechBar> {/* Adjust the progress */}
-            </TechProgress>
-          </TechItem>
-          <TechItem>
-            <TechIcon src={reactIcon} alt="React" />
-            <TechName>React</TechName>
-            <TechProgress>
-              <TechBar progress={50}></TechBar> {/* Adjust the progress */}
-            </TechProgress>
-          </TechItem>
-          <TechItem>
-            <TechIcon src={postmanIcon} alt="Postman" />
-            <TechName>Postman</TechName>
-            <TechProgress>
-              <TechBar progress={70}></TechBar> {/* Adjust the progress */}
-            </TechProgress>
-          </TechItem>
+        <SectionTitle variants={itemVariants}>Tech Stack</SectionTitle>
+        <TechStackList variants={containerVariants}>
+          {skills.map((skill) => (
+            <TechItem key={skill.name} variants={itemVariants}>
+              <TechIcon src={skill.icon} alt={skill.name} loading="lazy" decoding="async" />
+              <TechName>{skill.name}</TechName>
+              <TechProgress>
+                <TechBar
+                  initial={{ width: 0 }}
+                  animate={{ width: `${animatedProgress[skill.name] || 0}%` }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                />
+              </TechProgress>
+            </TechItem>
+          ))}
         </TechStackList>
       </div>
     </TechStackSection>

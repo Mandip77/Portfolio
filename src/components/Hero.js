@@ -28,8 +28,19 @@ const HeroVideo = styled.video`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    z-index: -2;
+    opacity: 0.6;
+`;
+
+// Overlay for better text readability
+const VideoOverlay = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
     z-index: -1;
-    opacity: 0.7;
 `;
 
 // Content container styling
@@ -78,11 +89,20 @@ function Hero() {
 
     return (
         <HeroSection>
-            <HeroVideo src={backgroundVideo} autoPlay loop muted playsInline />
+            <HeroVideo 
+                src={backgroundVideo} 
+                autoPlay 
+                loop 
+                muted 
+                playsInline 
+                preload="auto"
+                aria-label="Background video"
+            />
+            <VideoOverlay />
             <HeroContainer>
-                <HeroTitle>Welcome to My Website</HeroTitle>
-                <HeroDescription>Learn about my skills and projects.</HeroDescription>
-                <HeroButton href={resumeLink} download="Mandip's_Resume">
+                <HeroTitle>Hi, I'm Mandip Amgain</HeroTitle>
+                <HeroDescription>Computer Science Student & Software Developer passionate about creating innovative solutions and exploring AI technologies.</HeroDescription>
+                <HeroButton href={resumeLink} download="Mandip_Amgain_Resume.pdf" aria-label="Download resume">
                     Download My Resume
                 </HeroButton>
             </HeroContainer>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import logo from '../assets/logo.png';
@@ -17,6 +17,14 @@ const NavContainer = styled.nav`
   padding: 20px;
   z-index: 999;
   transition: left 0.3s ease;
+
+  &[aria-hidden="true"] {
+    visibility: hidden;
+  }
+
+  &[aria-hidden="false"] {
+    visibility: visible;
+  }
 `;
 
 // Hamburger Menu Styles
@@ -74,20 +82,32 @@ const NavLinkItem = styled.li`
   width: 100%;
 `;
 
-const NavLink = styled.a`
+const NavLink = styled.button`
   color: #03fffb;
   text-decoration: none;
   padding: 10px 20px;
   display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
   transition: background-color 0.3s ease;
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: #333;
+    outline: 2px solid #03fffb;
+    outline-offset: -2px;
   }
 `;
 
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const navRef = useRef(null);
+  const hamburgerRef = useRef(null);
   const navigationItems = [
     { name: 'About Me', sectionId: 'about' },
     { name: 'Projects', sectionId: 'projects' },
@@ -96,6 +116,40 @@ function Navigation() {
   ];
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        isOpen &&
+        navRef.current &&
+        !navRef.current.contains(event.target) &&
+        hamburgerRef.current &&
+        !hamburgerRef.current.contains(event.target)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    // Close menu on ESC key
+    const handleEscapeKey = (event) => {
+      if (event.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleEscapeKey);
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscapeKey);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
 
   const navigateToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
@@ -110,21 +164,34 @@ function Navigation() {
 
   return (
       <>
-        <NavContainer isOpen={isOpen}>
+        <NavContainer isOpen={isOpen} ref={navRef} aria-hidden={!isOpen}>
           <Logo onClick={scrollToTop}>
             <img src={logo} alt="MA Logo" style={{ width: '50px', height: '50px', cursor: 'pointer' }} />
           </Logo>
           <NavLinks>
             {navigationItems.map((item) => (
                 <NavLinkItem key={item.sectionId}>
-                  <NavLink to="#" onClick={() => navigateToSection(item.sectionId)}>
+                  <NavLink onClick={() => navigateToSection(item.sectionId)}>
                     {item.name}
                   </NavLink>
                 </NavLinkItem>
             ))}
           </NavLinks>
         </NavContainer>
-        <HamburgerMenu onClick={toggleMenu} aria-label="Menu">
+        <HamburgerMenu 
+          onClick={toggleMenu} 
+          aria-label={isOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isOpen}
+          ref={hamburgerRef}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              toggleMenu();
+            }
+          }}
+        >
           <HamburgerIcon isOpen={isOpen} />
           <HamburgerIcon isOpen={isOpen} />
           <HamburgerIcon isOpen={isOpen} />
