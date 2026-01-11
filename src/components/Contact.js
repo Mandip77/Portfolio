@@ -6,7 +6,7 @@ import useIntersectionObserver from '../hooks/useIntersectionObserver';
 import contactGif from '../assets/happy-hacker.gif';
 
 const ContactSection = styled(motion.section)`
-  background-color: #000;
+  background-color: ${({ theme }) => theme.body};
   padding: 100px;
   text-align: center;
   @media (max-width: 768px) {
@@ -17,7 +17,7 @@ const ContactSection = styled(motion.section)`
 const SectionTitle = styled(motion.h2)`
   font-size: 36px;
   margin-bottom: 40px;
-  color: #03fffb;
+  color: ${({ theme }) => theme.accent};
 `;
 
 const ContactContainer = styled(motion.div)`
@@ -56,20 +56,20 @@ const FormInput = styled.input`
   padding: 12px;
   margin-bottom: ${({ $hasError }) => ($hasError ? '5px' : '20px')};
   border-radius: 4px;
-  border: 1px solid ${({ $hasError }) => ($hasError ? '#ff6b6b' : '#333')};
-  background-color: #0a0a0a;
-  color: #fff;
+  border: 1px solid ${({ $hasError, theme }) => ($hasError ? '#ff6b6b' : theme.cardBorder)};
+  background-color: ${({ theme }) => theme.cardBg};
+  color: ${({ theme }) => theme.text};
   font-size: 16px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 
   &:focus {
     outline: none;
-    border-color: ${({ $hasError }) => ($hasError ? '#ff6b6b' : '#03fffb')};
-    box-shadow: 0 0 0 2px ${({ $hasError }) => ($hasError ? 'rgba(255, 107, 107, 0.2)' : 'rgba(3, 255, 251, 0.2)')};
+    border-color: ${({ $hasError, theme }) => ($hasError ? '#ff6b6b' : theme.accent)};
+    box-shadow: 0 0 0 2px ${({ $hasError, theme }) => ($hasError ? 'rgba(255, 107, 107, 0.2)' : theme.accent + '33')};
   }
 
   &::placeholder {
-    color: #666;
+    color: ${({ theme }) => theme.secondaryText};
   }
 `;
 
@@ -79,9 +79,9 @@ const FormTextarea = styled.textarea`
   padding: 12px;
   margin-bottom: ${({ $hasError }) => ($hasError ? '5px' : '20px')};
   border-radius: 4px;
-  border: 1px solid ${({ $hasError }) => ($hasError ? '#ff6b6b' : '#333')};
-  background-color: #0a0a0a;
-  color: #fff;
+  border: 1px solid ${({ $hasError, theme }) => ($hasError ? '#ff6b6b' : theme.cardBorder)};
+  background-color: ${({ theme }) => theme.cardBg};
+  color: ${({ theme }) => theme.text};
   font-size: 16px;
   font-family: inherit;
   resize: vertical;
@@ -89,12 +89,12 @@ const FormTextarea = styled.textarea`
 
   &:focus {
     outline: none;
-    border-color: ${({ $hasError }) => ($hasError ? '#ff6b6b' : '#03fffb')};
-    box-shadow: 0 0 0 2px ${({ $hasError }) => ($hasError ? 'rgba(255, 107, 107, 0.2)' : 'rgba(3, 255, 251, 0.2)')};
+    border-color: ${({ $hasError, theme }) => ($hasError ? '#ff6b6b' : theme.accent)};
+    box-shadow: 0 0 0 2px ${({ $hasError, theme }) => ($hasError ? 'rgba(255, 107, 107, 0.2)' : theme.accent + '33')};
   }
 
   &::placeholder {
-    color: #666;
+    color: ${({ theme }) => theme.secondaryText};
   }
 `;
 
@@ -106,7 +106,7 @@ const ErrorMessage = styled.p`
 `;
 
 const CharacterCount = styled.p`
-  color: #666;
+  color: ${({ theme }) => theme.secondaryText};
   font-size: 12px;
   margin-bottom: 20px;
   text-align: right;
@@ -114,8 +114,8 @@ const CharacterCount = styled.p`
 `;
 
 const FormButton = styled.button`
-  background-color: #03fffb;
-  color: #000;
+  background-color: ${({ theme }) => theme.buttonBg};
+  color: ${({ theme }) => theme.buttonText};
   padding: 12px 24px;
   border-radius: 4px;
   border: none;
@@ -125,7 +125,7 @@ const FormButton = styled.button`
   transition: all 0.3s ease;
 
   &:hover:not(:disabled) {
-    background-color: #04c3c5;
+    opacity: 0.9;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(3, 255, 251, 0.3);
   }
@@ -136,7 +136,7 @@ const FormButton = styled.button`
   }
 
   &:focus {
-    outline: 2px solid #03fffb;
+    outline: 2px solid ${({ theme }) => theme.accent};
     outline-offset: 2px;
   }
 `;
@@ -317,7 +317,7 @@ function Contact() {
   };
 
   return (
-    <ContactSection 
+    <ContactSection
       id="contact"
       ref={sectionRef}
       variants={containerVariants}
@@ -327,9 +327,9 @@ function Contact() {
       <div className="container">
         <SectionTitle variants={itemVariants}>Contact</SectionTitle>
         <ContactContainer variants={containerVariants}>
-          <ContactGif 
-            src={contactGif} 
-            alt="Happy Hacker GIF" 
+          <ContactGif
+            src={contactGif}
+            alt="Happy Hacker GIF"
             loading="lazy"
             variants={itemVariants}
           />

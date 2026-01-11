@@ -8,7 +8,7 @@ import googleCertBadge from '../assets/google_badge.png'; // Import Google IT Su
 import postmanCertBadge from '../assets/postman_badge.png'; // Import Postman API Fundamentals badge image
 
 const AboutSection = styled(motion.section)`
-  background-color: #000000;
+  background-color: ${({ theme }) => theme.body};
   padding: 100px;
   text-align: center;
   @media (max-width: 768px) {
@@ -19,7 +19,7 @@ const AboutSection = styled(motion.section)`
 const SectionTitle = styled(motion.h2)`
   font-size: 36px;
   margin-bottom: 40px;
-  color: #03fffb;
+  color: ${({ theme }) => theme.accent};
 `;
 
 const ProfileImage = styled(motion.img)`
@@ -33,7 +33,7 @@ const AboutText = styled(motion.p)`
   font-size: 18px;
   line-height: 1.6;
   margin-bottom: 30px;
-  color: #ccc;
+  color: ${({ theme }) => theme.secondaryText};
 `;
 
 const BadgeImage = styled.img`
@@ -85,29 +85,29 @@ const About = () => {
   };
 
   return (
-      <AboutSection 
-        id="about"
-        ref={sectionRef}
-        variants={containerVariants}
-        initial="hidden"
-        animate={isSectionVisible ? "visible" : "hidden"}
-      >
-        <SectionTitle variants={itemVariants}>About Me</SectionTitle>
-        <ProfileImage
-            src={profile}
-            alt="Profile Picture"
-            loading="lazy"
-            decoding="async"
-            variants={itemVariants}
-        />
-        <AboutText variants={itemVariants}>
-          Hello! I'm Mandip Amgain, a dedicated computer science student with a passion for software development. I hold an Associate in Science in Computer Science from Bunker Hill Community College and am currently pursuing a B.S. in Information Technology at Northeastern University. I'm seeking opportunities in software development with a special interest in artificial intelligence.
-        </AboutText>
-          <BadgesContainer variants={itemVariants}>
-              <BadgeImage src={googleCertBadge} alt="Google IT Support Badge" loading="lazy" decoding="async" />
-              <BadgeImage src={postmanCertBadge} alt="Postman API Fundamentals Badge" loading="lazy" decoding="async" />
-          </BadgesContainer>
-      </AboutSection>
+    <AboutSection
+      id="about"
+      ref={sectionRef}
+      variants={containerVariants}
+      initial="hidden"
+      animate={isSectionVisible ? "visible" : "hidden"}
+    >
+      <SectionTitle variants={itemVariants}>About Me</SectionTitle>
+      <ProfileImage
+        src={profile}
+        alt="Profile Picture"
+        loading="lazy"
+        decoding="async"
+        variants={itemVariants}
+      />
+      <AboutText variants={itemVariants}>
+        Hello! I'm Mandip Amgain, a dedicated computer science student with a passion for software development. I hold an Associate in Science in Computer Science from Bunker Hill Community College and am currently pursuing a B.S. in Information Technology at Northeastern University. I'm seeking opportunities in software development with a special interest in artificial intelligence.
+      </AboutText>
+      <BadgesContainer variants={itemVariants}>
+        <BadgeImage src={googleCertBadge} alt="Google IT Support Badge" loading="lazy" decoding="async" />
+        <BadgeImage src={postmanCertBadge} alt="Postman API Fundamentals Badge" loading="lazy" decoding="async" />
+      </BadgesContainer>
+    </AboutSection>
   );
 };
 

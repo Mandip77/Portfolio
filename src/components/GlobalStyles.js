@@ -1,5 +1,29 @@
 import { createGlobalStyle } from 'styled-components';
 
+export const lightTheme = {
+    body: '#f4f4f4',
+    text: '#121212',
+    accent: '#008080', // Teal
+    secondaryText: '#555',
+    cardBg: '#fff',
+    cardBorder: '#ddd',
+    buttonBg: '#008080',
+    buttonText: '#fff',
+    navBg: '#fff',
+};
+
+export const darkTheme = {
+    body: '#070707',
+    text: '#ffffff',
+    accent: '#03fffb', // Cyan
+    secondaryText: '#aaa',
+    cardBg: '#0a0a0a',
+    cardBorder: '#333',
+    buttonBg: '#03fffb',
+    buttonText: '#000',
+    navBg: '#000',
+};
+
 const GlobalStyles = createGlobalStyle`
     /* Reset CSS */
     *, *::before, *::after {
@@ -17,8 +41,9 @@ const GlobalStyles = createGlobalStyle`
         font-size: 16px;
         line-height: 1.6;
         font-weight: 400;
-        background-color: #070707;
-        color: #ffffff;
+        background-color: ${({ theme }) => theme.body};
+        color: ${({ theme }) => theme.text};
+        transition: background-color 0.3s ease, color 0.3s ease;
         overflow-x: hidden; /* Prevent horizontal scroll */
     }
 
@@ -27,13 +52,13 @@ const GlobalStyles = createGlobalStyle`
         max-width: 1200px;
         margin: 0 auto;
         padding: 20px;
-        color: #03fffb;
+        color: ${({ theme }) => theme.accent};
     }
 
     /* Heading styles */
     h1, h2, h3 {
         margin-bottom: 0.5em;
-        color: #03fffb;
+        color: ${({ theme }) => theme.accent};
     }
 
     h1 {
@@ -55,17 +80,17 @@ const GlobalStyles = createGlobalStyle`
     p {
         font-size: 1em; /* 16px */
         margin-bottom: 1em;
-        color: #aaa;
+        color: ${({ theme }) => theme.secondaryText};
     }
 
     /* Link styles */
     a {
-        color: #03fffb;
+        color: ${({ theme }) => theme.accent};
         text-decoration: none;
         transition: color 0.3s ease;
 
         &:hover {
-            color: #06d6a0;
+            opacity: 0.8;
         }
     }
 
@@ -74,15 +99,15 @@ const GlobalStyles = createGlobalStyle`
         padding: 12px 24px;
         border: none;
         border-radius: 4px;
-        background-color: #03fffb;
-        color: #000;
+        background-color: ${({ theme }) => theme.buttonBg};
+        color: ${({ theme }) => theme.buttonText};
         font-size: 1em; /* 16px */
         font-weight: 600;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.3s ease, color 0.3s ease;
 
         &:hover {
-            background-color: #06d6a0;
+            opacity: 0.9;
         }
     }
 

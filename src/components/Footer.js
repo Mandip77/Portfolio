@@ -5,10 +5,11 @@ import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 const FooterContainer = styled.footer`
-  background-color: #000;
-  color: #fff;
+  background-color: ${({ theme }) => theme.navBg};
+  color: ${({ theme }) => theme.text};
   padding: 20px 0;
   text-align: center;
+  border-top: 1px solid ${({ theme }) => theme.cardBorder};
 `;
 
 const Container = styled(motion.div)`
@@ -38,7 +39,7 @@ const SocialIcon = styled(motion.li)`
 `;
 
 const SocialLink = styled.a`
-  color: #03fffb;
+  color: ${({ theme }) => theme.accent};
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -71,23 +72,23 @@ function Footer() {
 
   const containerVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { 
-        duration: 0.6, 
+      transition: {
+        duration: 0.6,
         ease: 'easeInOut',
         staggerChildren: 0.1,
-      } 
+      }
     },
   };
 
   const socialIconVariants = {
     hidden: { opacity: 0, scale: 0.8 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       scale: 1,
-      transition: { duration: 0.4, ease: 'easeInOut' } 
+      transition: { duration: 0.4, ease: 'easeInOut' }
     },
   };
 
@@ -99,11 +100,11 @@ function Footer() {
         variants={containerVariants}
       >
         <SocialIcons>
-          {[{icon: FaGithub, href: "https://github.com/Mandip77"}, {icon: FaLinkedin, href: "https://www.linkedin.com/public-profile/settings?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_self_edit_contact-info%3BAm%2F0Y%2BdCSUqnET6EflxAyw%3D%3D"}, {icon: FaTwitter, href: "https://twitter.com/renderingsoul8"}].map((social, index) => (
+          {[{ icon: FaGithub, href: "https://github.com/Mandip77" }, { icon: FaLinkedin, href: "https://www.linkedin.com/public-profile/settings?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_self_edit_contact-info%3BAm%2F0Y%2BdCSUqnET6EflxAyw%3D%3D" }, { icon: FaTwitter, href: "https://twitter.com/renderingsoul8" }].map((social, index) => (
             <SocialIcon key={index} variants={socialIconVariants}>
-              <SocialLink 
-                href={social.href} 
-                target="_blank" 
+              <SocialLink
+                href={social.href}
+                target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Visit my ${social.icon.name === 'FaGithub' ? 'GitHub' : social.icon.name === 'FaLinkedin' ? 'LinkedIn' : 'Twitter'} profile`}
               >

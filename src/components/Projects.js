@@ -2,9 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
+import textEditorGif from '../assets/text_editor.gif';
 
 const ProjectsSection = styled(motion.section)`
-  background-color: #000;
+  background-color: ${({ theme }) => theme.body};
   padding: 100px;
   text-align: center;
   
@@ -16,7 +17,7 @@ const ProjectsSection = styled(motion.section)`
 const SectionTitle = styled(motion.h2)`
   font-size: 36px;
   margin-bottom: 40px;
-  color: #03fffb;
+  color: ${({ theme }) => theme.accent};
 `;
 
 const ProjectsList = styled(motion.div)`
@@ -29,10 +30,10 @@ const ProjectsList = styled(motion.div)`
 
 const Project = styled(motion.div)`
   max-width: 300px;
-  border: 1px solid #333;
+  border: 1px solid ${({ theme }) => theme.cardBorder};
   border-radius: 8px;
   overflow: hidden;
-  background-color: #0a0a0a;
+  background-color: ${({ theme }) => theme.cardBg};
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
@@ -55,36 +56,36 @@ const ProjectDetails = styled.div`
 const ProjectTitle = styled.h3`
   font-size: 24px;
   margin-bottom: 10px;
-  color: #07d20d;
+  color: ${({ theme }) => theme.text};
 `;
 
 const ProjectDescription = styled.p`
   font-size: 18px;
   line-height: 1.6;
   margin-bottom: 20px;
-  color: #ccc;
+  color: ${({ theme }) => theme.secondaryText};
 `;
 
 const ProjectLink = styled.a`
   display: inline-block;
-  color: #03fffb;
+  color: ${({ theme }) => theme.accent};
   text-decoration: none;
   padding: 10px 20px;
-  border: 2px solid #03fffb;
+  border: 2px solid ${({ theme }) => theme.accent};
   border-radius: 4px;
   transition: all 0.3s ease;
   font-weight: 600;
 
   &:hover,
   &:focus {
-    background-color: #03fffb;
-    color: #000;
+    background-color: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.buttonText || '#000'};
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(3, 255, 251, 0.3);
   }
 
   &:focus {
-    outline: 2px solid #03fffb;
+    outline: 2px solid ${({ theme }) => theme.accent};
     outline-offset: 2px;
   }
 `;
@@ -100,7 +101,7 @@ const projects = [
   {
     title: 'Simple Text Editor',
     description: 'Lightweight Java Swing text editor with open/save, cut/copy/paste and custom formatting.',
-    image: process.env.PUBLIC_URL + '/assets/text_editor.gif',
+    image: textEditorGif,
     githubUrl: 'https://github.com/Mandip77/Simple-TextEditor-Java',
     imageAlt: 'Text Editor Demo',
   },
@@ -132,7 +133,7 @@ function Projects() {
   };
 
   return (
-    <ProjectsSection 
+    <ProjectsSection
       id="projects"
       ref={sectionRef}
       variants={containerVariants}

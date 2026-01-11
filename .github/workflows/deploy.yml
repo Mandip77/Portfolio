@@ -35,7 +35,7 @@ jobs:
           fi
 
       - name: Inject EmailJS env (optional)
-        if: secrets.EMAILJS_SERVICE_ID && secrets.EMAILJS_TEMPLATE_ID && secrets.EMAILJS_PUBLIC_KEY
+
         run: |
           echo "REACT_APP_EMAILJS_SERVICE_ID=${{ secrets.EMAILJS_SERVICE_ID }}" >> .env
           echo "REACT_APP_EMAILJS_TEMPLATE_ID=${{ secrets.EMAILJS_TEMPLATE_ID }}" >> .env

@@ -9,13 +9,13 @@ import htmlIcon from '../assets/html-5-svgrepo-com.svg';
 import cssIcon from '../assets/css-3-svgrepo-com.svg';
 import jsIcon from '../assets/js-svgrepo-com.svg';
 import mysqlIcon from '../assets/sql-server-icon-png-11359.png';
-import kotlinIcon from '../assets/kotlin.svg'; 
-import firebaseIcon from '../assets/firebase.svg'; 
+import kotlinIcon from '../assets/kotlin.svg';
+import firebaseIcon from '../assets/firebase.svg';
 import reactIcon from '../assets/react.svg';
 import postmanIcon from '../assets/postman.svg';
 
 const TechStackSection = styled(motion.section)`
-  background-color: #000000;
+  background-color: ${({ theme }) => theme.body};
   padding: 100px;
   text-align: center;
   @media (max-width: 768px) {
@@ -26,7 +26,7 @@ const TechStackSection = styled(motion.section)`
 const SectionTitle = styled(motion.h2)`
   font-size: 36px;
   margin-bottom: 40px;
-  color: #03fffb;
+  color: ${({ theme }) => theme.accent};
 `;
 
 const TechStackList = styled(motion.div)`
@@ -40,9 +40,9 @@ const TechItem = styled(motion.div)`
   width: 200px;
   margin: 10px;
   padding: 20px;
-  border: 1px solid #040303;
+  border: 1px solid ${({ theme }) => theme.cardBorder};
   border-radius: 4px;
-  background-color: #060606;
+  background-color: ${({ theme }) => theme.cardBg};
   transition: transform 0.3s ease;
 
   &:hover {
@@ -59,19 +59,19 @@ const TechIcon = styled.img`
 const TechName = styled.h3`
   font-size: 24px;
   margin-bottom: 10px;
-  color: #20d62f;
+  color: ${({ theme }) => theme.text};
 `;
 
 const TechProgress = styled.div`
   height: 10px;
-  background-color: #333;
+  background-color: ${({ theme }) => theme.cardBorder};
   border-radius: 4px;
   overflow: hidden;
 `;
 
 const TechBar = styled(motion.div)`
   height: 100%;
-  background-color: #00af91;
+  background-color: ${({ theme }) => theme.accent};
   border-radius: 4px;
 `;
 
@@ -127,7 +127,7 @@ function TechStack() {
   };
 
   return (
-    <TechStackSection 
+    <TechStackSection
       id="skills"
       ref={sectionRef}
       variants={containerVariants}

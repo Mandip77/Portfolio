@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import styled from 'styled-components';
+import { FaSun, FaMoon } from 'react-icons/fa';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 import logo from '../assets/logo.png';
 
@@ -10,13 +12,14 @@ const NavContainer = styled.nav`
   left: ${({ isOpen }) => (isOpen ? '0' : '-250px')};
   height: 100vh;
   width: 250px;
-  background-color: #000;
+  background-color: ${({ theme }) => theme.navBg};
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 20px;
   z-index: 999;
-  transition: left 0.3s ease;
+  transition: left 0.3s ease, background-color 0.3s ease;
+  border-right: 1px solid ${({ theme }) => theme.cardBorder};
 
   &[aria-hidden="true"] {
     visibility: hidden;
@@ -39,12 +42,16 @@ const HamburgerMenu = styled.div`
   justify-content: space-around;
   width: 30px;
   height: 25px;
+  
+  /* Mix-blend-mode ensures visibility on light/dark backgrounds if overlapping content */
+  mix-blend-mode: difference;
+  color: #fff; 
 `;
 
 const HamburgerIcon = styled.div`
   width: 100%;
   height: 3px;
-  background-color: #fff;
+  background-color: currentColor;
   transition: all 0.3s linear;
 
   &:nth-child(1) {
@@ -65,7 +72,7 @@ const HamburgerIcon = styled.div`
 const Logo = styled.div`
   font-size: 24px;
   font-weight: bold;
-  color: #03fffb;
+  color: ${({ theme }) => theme.accent};
   margin: 80px 0 20px;
   align-self: center;
 `;
@@ -83,7 +90,7 @@ const NavLinkItem = styled.li`
 `;
 
 const NavLink = styled.button`
-  color: #03fffb;
+  color: ${({ theme }) => theme.text};
   text-decoration: none;
   padding: 10px 20px;
   display: block;
@@ -94,24 +101,44 @@ const NavLink = styled.button`
   cursor: pointer;
   font-size: inherit;
   font-family: inherit;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 
   &:hover,
   &:focus {
-    background-color: #333;
-    outline: 2px solid #03fffb;
+    background-color: ${({ theme }) => theme.cardBorder};
+    color: ${({ theme }) => theme.accent};
+    outline: 2px solid ${({ theme }) => theme.accent};
     outline-offset: -2px;
+  }
+`;
+
+const ThemeToggleBtn = styled.button`
+  margin-top: auto;
+  align-self: center;
+  background: transparent;
+  color: ${({ theme }) => theme.text};
+  font-size: 1.5rem;
+  padding: 10px;
+  
+  &:hover {
+    color: ${({ theme }) => theme.accent};
+    background: transparent;
+    opacity: 1;
   }
 `;
 
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const { theme, toggleTheme } = useContext(ThemeContext);
   const navRef = useRef(null);
   const hamburgerRef = useRef(null);
   const navigationItems = [
     { name: 'About Me', sectionId: 'about' },
-    { name: 'Projects', sectionId: 'projects' },
     { name: 'Skills', sectionId: 'skills' },
+    { name: 'Experience', sectionId: 'experience' },
+    { name: 'Vibe-Coded Apps', sectionId: 'vibe-coded-apps' },
+    { name: 'Projects', sectionId: 'projects' },
+    { name: 'Blog', sectionId: 'blog' },
     { name: 'Contact', sectionId: 'contact' }
   ];
 
@@ -163,40 +190,47 @@ function Navigation() {
   };
 
   return (
-      <>
-        <NavContainer isOpen={isOpen} ref={navRef} aria-hidden={!isOpen}>
-          <Logo onClick={scrollToTop}>
-            <img src={logo} alt="MA Logo" style={{ width: '50px', height: '50px', cursor: 'pointer' }} />
-          </Logo>
-          <NavLinks>
-            {navigationItems.map((item) => (
-                <NavLinkItem key={item.sectionId}>
-                  <NavLink onClick={() => navigateToSection(item.sectionId)}>
-                    {item.name}
-                  </NavLink>
-                </NavLinkItem>
-            ))}
-          </NavLinks>
-        </NavContainer>
-        <HamburgerMenu 
-          onClick={toggleMenu} 
-          aria-label={isOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isOpen}
-          ref={hamburgerRef}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              toggleMenu();
-            }
-          }}
+    <>
+      <NavContainer isOpen={isOpen} ref={navRef} aria-hidden={!isOpen}>
+        <Logo onClick={scrollToTop}>
+          <img src={logo} alt="MA Logo" style={{ width: '50px', height: '50px', cursor: 'pointer' }} />
+        </Logo>
+        <NavLinks>
+          {navigationItems.map((item) => (
+            <NavLinkItem key={item.sectionId}>
+              <NavLink onClick={() => navigateToSection(item.sectionId)}>
+                {item.name}
+              </NavLink>
+            </NavLinkItem>
+          ))}
+        </NavLinks>
+
+        <ThemeToggleBtn
+          onClick={toggleTheme}
+          aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
         >
-          <HamburgerIcon isOpen={isOpen} />
-          <HamburgerIcon isOpen={isOpen} />
-          <HamburgerIcon isOpen={isOpen} />
-        </HamburgerMenu>
-      </>
+          {theme === 'dark' ? <FaSun /> : <FaMoon />}
+        </ThemeToggleBtn>
+      </NavContainer>
+      <HamburgerMenu
+        onClick={toggleMenu}
+        aria-label={isOpen ? "Close menu" : "Open menu"}
+        aria-expanded={isOpen}
+        ref={hamburgerRef}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleMenu();
+          }
+        }}
+      >
+        <HamburgerIcon isOpen={isOpen} />
+        <HamburgerIcon isOpen={isOpen} />
+        <HamburgerIcon isOpen={isOpen} />
+      </HamburgerMenu>
+    </>
   );
 }
 
