@@ -59,6 +59,9 @@ const AppContent = () => {
           <Projects />
         </Suspense>
         <Suspense fallback={<LoadingFallback />}>
+          <Blog />
+        </Suspense>
+        <Suspense fallback={<LoadingFallback />}>
           <Contact />
         </Suspense>
         <Suspense fallback={<LoadingFallback />}>
