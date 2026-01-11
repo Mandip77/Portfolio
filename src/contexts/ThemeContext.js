@@ -4,7 +4,6 @@ export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
     const [theme, setTheme] = useState('dark');
-    const [isMounted, setIsMounted] = useState(false);
 
     const setMode = (mode) => {
         window.localStorage.setItem('theme', mode);
@@ -20,7 +19,6 @@ export const ThemeProvider = ({ children }) => {
         if (localTheme) {
             setTheme(localTheme);
         }
-        setIsMounted(true);
     }, []);
 
     // Prevent hydration mismatch or unwanted flashing by waiting for mount if needed.
