@@ -12,26 +12,24 @@ export const ThemeProvider = ({ children }) => {
     };
 
     const toggleTheme = () => {
-        if (theme === 'light') {
-            setMode('dark');
-        } else {
-            setMode('light');
-        }
+        theme === 'light' ? setMode('dark') : setMode('light');
     };
 
     useEffect(() => {
         const localTheme = window.localStorage.getItem('theme');
         if (localTheme) {
             setTheme(localTheme);
-        } else {
-            setMode('dark');
         }
         setIsMounted(true);
     }, []);
 
-    if (!isMounted) {
-        return <>{children}</>;
-    }
+    // Prevent hydration mismatch or unwanted flashing by waiting for mount if needed.
+    // However, for the context to be available to children, we MUST wrap them in Provider.
+    // If we want to hide content until theme is loaded, we should return null or a loader, 
+    // BUT since we default to 'dark', we can just render immediately.
+
+    // The previous bug was returning {children} WITHOUT the Provider wrapper when !isMounted,
+    // causing useContext(ThemeContext) in children to return undefined and crash.
 
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
