@@ -129,7 +129,7 @@ const experienceData = [
     title: 'Northeastern University',
     subtitle: 'Bachelor of Science in Information Technology',
     date: '2023 - Present',
-    description: 'Focusing on Systems Administration, Cloud Computing, and Software Development. Dean\'s List student.',
+    description: 'Focusing on Systems Administration, Cloud Computing, and Software Development.',
   },
   {
     type: 'school',
