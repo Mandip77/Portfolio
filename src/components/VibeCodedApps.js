@@ -183,7 +183,7 @@ const apps = [
             'Local batch processing with saved configurations'
         ],
         techStack: ['Python', 'Pandas', 'Tkinter', 'PyInstaller'],
-        liveUrl: 'https://Mandip77.github.io/csv-merger/',
+        liveUrl: 'https://mandip77.github.io/csv-merger/',
         repoUrl: 'https://github.com/Mandip77/csv-merger',
         primaryBtnText: 'Project Site',
         secondaryBtnText: 'GitHub Repo'
