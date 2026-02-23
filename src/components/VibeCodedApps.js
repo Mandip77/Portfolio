@@ -174,35 +174,20 @@ const Button = styled.a`
 
 const apps = [
     {
-        title: 'Repurpose AI',
-        tagline: 'Turn one YouTube video into TikTok scripts, LinkedIn posts, and newsletter drafts.',
+        title: 'CSV Merger Desktop App',
+        tagline: 'A modern, feature-rich desktop tool for filtering, mapping, and combining bulk CSV data.',
         status: 'Live',
         highlights: [
-            'YouTube link or transcript → platform-ready content',
-            'Templates optimized for each platform + tone control',
-            'Copy/export workflow for creators'
+            'Multi-file selection & cross-column mapping',
+            'Advanced filtering and duplicate handling',
+            'Local batch processing with saved configurations'
         ],
-        techStack: ['React', 'Vite', 'Tailwind CSS', 'Node.js', 'Express', 'Supabase', 'OpenAI', 'Gemini'],
-        liveUrl: 'https://vibe-coding-apps-vgj1ihbxv-mandips-projects-3745215c.vercel.app/login',
-        repoUrl: '#', // Placeholder as requested
-        primaryBtnText: 'Live Demo',
+        techStack: ['Python', 'Pandas', 'Tkinter', 'PyInstaller'],
+        liveUrl: 'https://Mandip77.github.io/csv-merger/',
+        repoUrl: 'https://github.com/Mandip77/csv-merger',
+        primaryBtnText: 'Project Site',
         secondaryBtnText: 'GitHub Repo'
-    },
-    {
-        title: 'Repurpose AI Chrome Extension',
-        tagline: 'One-click transcript capture and send-to-app flow from YouTube.',
-        status: 'Coming Soon',
-        highlights: [
-            'Extract transcript from YouTube watch pages',
-            'Copy or send directly into Repurpose AI',
-            'Built for speed with minimal UI'
-        ],
-        techStack: ['JavaScript', 'Chrome API', 'React'],
-        liveUrl: '#',
-        repoUrl: null,
-        primaryBtnText: 'Notify Me',
-        secondaryBtnText: null
-    },
+    }
 ];
 
 function VibeCodedApps() {
