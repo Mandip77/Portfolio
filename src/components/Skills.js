@@ -13,6 +13,7 @@ import kotlinIcon from '../assets/kotlin.svg';
 import firebaseIcon from '../assets/firebase.svg';
 import reactIcon from '../assets/react.svg';
 import postmanIcon from '../assets/postman.svg';
+import linuxIcon from '../assets/linux-svgrepo-com.svg';
 
 const TechStackSection = styled(motion.section)`
   background-color: ${({ theme }) => theme.body};
@@ -76,15 +77,17 @@ const TechBar = styled(motion.div)`
 `;
 
 const skills = [
+  { name: 'Machine Learning', icon: pythonIcon, progress: 85 },
+  { name: 'Cybersecurity', icon: linuxIcon, progress: 80 },
   { name: 'Java', icon: javaIcon, progress: 90 },
-  { name: 'Python', icon: pythonIcon, progress: 60 },
+  { name: 'Python', icon: pythonIcon, progress: 85 },
   { name: 'HTML', icon: htmlIcon, progress: 80 },
   { name: 'CSS', icon: cssIcon, progress: 80 },
-  { name: 'JavaScript', icon: jsIcon, progress: 50 },
+  { name: 'JavaScript', icon: jsIcon, progress: 70 },
   { name: 'MySQL', icon: mysqlIcon, progress: 75 },
   { name: 'Kotlin', icon: kotlinIcon, progress: 70 },
   { name: 'Firebase', icon: firebaseIcon, progress: 80 },
-  { name: 'React', icon: reactIcon, progress: 50 },
+  { name: 'React', icon: reactIcon, progress: 60 },
   { name: 'Postman', icon: postmanIcon, progress: 70 },
 ];
 

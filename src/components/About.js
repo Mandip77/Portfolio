@@ -101,7 +101,7 @@ const About = () => {
         variants={itemVariants}
       />
       <AboutText variants={itemVariants}>
-        Hello! I'm Mandip Amgain, a dedicated computer science student with a passion for software development. I hold an Associate in Science in Computer Science from Bunker Hill Community College and am currently pursuing a B.S. in Information Technology at Northeastern University. I'm seeking opportunities in software development with a special interest in artificial intelligence.
+        Hello! I'm Mandip Amgain, a dedicated software engineer specializing in secure application development and AI integration. With a strong foundation in Computer Science and an ongoing B.S. in Information Technology at Northeastern University, I build resilient systems, innovative gamification engines, and LLM-powered tools. I am passionate about pushing the boundaries of what's possible at the intersection of Cybersecurity, Artificial Intelligence, and scalable web architecture.
       </AboutText>
       <BadgesContainer variants={itemVariants}>
         <BadgeImage src={googleCertBadge} alt="Google IT Support Badge" loading="lazy" decoding="async" />

@@ -173,109 +173,139 @@ const Button = styled.a`
 `;
 
 const apps = [
-    {
-        title: 'CSV Merger Desktop App',
-        tagline: 'A modern, feature-rich desktop tool for filtering, mapping, and combining bulk CSV data.',
-        status: 'Live',
-        highlights: [
-            'Multi-file selection & cross-column mapping',
-            'Advanced filtering and duplicate handling',
-            'Local batch processing with saved configurations'
-        ],
-        techStack: ['Python', 'Pandas', 'Tkinter', 'PyInstaller'],
-        liveUrl: 'https://mandip77.github.io/csv-merger/',
-        repoUrl: 'https://github.com/Mandip77/csv-merger',
-        primaryBtnText: 'Project Site',
-        secondaryBtnText: 'GitHub Repo'
-    }
+  {
+    title: 'CSV Merger Desktop App',
+    tagline: 'A modern, feature-rich desktop tool for filtering, mapping, and combining bulk CSV data.',
+    status: 'Live',
+    highlights: [
+      'Multi-file selection & cross-column mapping',
+      'Advanced filtering and duplicate handling',
+      'Local batch processing with saved configurations'
+    ],
+    techStack: ['Python', 'Pandas', 'Tkinter', 'PyInstaller'],
+    liveUrl: 'https://mandip77.github.io/csv-merger/',
+    repoUrl: 'https://github.com/Mandip77/csv-merger',
+    primaryBtnText: 'Project Site',
+    secondaryBtnText: 'GitHub Repo'
+  },
+  {
+    title: 'Powerball Prediction Model',
+    tagline: 'Machine learning and LLM approach to predict drawn numbers.',
+    status: 'In Progress',
+    highlights: [
+      'Distinguishes regular white balls from the Powerball',
+      'Utilizes historical data and advanced AI models',
+      'Full end-to-end data science pipeline'
+    ],
+    techStack: ['Python', 'Scikit-Learn', 'LLM', 'Data Science'],
+    liveUrl: '#',
+    repoUrl: '#',
+    primaryBtnText: 'View Project',
+    secondaryBtnText: 'GitHub Repo'
+  },
+  {
+    title: 'AI Content Repurposer',
+    tagline: 'AI Content Repurposing application with robust security.',
+    status: 'Live',
+    highlights: [
+      'Protected routes and user authentication',
+      'Hybrid hosting strategy for reliability',
+      'Scalable monorepo architecture'
+    ],
+    techStack: ['React', 'Node.js', 'AI Integration', 'Cybersecurity'],
+    liveUrl: 'https://vibe-coding-apps.vercel.app/',
+    repoUrl: 'https://github.com/Mandip77/Vibe-Coding-Apps',
+    primaryBtnText: 'Project Site',
+    secondaryBtnText: 'GitHub Repo'
+  }
 ];
 
 function VibeCodedApps() {
-    const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
+  const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
 
-    const containerVariants = {
-        hidden: { opacity: 0, y: 50 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.6,
-                staggerChildren: 0.2,
-            },
-        },
-    };
+  const containerVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.2,
+      },
+    },
+  };
 
-    const itemVariants = {
-        hidden: { opacity: 0, y: 30 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.5 },
-        },
-    };
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
+  };
 
-    return (
-        <Section
-            id="vibe-coded-apps"
-            ref={sectionRef}
-            variants={containerVariants}
-            initial="hidden"
-            animate={isSectionVisible ? "visible" : "hidden"}
-        >
-            <div className="container">
-                <SectionTitle variants={itemVariants}>Vibe-Coded Apps</SectionTitle>
-                <SectionIntro variants={itemVariants}>
-                    architecture → <WorkflowHighlight>task planning</WorkflowHighlight> → <WorkflowHighlight>agent execution</WorkflowHighlight> → walkthrough review → <WorkflowHighlight>testing</WorkflowHighlight> → deployment
-                </SectionIntro>
+  return (
+    <Section
+      id="vibe-coded-apps"
+      ref={sectionRef}
+      variants={containerVariants}
+      initial="hidden"
+      animate={isSectionVisible ? "visible" : "hidden"}
+    >
+      <div className="container">
+        <SectionTitle variants={itemVariants}>Vibe-Coded Apps</SectionTitle>
+        <SectionIntro variants={itemVariants}>
+          architecture → <WorkflowHighlight>task planning</WorkflowHighlight> → <WorkflowHighlight>agent execution</WorkflowHighlight> → walkthrough review → <WorkflowHighlight>testing</WorkflowHighlight> → deployment
+        </SectionIntro>
 
-                <Grid variants={containerVariants}>
-                    {apps.map((app) => (
-                        <Card key={app.title} variants={itemVariants}>
-                            <CardHeader>
-                                <Title style={{ fontSize: '20px', marginBottom: 0 }}>{app.title}</Title>
-                                <StatusBadge status={app.status}>{app.status}</StatusBadge>
-                            </CardHeader>
-                            <Details>
-                                <Tagline>{app.tagline}</Tagline>
-                                <HighlightList>
-                                    {app.highlights.map((highlight, idx) => (
-                                        <HighlightItem key={idx}>{highlight}</HighlightItem>
-                                    ))}
-                                </HighlightList>
-                                <TechStack>
-                                    {app.techStack.map((tech) => (
-                                        <TechBadge key={tech}>{tech}</TechBadge>
-                                    ))}
-                                </TechStack>
+        <Grid variants={containerVariants}>
+          {apps.map((app) => (
+            <Card key={app.title} variants={itemVariants}>
+              <CardHeader>
+                <Title style={{ fontSize: '20px', marginBottom: 0 }}>{app.title}</Title>
+                <StatusBadge status={app.status}>{app.status}</StatusBadge>
+              </CardHeader>
+              <Details>
+                <Tagline>{app.tagline}</Tagline>
+                <HighlightList>
+                  {app.highlights.map((highlight, idx) => (
+                    <HighlightItem key={idx}>{highlight}</HighlightItem>
+                  ))}
+                </HighlightList>
+                <TechStack>
+                  {app.techStack.map((tech) => (
+                    <TechBadge key={tech}>{tech}</TechBadge>
+                  ))}
+                </TechStack>
 
-                                <ButtonGroup>
-                                    <Button
-                                        href={app.liveUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        primary
-                                        disabled={!app.liveUrl || app.liveUrl === '#'}
-                                    >
-                                        {app.primaryBtnText}
-                                    </Button>
-                                    {app.secondaryBtnText && (
-                                        <Button
-                                            href={app.repoUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            disabled={!app.repoUrl || app.repoUrl === '#'}
-                                        >
-                                            {app.secondaryBtnText}
-                                        </Button>
-                                    )}
-                                </ButtonGroup>
-                            </Details>
-                        </Card>
-                    ))}
-                </Grid>
-            </div>
-        </Section>
-    );
+                <ButtonGroup>
+                  <Button
+                    href={app.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    primary
+                    disabled={!app.liveUrl || app.liveUrl === '#'}
+                  >
+                    {app.primaryBtnText}
+                  </Button>
+                  {app.secondaryBtnText && (
+                    <Button
+                      href={app.repoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      disabled={!app.repoUrl || app.repoUrl === '#'}
+                    >
+                      {app.secondaryBtnText}
+                    </Button>
+                  )}
+                </ButtonGroup>
+              </Details>
+            </Card>
+          ))}
+        </Grid>
+      </div>
+    </Section>
+  );
 }
 
 export default VibeCodedApps;

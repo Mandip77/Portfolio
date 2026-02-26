@@ -13,21 +13,42 @@ export const lightTheme = {
 };
 
 export const darkTheme = {
-    body: '#070707',
-    text: '#ffffff',
-    accent: '#03fffb', // Cyan
-    secondaryText: '#aaa',
-    cardBg: '#0a0a0a',
-    cardBorder: '#333',
-    buttonBg: '#03fffb',
-    buttonText: '#000',
-    navBg: '#000',
+    body: '#020617', // Very dark slate/blue for cybersecurity feel
+    text: '#e2e8f0',
+    accent: '#00ffcc', // Bright neon cyan/green
+    secondaryText: '#94a3b8',
+    cardBg: '#0f172a',
+    cardBorder: '#1e293b',
+    buttonBg: '#00ffcc',
+    buttonText: '#020617',
+    navBg: '#020617',
 };
 
 const GlobalStyles = createGlobalStyle`
     /* Reset CSS */
     *, *::before, *::after {
         box-sizing: border-box;
+    }
+
+    @keyframes typing {
+        from { width: 0 }
+        to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+        from, to { border-color: transparent }
+        50% { border-color: ${({ theme }) => theme.accent} }
+    }
+
+    .terminal-text {
+        overflow: hidden;
+        border-right: .15em solid ${({ theme }) => theme.accent};
+        white-space: nowrap;
+        margin: 0 auto;
+        letter-spacing: .15em;
+        animation: 
+            typing 3.5s steps(40, end),
+            blink-caret .75s step-end infinite;
     }
 
     html, body {

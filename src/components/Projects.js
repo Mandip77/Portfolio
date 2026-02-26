@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 import textEditorGif from '../assets/text_editor.gif';
+import superBudgetAnimation from '../assets/SuperBudget_Animation.webp';
 
 const ProjectsSection = styled(motion.section)`
   background-color: ${({ theme }) => theme.body};
@@ -94,11 +95,11 @@ const projects = [
   {
     title: 'Budget Management',
     description: 'Spring Boot web app for creating budget categories, tracking allocations, transactions, and visualizing spending in an interactive dashboard.',
-    image: process.env.PUBLIC_URL + '/assets/budget-management.png',
+    image: superBudgetAnimation,
     githubUrl: 'https://github.com/Mandip77/Budget_Management',
     imageAlt: 'Budget Management',
   },
-  {
+   {
     title: 'Simple Text Editor',
     description: 'Lightweight Java Swing text editor with open/save, cut/copy/paste and custom formatting.',
     image: textEditorGif,

@@ -89,19 +89,19 @@ function Hero() {
 
     return (
         <HeroSection>
-            <HeroVideo 
-                src={backgroundVideo} 
-                autoPlay 
-                loop 
-                muted 
-                playsInline 
+            <HeroVideo
+                src={backgroundVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
                 preload="auto"
                 aria-label="Background video"
             />
             <VideoOverlay />
             <HeroContainer>
-                <HeroTitle>Hi, I'm Mandip Amgain</HeroTitle>
-                <HeroDescription>Computer Science Student & Software Developer passionate about creating innovative solutions and exploring AI technologies.</HeroDescription>
+                <HeroTitle className="terminal-text" style={{ display: 'inline-block' }}>&gt; Hi, I'm Mandip Amgain_</HeroTitle>
+                <HeroDescription>Secure Software Engineer & AI Integrator. Passionate about building intelligent, fortified systems and exploring the cutting edge of tech.</HeroDescription>
                 <HeroButton href={resumeLink} download="Mandip_Amgain_Resume.pdf" aria-label="Download resume">
                     Download My Resume
                 </HeroButton>
