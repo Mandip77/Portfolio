@@ -129,7 +129,7 @@ function Hero() {
             <VideoOverlay />
             <HeroContainer>
                 <HeroTitle className="terminal-text" style={{ display: 'inline-block' }}>&gt; Hi, I'm Mandip Amgain_</HeroTitle>
-                <HeroDescription>Secure Software Engineer & AI Integrator. Passionate about building intelligent, fortified systems and exploring the cutting edge of tech.</HeroDescription>
+                <HeroDescription>IT & Cybersecurity Professional. Passionate about defending digital infrastructure, actively pursuing entry-level roles to build a foundation for a career in Penetration Testing.</HeroDescription>
                 <ButtonContainer>
                     <HeroButton href={resumeLink} download="Mandip_Amgain_Resume.pdf" aria-label="Download resume">
                         Download My Resume
