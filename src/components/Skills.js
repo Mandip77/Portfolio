@@ -13,7 +13,6 @@ import kotlinIcon from '../assets/kotlin.svg';
 import firebaseIcon from '../assets/firebase.svg';
 import reactIcon from '../assets/react.svg';
 import postmanIcon from '../assets/postman.svg';
-import linuxIcon from '../assets/linux-svgrepo-com.svg';
 
 const TechStackSection = styled(motion.section)`
   background-color: ${({ theme }) => theme.body};
