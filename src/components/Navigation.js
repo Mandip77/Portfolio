@@ -112,6 +112,31 @@ const NavLink = styled.button`
   }
 `;
 
+const CyberNavLink = styled.a`
+  color: #07d8db;
+  text-decoration: none;
+  padding: 10px 20px;
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  transition: background-color 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+  text-shadow: 0 0 5px rgba(7, 216, 219, 0.5);
+
+  &:hover,
+  &:focus {
+    background-color: rgba(7, 216, 219, 0.1);
+    color: #07d8db;
+    outline: 2px solid #07d8db;
+    outline-offset: -2px;
+    text-shadow: 0 0 10px rgba(7, 216, 219, 0.8), 0 0 20px rgba(7, 216, 219, 0.4);
+  }
+`;
+
 const ThemeToggleBtn = styled.button`
   margin-top: auto;
   align-self: center;
@@ -203,6 +228,11 @@ function Navigation() {
               </NavLink>
             </NavLinkItem>
           ))}
+          <NavLinkItem>
+            <CyberNavLink href="https://Mandip77.github.io/cyber-blog/" target="_blank" rel="noopener noreferrer">
+              Cyber Research Lab ↗
+            </CyberNavLink>
+          </NavLinkItem>
         </NavLinks>
 
         <ThemeToggleBtn

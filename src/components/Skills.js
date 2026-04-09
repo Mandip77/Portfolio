@@ -77,8 +77,6 @@ const TechBar = styled(motion.div)`
 `;
 
 const skills = [
-  { name: 'Machine Learning', icon: pythonIcon, progress: 85 },
-  { name: 'Cybersecurity', icon: linuxIcon, progress: 80 },
   { name: 'Java', icon: javaIcon, progress: 90 },
   { name: 'Python', icon: pythonIcon, progress: 85 },
   { name: 'HTML', icon: htmlIcon, progress: 80 },

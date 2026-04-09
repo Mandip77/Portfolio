@@ -84,6 +84,34 @@ const HeroButton = styled.a`
   }
 `;
 
+// Cyber glow button styling
+const CyberButton = styled.a`
+  display: inline-block;
+  background-color: transparent;
+  color: #07d8db;
+  padding: 15px 30px;
+  text-decoration: none;
+  border-radius: 5px;
+  border: 1px solid #07d8db;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+  box-shadow: 0 0 10px rgba(7, 216, 219, 0.2), inset 0 0 10px rgba(7, 216, 219, 0.1);
+
+  &:hover {
+    background-color: rgba(7, 216, 219, 0.1);
+    box-shadow: 0 0 20px rgba(7, 216, 219, 0.5), inset 0 0 15px rgba(7, 216, 219, 0.3);
+    text-shadow: 0 0 8px #07d8db;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+`;
+
 function Hero() {
     const resumeLink = process.env.PUBLIC_URL + "/Resume.pdf"; // Use PUBLIC_URL for correct path
 
@@ -102,9 +130,14 @@ function Hero() {
             <HeroContainer>
                 <HeroTitle className="terminal-text" style={{ display: 'inline-block' }}>&gt; Hi, I'm Mandip Amgain_</HeroTitle>
                 <HeroDescription>Secure Software Engineer & AI Integrator. Passionate about building intelligent, fortified systems and exploring the cutting edge of tech.</HeroDescription>
-                <HeroButton href={resumeLink} download="Mandip_Amgain_Resume.pdf" aria-label="Download resume">
-                    Download My Resume
-                </HeroButton>
+                <ButtonContainer>
+                    <HeroButton href={resumeLink} download="Mandip_Amgain_Resume.pdf" aria-label="Download resume">
+                        Download My Resume
+                    </HeroButton>
+                    <CyberButton href="https://Mandip77.github.io/cyber-blog/" target="_blank" rel="noopener noreferrer" aria-label="Visit Cybersecurity Research Lab">
+                        Cyber Research Lab
+                    </CyberButton>
+                </ButtonContainer>
             </HeroContainer>
         </HeroSection>
     );
