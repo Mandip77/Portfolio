@@ -189,21 +189,6 @@ const apps = [
     secondaryBtnText: 'GitHub Repo'
   },
   {
-    title: 'Powerball Prediction Model',
-    tagline: 'Machine learning and LLM approach to predict drawn numbers.',
-    status: 'In Progress',
-    highlights: [
-      'Distinguishes regular white balls from the Powerball',
-      'Utilizes historical data and advanced AI models',
-      'Full end-to-end data science pipeline'
-    ],
-    techStack: ['Python', 'Scikit-Learn', 'LLM', 'Data Science'],
-    liveUrl: '#',
-    repoUrl: '#',
-    primaryBtnText: 'View Project',
-    secondaryBtnText: 'GitHub Repo'
-  },
-  {
     title: 'AI Content Repurposer',
     tagline: 'AI Content Repurposing application with robust security.',
     status: 'Live',
