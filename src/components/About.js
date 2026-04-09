@@ -101,7 +101,7 @@ const About = () => {
         variants={itemVariants}
       />
       <AboutText variants={itemVariants}>
-        Hello! I'm Mandip Amgain, a dedicated software engineer specializing in secure application development and AI integration. With a strong foundation in Computer Science and an ongoing B.S. in Information Technology at Northeastern University, I build resilient systems, innovative gamification engines, and LLM-powered tools. I am passionate about pushing the boundaries of what's possible at the intersection of Cybersecurity, Artificial Intelligence, and scalable web architecture. i am a student still,
+        Hello! I'm Mandip Amgain, an aspiring cybersecurity professional actively seeking entry-level security analyst and penetration testing roles. Currently pursuing my B.S. in Information Technology at Northeastern University, I focus on uncovering vulnerabilities and securing digital physical systems. With a strong foundation in software development and a keen interest in Artificial Intelligence, I bring a unique builder's perspective to cybersecurity. Whether I'm conducting independent lab research or building LLM-powered applications, my goal is to defend and secure the next generation of technology.
       </AboutText>
       <BadgesContainer variants={itemVariants}>
         <BadgeImage src={googleCertBadge} alt="Google IT Support Badge" loading="lazy" decoding="async" />
