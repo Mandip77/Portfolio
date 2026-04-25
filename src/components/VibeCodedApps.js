@@ -1,233 +1,278 @@
-import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 const Section = styled(motion.section)`
   background-color: ${({ theme }) => theme.body};
-  padding: 100px;
+`;
+
+const Inner = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+`;
+
+const Header = styled.div`
   text-align: center;
-  
-  @media (max-width: 768px) {
-    padding: 50px 20px;
-  }
+  margin-bottom: 16px;
 `;
 
-const SectionTitle = styled(motion.h2)`
-  font-size: 36px;
-  margin-bottom: 20px;
+const SectionLabel = styled.div`
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
   color: ${({ theme }) => theme.accent};
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 12px;
 `;
 
-const SectionIntro = styled(motion.p)`
-  font-size: 18px;
-  max-width: 800px;
-  margin: 0 auto 50px;
+const Heading = styled.h2`
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: ${({ theme }) => theme.text};
+`;
+
+const GradientSpan = styled.span`
+  background: linear-gradient(135deg, ${({ theme }) => theme.accent} 0%, ${({ theme }) => theme.accentCyan} 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+`;
+
+const Intro = styled.p`
+  text-align: center;
+  font-size: 14px;
   color: ${({ theme }) => theme.secondaryText};
-  line-height: 1.6;
+  margin: 12px auto 56px;
+  max-width: 560px;
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1.8;
 `;
 
-const WorkflowHighlight = styled.span`
+const Accent = styled.span`
   color: ${({ theme }) => theme.accent};
   font-weight: 600;
 `;
 
 const Grid = styled(motion.div)`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  grid-gap: 30px;
-  justify-items: center;
-  margin-bottom: 50px;
-`;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
 
-const Card = styled(motion.div)`
-  max-width: 400px;
-  width: 100%;
-  border: 1px solid ${({ theme }) => theme.cardBorder};
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: ${({ theme }) => theme.cardBg};
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-
-  &:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 16px rgba(3, 255, 251, 0.2);
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
   }
 `;
 
-const CardHeader = styled.div`
-  padding: 20px;
-  background: ${({ theme }) => theme.cardBg}; /* Using simple cardBg for cleaner light mode */
+const Card = styled(motion.div)`
+  background: ${({ theme }) => theme.cardBg};
+  border: 1px solid ${({ theme }) => theme.cardBorder};
+  border-radius: 18px;
+  overflow: hidden;
+  backdrop-filter: blur(14px);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.accent};
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px ${({ theme }) => theme.glowColor};
+  }
+`;
+
+const CardTop = styled.div`
+  padding: 24px 24px 20px;
   border-bottom: 1px solid ${({ theme }) => theme.cardBorder};
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+`;
+
+const CardTitle = styled.h3`
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: ${({ theme }) => theme.text};
+  letter-spacing: -0.01em;
 `;
 
 const StatusBadge = styled.span`
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
-  padding: 4px 8px;
-  border-radius: 4px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  background-color: ${({ status }) => status === 'Live' ? 'rgba(7, 210, 13, 0.2)' : 'rgba(255, 165, 0, 0.2)'};
-  color: ${({ status }) => status === 'Live' ? '#07d20d' : '#ffa500'};
-  border: 1px solid ${({ status }) => status === 'Live' ? '#07d20d' : '#ffa500'};
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  background: ${({ status }) =>
+    status === 'Live' ? 'rgba(22,163,74,0.18)' : 'rgba(234,179,8,0.18)'};
+  color: ${({ status }) => status === 'Live' ? '#4ade80' : '#fbbf24'};
+  border: 1px solid ${({ status }) =>
+    status === 'Live' ? 'rgba(74,222,128,0.35)' : 'rgba(251,191,36,0.35)'};
 `;
 
-const Details = styled.div`
-  padding: 25px;
-  flex: 1;
+const CardBody = styled.div`
+  padding: 24px;
   display: flex;
   flex-direction: column;
-`;
-
-const Title = styled.h3`
-  font-size: 24px;
-  margin-bottom: 10px;
-  color: ${({ theme }) => theme.text};
+  flex: 1;
+  gap: 16px;
 `;
 
 const Tagline = styled.p`
-  font-size: 16px;
+  font-size: 14px;
   color: ${({ theme }) => theme.secondaryText};
-  margin-bottom: 20px;
   font-style: italic;
+  line-height: 1.6;
+  margin: 0;
 `;
 
 const HighlightList = styled.ul`
-  margin: 0 0 20px 0;
-  padding-left: 20px;
-  color: ${({ theme }) => theme.secondaryText};
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `;
 
 const HighlightItem = styled.li`
-  margin-bottom: 8px;
-  font-size: 15px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  color: ${({ theme }) => theme.secondaryText};
   line-height: 1.5;
+
+  &::before {
+    content: '→';
+    color: ${({ theme }) => theme.accent};
+    font-size: 12px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
 `;
 
-const TechStack = styled.div`
+const TechRow = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 25px;
+  gap: 7px;
 `;
 
 const TechBadge = styled.span`
-  background-color: ${({ theme }) => theme.body};
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: ${({ theme }) => theme.surfaceHover};
   color: ${({ theme }) => theme.secondaryText};
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 4px;
   border: 1px solid ${({ theme }) => theme.cardBorder};
 `;
 
-const ButtonGroup = styled.div`
+const BtnRow = styled.div`
   display: flex;
-  gap: 15px;
+  gap: 12px;
   margin-top: auto;
+  flex-wrap: wrap;
 `;
 
-const Button = styled.a`
+const PrimaryBtn = styled.a`
   flex: 1;
+  min-width: 0;
+  min-height: 44px;
   text-align: center;
-  padding: 10px 0;
-  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  background: ${({ theme }) => theme.accent};
+  color: #fff;
+  font-size: 13px;
   font-weight: 600;
-  font-size: 14px;
+  border-radius: 10px;
   text-decoration: none;
-  transition: all 0.3s ease;
-  cursor: pointer;
+  transition: all 0.22s ease;
+  -webkit-tap-highlight-color: transparent;
 
-  ${({ primary, theme }) => primary ? `
-    background-color: ${theme.buttonBg};
-    color: ${theme.buttonText};
-    border: none;
-    
-    &:hover {
-      opacity: 0.9;
-      box-shadow: 0 4px 8px rgba(3, 255, 251, 0.3);
-    }
-  ` : `
-    background-color: transparent;
-    color: ${theme.accent};
-    border: 1px solid ${theme.accent};
+  &:hover {
+    opacity: 0.88;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px ${({ theme }) => theme.glowColor};
+  }
+`;
 
-    &:hover {
-      background-color: ${theme.accent}1A; /* 10% opacity hex */
-    }
-  `}
+const OutlineBtn = styled.a`
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  background: transparent;
+  color: ${({ theme }) => theme.accent};
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 1px solid ${({ theme }) => theme.cardBorder};
+  text-decoration: none;
+  transition: all 0.22s ease;
+  -webkit-tap-highlight-color: transparent;
 
-  ${({ disabled }) => disabled && `
-    opacity: 0.5;
-    cursor: not-allowed;
-    pointer-events: none;
-    border-color: #555;
-    color: #555;
-  `}
+  &:hover {
+    background: ${({ theme }) => theme.surfaceHover};
+    border-color: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.accent};
+  }
 `;
 
 const apps = [
   {
     title: 'CSV Merger Desktop App',
-    tagline: 'A modern, feature-rich desktop tool for filtering, mapping, and combining bulk CSV data.',
+    tagline: 'A modern desktop tool for filtering, mapping, and combining bulk CSV data.',
     status: 'Live',
     highlights: [
       'Multi-file selection & cross-column mapping',
       'Advanced filtering and duplicate handling',
-      'Local batch processing with saved configurations'
+      'Local batch processing with saved configurations',
     ],
     techStack: ['Python', 'Pandas', 'Tkinter', 'PyInstaller'],
     liveUrl: 'https://mandip77.github.io/csv-merger/',
     repoUrl: 'https://github.com/Mandip77/csv-merger',
-    primaryBtnText: 'Project Site',
-    secondaryBtnText: 'GitHub Repo'
   },
   {
     title: 'AI Content Repurposer',
-    tagline: 'AI Content Repurposing application with robust security.',
+    tagline: 'AI-powered content repurposing with robust authentication and security.',
     status: 'Live',
     highlights: [
       'Protected routes and user authentication',
       'Hybrid hosting strategy for reliability',
-      'Scalable monorepo architecture'
+      'Scalable monorepo architecture',
     ],
     techStack: ['React', 'Node.js', 'AI Integration', 'Cybersecurity'],
     liveUrl: 'https://vibe-coding-apps.vercel.app/',
     repoUrl: 'https://github.com/Mandip77/Vibe-Coding-Apps',
-    primaryBtnText: 'Project Site',
-    secondaryBtnText: 'GitHub Repo'
-  }
+  },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, staggerChildren: 0.15 } },
+};
+
+const itemVariant = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+};
+
 function VibeCodedApps() {
-  const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
-
-  const containerVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
+  const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.08, triggerOnce: true });
 
   return (
     <Section
@@ -235,60 +280,51 @@ function VibeCodedApps() {
       ref={sectionRef}
       variants={containerVariants}
       initial="hidden"
-      animate={isSectionVisible ? "visible" : "hidden"}
+      animate={isSectionVisible ? 'visible' : 'hidden'}
     >
-      <div className="container">
-        <SectionTitle variants={itemVariants}>Vibe-Coded Apps</SectionTitle>
-        <SectionIntro variants={itemVariants}>
-          architecture → <WorkflowHighlight>task planning</WorkflowHighlight> → <WorkflowHighlight>agent execution</WorkflowHighlight> → walkthrough review → <WorkflowHighlight>testing</WorkflowHighlight> → deployment
-        </SectionIntro>
+      <Inner>
+        <Header>
+          <SectionLabel>Vibe-Coded Apps</SectionLabel>
+          <Heading>
+            AI-<GradientSpan>Assisted</GradientSpan> Builds
+          </Heading>
+        </Header>
+        <Intro>
+          architecture → <Accent>task planning</Accent> → <Accent>agent execution</Accent> → walkthrough review → <Accent>testing</Accent> → deployment
+        </Intro>
 
         <Grid variants={containerVariants}>
           {apps.map((app) => (
-            <Card key={app.title} variants={itemVariants}>
-              <CardHeader>
-                <Title style={{ fontSize: '20px', marginBottom: 0 }}>{app.title}</Title>
+            <Card key={app.title} variants={itemVariant}>
+              <CardTop>
+                <CardTitle>{app.title}</CardTitle>
                 <StatusBadge status={app.status}>{app.status}</StatusBadge>
-              </CardHeader>
-              <Details>
+              </CardTop>
+              <CardBody>
                 <Tagline>{app.tagline}</Tagline>
                 <HighlightList>
-                  {app.highlights.map((highlight, idx) => (
-                    <HighlightItem key={idx}>{highlight}</HighlightItem>
+                  {app.highlights.map((h, i) => (
+                    <HighlightItem key={i}>{h}</HighlightItem>
                   ))}
                 </HighlightList>
-                <TechStack>
-                  {app.techStack.map((tech) => (
-                    <TechBadge key={tech}>{tech}</TechBadge>
+                <TechRow>
+                  {app.techStack.map((t) => (
+                    <TechBadge key={t}>{t}</TechBadge>
                   ))}
-                </TechStack>
-
-                <ButtonGroup>
-                  <Button
-                    href={app.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    primary
-                    disabled={!app.liveUrl || app.liveUrl === '#'}
-                  >
-                    {app.primaryBtnText}
-                  </Button>
-                  {app.secondaryBtnText && (
-                    <Button
-                      href={app.repoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      disabled={!app.repoUrl || app.repoUrl === '#'}
-                    >
-                      {app.secondaryBtnText}
-                    </Button>
-                  )}
-                </ButtonGroup>
-              </Details>
+                </TechRow>
+                <BtnRow>
+                  <PrimaryBtn href={app.liveUrl} target="_blank" rel="noopener noreferrer">
+                    Live Demo ↗
+                  </PrimaryBtn>
+                  <OutlineBtn href={app.repoUrl} target="_blank" rel="noopener noreferrer">
+                    GitHub
+                  </OutlineBtn>
+                </BtnRow>
+              </CardBody>
             </Card>
           ))}
         </Grid>
-      </div>
+      </Inner>
     </Section>
   );
 }

@@ -1,201 +1,219 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
-const BlogSection = styled(motion.section)`
+const Section = styled(motion.section)`
   background-color: ${({ theme }) => theme.body};
-  padding: 100px 20px;
-  text-align: center;
-
-  @media (max-width: 768px) {
-    padding: 50px 20px;
-  }
 `;
 
-const SectionTitle = styled(motion.h2)`
-  font-size: 36px;
-  margin-bottom: 20px;
-  color: ${({ theme }) => theme.accent};
-`;
-
-const SectionSubtitle = styled(motion.p)`
-  font-size: 18px;
-  margin-bottom: 50px;
-  color: ${({ theme }) => theme.secondaryText};
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-`;
-
-const BlogGrid = styled(motion.div)`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 30px;
+const Inner = styled.div`
   max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+`;
+
+const Header = styled.div`
+  text-align: center;
+  margin-bottom: 64px;
+`;
+
+const SectionLabel = styled.div`
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.accent};
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 12px;
+`;
+
+const Heading = styled.h2`
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: ${({ theme }) => theme.text};
+  margin-bottom: 12px;
+`;
+
+const GradientSpan = styled.span`
+  background: linear-gradient(135deg, ${({ theme }) => theme.accent} 0%, ${({ theme }) => theme.accentCyan} 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+`;
+
+const Subtitle = styled.p`
+  font-size: 15px;
+  color: ${({ theme }) => theme.secondaryText};
+  max-width: 480px;
   margin: 0 auto;
 `;
 
-const BlogPost = styled(motion.a)`
-  background-color: ${({ theme }) => theme.cardBg};
+const Grid = styled(motion.div)`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+`;
+
+const PostCard = styled(motion.a)`
+  background: ${({ theme }) => theme.cardBg};
   border: 1px solid ${({ theme }) => theme.cardBorder};
-  border-radius: 8px;
+  border-radius: 16px;
   overflow: hidden;
   text-decoration: none;
   color: inherit;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 100%;
+  backdrop-filter: blur(14px);
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 
   &:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     border-color: ${({ theme }) => theme.accent};
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px ${({ theme }) => theme.glowColor};
   }
 `;
 
-const PostImage = styled.img`
+const PostImg = styled.img`
   width: 100%;
-  height: 200px;
+  height: 188px;
   object-fit: cover;
-  background-color: #222;
+  background: ${({ theme }) => theme.cardBorder};
 `;
 
-const PostContent = styled.div`
-  padding: 20px;
+const PostBody = styled.div`
+  padding: 22px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  text-align: left;
-`;
-
-const PostTitle = styled.h3`
-  font-size: 20px;
-  margin-bottom: 10px;
-  color: ${({ theme }) => theme.text};
-  line-height: 1.4;
+  gap: 10px;
 `;
 
 const PostDate = styled.span`
-  font-size: 14px;
-  color: ${({ theme }) => theme.secondaryText};
-  margin-bottom: 10px;
-  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-family: 'JetBrains Mono', monospace;
+  color: ${({ theme }) => theme.accent};
 `;
 
-const PostDescription = styled.p`
-  font-size: 15px;
+const PostTitle = styled.h3`
+  font-size: 1rem;
+  font-weight: 700;
+  color: ${({ theme }) => theme.text};
+  line-height: 1.45;
+`;
+
+const PostDesc = styled.p`
+  font-size: 13.5px;
   color: ${({ theme }) => theme.secondaryText};
-  line-height: 1.5;
-  margin-bottom: 20px;
+  line-height: 1.65;
   flex: 1;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 `;
 
-const TagContainer = styled.div`
+const TagRow = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: auto;
+  gap: 6px;
+  margin-top: 4px;
 `;
 
 const Tag = styled.span`
-  background-color: ${({ theme }) => theme.buttonBg}20; /* 20% opacity */
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: ${({ theme }) => theme.surfaceHover};
   color: ${({ theme }) => theme.accent};
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-weight: 500;
+  border: 1px solid ${({ theme }) => theme.cardBorder};
 `;
 
+const LoadingText = styled.p`
+  text-align: center;
+  color: ${({ theme }) => theme.secondaryText};
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+`;
+
+const containerVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, staggerChildren: 0.12 } },
+};
+
+const itemVariant = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+};
+
 function Blog() {
-    const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.08, triggerOnce: true });
 
-    useEffect(() => {
-        // Fetch generic 'react' articles from Dev.to since specific user might not exist yet
-        // Replace 'tag=react' with 'username=your_username' when you have one
-        fetch('https://dev.to/api/articles?tag=react&top=5&per_page=3')
-            .then(res => res.json())
-            .then(data => {
-                setPosts(data);
-                setLoading(false);
-            })
-            .catch(err => {
-                console.error("Failed to fetch posts", err);
-                setLoading(false);
-            });
-    }, []);
+  useEffect(() => {
+    fetch('https://dev.to/api/articles?tag=react&top=5&per_page=3')
+      .then((r) => r.json())
+      .then((data) => { setPosts(data); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, []);
 
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.2,
-            },
-        },
-    };
+  return (
+    <Section
+      id="blog"
+      ref={sectionRef}
+      variants={containerVariants}
+      initial="hidden"
+      animate={isSectionVisible ? 'visible' : 'hidden'}
+    >
+      <Inner>
+        <Header>
+          <SectionLabel>Writing</SectionLabel>
+          <Heading>
+            Latest <GradientSpan>Thoughts</GradientSpan>
+          </Heading>
+          <Subtitle>Exploring code, architecture, and the future of AI.</Subtitle>
+        </Header>
 
-    const itemVariants = {
-        hidden: { opacity: 0, y: 30 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.5 },
-        },
-    };
-
-    return (
-        <BlogSection
-            id="blog"
-            ref={sectionRef}
-            initial="hidden"
-            animate={isSectionVisible ? 'visible' : 'hidden'}
-            variants={containerVariants}
-        >
-            <div className="container">
-                <SectionTitle variants={itemVariants}>Latest Thoughts</SectionTitle>
-                <SectionSubtitle variants={itemVariants}>
-                    Exploring code, architecture, and the future of AI.
-                </SectionSubtitle>
-
-                {loading ? (
-                    <p style={{ color: '#888' }}>Loading articles...</p>
-                ) : (
-                    <BlogGrid variants={containerVariants}>
-                        {posts.map((post) => (
-                            <BlogPost
-                                key={post.id}
-                                href={post.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                variants={itemVariants}
-                                title={post.title}
-                            >
-                                {post.cover_image && (
-                                    <PostImage src={post.cover_image} alt={post.title} loading="lazy" />
-                                )}
-                                <PostContent>
-                                    <PostDate>{new Date(post.published_at).toLocaleDateString()}</PostDate>
-                                    <PostTitle>{post.title}</PostTitle>
-                                    <PostDescription>
-                                        {post.description}
-                                    </PostDescription>
-                                    <TagContainer>
-                                        {post.tag_list?.slice(0, 3).map(tag => (
-                                            <Tag key={tag}>#{tag}</Tag>
-                                        ))}
-                                    </TagContainer>
-                                </PostContent>
-                            </BlogPost>
-                        ))}
-                    </BlogGrid>
+        {loading ? (
+          <LoadingText>Loading articles…</LoadingText>
+        ) : (
+          <Grid variants={containerVariants}>
+            {posts.map((post) => (
+              <PostCard
+                key={post.id}
+                href={post.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                variants={itemVariant}
+                aria-label={post.title}
+              >
+                {post.cover_image && (
+                  <PostImg src={post.cover_image} alt={post.title} loading="lazy" />
                 )}
-            </div>
-        </BlogSection>
-    );
+                <PostBody>
+                  <PostDate>{new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</PostDate>
+                  <PostTitle>{post.title}</PostTitle>
+                  <PostDesc>{post.description}</PostDesc>
+                  <TagRow>
+                    {post.tag_list?.slice(0, 3).map((tag) => (
+                      <Tag key={tag}>#{tag}</Tag>
+                    ))}
+                  </TagRow>
+                </PostBody>
+              </PostCard>
+            ))}
+          </Grid>
+        )}
+      </Inner>
+    </Section>
+  );
 }
 
 export default Blog;

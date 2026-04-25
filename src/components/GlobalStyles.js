@@ -1,159 +1,171 @@
 import { createGlobalStyle } from 'styled-components';
 
-export const lightTheme = {
-    body: '#f4f4f4',
-    text: '#121212',
-    accent: '#008080', // Teal
-    secondaryText: '#555',
-    cardBg: '#fff',
-    cardBorder: '#ddd',
-    buttonBg: '#008080',
-    buttonText: '#fff',
-    navBg: '#fff',
+export const darkTheme = {
+  body: '#07070f',
+  text: '#e8eaf6',
+  accent: '#6366f1',
+  accentLight: '#818cf8',
+  accentCyan: '#22d3ee',
+  secondaryText: '#8892a4',
+  cardBg: 'rgba(13, 13, 30, 0.92)',
+  cardBorder: 'rgba(99, 102, 241, 0.18)',
+  buttonBg: '#6366f1',
+  buttonText: '#ffffff',
+  navBg: 'rgba(7, 7, 15, 0.85)',
+  glowColor: 'rgba(99, 102, 241, 0.4)',
+  surfaceHover: 'rgba(99, 102, 241, 0.08)',
 };
 
-export const darkTheme = {
-    body: '#020617', // Very dark slate/blue for cybersecurity feel
-    text: '#e2e8f0',
-    accent: '#00ffcc', // Bright neon cyan/green
-    secondaryText: '#94a3b8',
-    cardBg: '#0f172a',
-    cardBorder: '#1e293b',
-    buttonBg: '#00ffcc',
-    buttonText: '#020617',
-    navBg: '#020617',
+export const lightTheme = {
+  body: '#f3f3ff',
+  text: '#0f0f2e',
+  accent: '#4f46e5',
+  accentLight: '#6366f1',
+  accentCyan: '#0891b2',
+  secondaryText: '#525270',
+  cardBg: 'rgba(255, 255, 255, 0.92)',
+  cardBorder: 'rgba(79, 70, 229, 0.15)',
+  buttonBg: '#4f46e5',
+  buttonText: '#ffffff',
+  navBg: 'rgba(243, 243, 255, 0.85)',
+  glowColor: 'rgba(99, 102, 241, 0.2)',
+  surfaceHover: 'rgba(79, 70, 229, 0.06)',
 };
 
 const GlobalStyles = createGlobalStyle`
-    /* Reset CSS */
-    *, *::before, *::after {
-        box-sizing: border-box;
-    }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
 
-    @keyframes typing {
-        from { width: 0 }
-        to { width: 100% }
-    }
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-    @keyframes blink-caret {
-        from, to { border-color: transparent }
-        50% { border-color: ${({ theme }) => theme.accent} }
-    }
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+  }
 
-    .terminal-text {
-        overflow: hidden;
-        border-right: .15em solid ${({ theme }) => theme.accent};
-        white-space: nowrap;
-        margin: 0 auto;
-        letter-spacing: .15em;
-        animation: 
-            typing 3.5s steps(40, end),
-            blink-caret .75s step-end infinite;
-    }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    font-weight: 400;
+    background-color: ${({ theme }) => theme.body};
+    color: ${({ theme }) => theme.text};
+    transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-    html, body {
-        margin: 0;
-        padding: 0;
-        scroll-behavior: smooth; /* Smooth scrolling */
-    }
+  ::selection {
+    background-color: ${({ theme }) => theme.accent};
+    color: #fff;
+  }
 
-    body {
-        font-family: 'Roboto', Arial, sans-serif;
-        font-size: 16px;
-        line-height: 1.6;
-        font-weight: 400;
-        background-color: ${({ theme }) => theme.body};
-        color: ${({ theme }) => theme.text};
-        transition: background-color 0.3s ease, color 0.3s ease;
-        overflow-x: hidden; /* Prevent horizontal scroll */
-    }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    width: 100%;
+  }
 
-    /* Container for consistent spacing and alignment */
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-        color: ${({ theme }) => theme.accent};
-    }
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2;
+    font-weight: 700;
+    color: ${({ theme }) => theme.text};
+  }
 
-    /* Heading styles */
-    h1, h2, h3 {
-        margin-bottom: 0.5em;
-        color: ${({ theme }) => theme.accent};
-    }
+  a {
+    color: ${({ theme }) => theme.accent};
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
 
-    h1 {
-        font-size: 2.25em; /* 36px */
-        font-weight: 700;
-    }
+  a:hover {
+    color: ${({ theme }) => theme.accentLight};
+  }
 
-    h2 {
-        font-size: 1.5em; /* 24px */
-        font-weight: 600;
-    }
+  button {
+    font-family: inherit;
+    cursor: pointer;
+  }
 
-    h3 {
-        font-size: 1.25em; /* 20px */
-        font-weight: 500;
-    }
+  img, video {
+    max-width: 100%;
+    display: block;
+  }
 
-    /* Paragraph styles */
-    p {
-        font-size: 1em; /* 16px */
-        margin-bottom: 1em;
-        color: ${({ theme }) => theme.secondaryText};
-    }
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.body};
+  }
+  ::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.accent};
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${({ theme }) => theme.accentLight};
+  }
 
-    /* Link styles */
-    a {
-        color: ${({ theme }) => theme.accent};
-        text-decoration: none;
-        transition: color 0.3s ease;
+  /* Section base */
+  section {
+    padding: 100px 0;
 
-        &:hover {
-            opacity: 0.8;
-        }
-    }
-
-    /* Button styles */
-    button {
-        padding: 12px 24px;
-        border: none;
-        border-radius: 4px;
-        background-color: ${({ theme }) => theme.buttonBg};
-        color: ${({ theme }) => theme.buttonText};
-        font-size: 1em; /* 16px */
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.3s ease, color 0.3s ease;
-
-        &:hover {
-            opacity: 0.9;
-        }
-    }
-
-    /* Responsive typography */
     @media (max-width: 768px) {
-        body {
-            font-size: 14px;
-        }
-
-        h1 {
-            font-size: 2em; /* 28px */
-        }
-
-        h2 {
-            font-size: 1.75em; /* 24px */
-        }
-
-        h3 {
-            font-size: 1.5em; /* 20px */
-        }
+      padding: 64px 0;
     }
 
-    /* Additional custom styles */
-    /* Add your custom styles here */
+    @media (max-width: 480px) {
+      padding: 48px 0;
+    }
+  }
 
+  /* Offset for sticky 68px nav */
+  section[id] {
+    scroll-margin-top: 80px;
+  }
+
+  /* Section label */
+  .section-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: ${({ theme }) => theme.accent};
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Gradient text utility */
+  .gradient-text {
+    background: linear-gradient(135deg, ${({ theme }) => theme.accent} 0%, ${({ theme }) => theme.accentCyan} 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glass card base */
+  .glass {
+    background: ${({ theme }) => theme.cardBg};
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid ${({ theme }) => theme.cardBorder};
+    border-radius: 16px;
+  }
+
+  /* Glow line separator */
+  .glow-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, ${({ theme }) => theme.accent}, transparent);
+    border: none;
+    margin: 0;
+  }
 `;
 
 export default GlobalStyles;

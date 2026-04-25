@@ -1,175 +1,389 @@
-import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 import textEditorGif from '../assets/text_editor.gif';
 import superBudgetAnimation from '../assets/SuperBudget_Animation.webp';
 
-const ProjectsSection = styled(motion.section)`
+const Section = styled(motion.section)`
   background-color: ${({ theme }) => theme.body};
-  padding: 100px;
+`;
+
+const Inner = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+`;
+
+const Header = styled.div`
   text-align: center;
-  
-  @media (max-width: 768px) {
-    padding: 50px 20px;
-  }
+  margin-bottom: 64px;
 `;
 
-const SectionTitle = styled(motion.h2)`
-  font-size: 36px;
-  margin-bottom: 40px;
+const SectionLabel = styled.div`
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
   color: ${({ theme }) => theme.accent};
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 12px;
 `;
 
-const ProjectsList = styled(motion.div)`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 30px;
-  justify-items: center;
-  margin-bottom: 50px;
+const Heading = styled.h2`
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: ${({ theme }) => theme.text};
 `;
 
-const Project = styled(motion.div)`
-  max-width: 300px;
+const GradientSpan = styled.span`
+  background: linear-gradient(135deg, ${({ theme }) => theme.accent} 0%, ${({ theme }) => theme.accentCyan} 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+`;
+
+/* ── Featured (EcoBarter) ── */
+const FeaturedCard = styled(motion.div)`
+  background: ${({ theme }) => theme.cardBg};
   border: 1px solid ${({ theme }) => theme.cardBorder};
-  border-radius: 8px;
+  border-radius: 20px;
   overflow: hidden;
-  background-color: ${({ theme }) => theme.cardBg};
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(16px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 40px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 
   &:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 16px rgba(3, 255, 251, 0.2);
+    border-color: #16a34a80;
+    box-shadow: 0 16px 48px rgba(22, 163, 74, 0.15);
+  }
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
   }
 `;
 
-const ProjectImage = styled.img`
+const FeaturedBanner = styled.div`
+  min-height: 260px;
+  background: linear-gradient(135deg, #052e16 0%, #14532d 50%, #166534 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 36px 24px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(22,163,74,0.25) 0%, transparent 70%);
+  }
+
+  @media (max-width: 480px) {
+    min-height: 200px;
+    padding: 28px 20px;
+  }
+`;
+
+const FeaturedBannerTitle = styled.h3`
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.03em;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+`;
+
+const FeaturedBannerTagline = styled.p`
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  max-width: 240px;
+  line-height: 1.5;
+`;
+
+const FeaturedBannerBadge = styled.div`
+  position: relative;
+  z-index: 1;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+  background: rgba(22,163,74,0.3);
+  color: #4ade80;
+  border: 1px solid rgba(74,222,128,0.4);
+`;
+
+const FeaturedDetails = styled.div`
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  justify-content: center;
+`;
+
+const FeaturedTitle = styled.h3`
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: ${({ theme }) => theme.text};
+  letter-spacing: -0.02em;
+`;
+
+const FeaturedDesc = styled.p`
+  font-size: 14px;
+  line-height: 1.75;
+  color: ${({ theme }) => theme.secondaryText};
+  margin: 0;
+`;
+
+const TechTags = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+`;
+
+const TechTag = styled.span`
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: ${({ accent }) => accent ? `${accent}18` : 'transparent'};
+  color: ${({ accent, theme }) => accent || theme.secondaryText};
+  border: 1px solid ${({ accent, theme }) => accent ? `${accent}45` : theme.cardBorder};
+`;
+
+const BtnRow = styled.div`
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+`;
+
+const PrimaryBtn = styled.a`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 10px 22px;
+  background: ${({ accent }) => accent || '#6366f1'};
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.22s ease;
+  -webkit-tap-highlight-color: transparent;
+
+  &:hover {
+    opacity: 0.88;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px ${({ accent }) => accent ? `${accent}50` : 'rgba(99,102,241,0.4)'};
+  }
+`;
+
+const OutlineBtn = styled.a`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 10px 22px;
+  background: transparent;
+  color: ${({ accent, theme }) => accent || theme.accent};
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 1px solid ${({ accent, theme }) => accent ? `${accent}55` : theme.cardBorder};
+  text-decoration: none;
+  transition: all 0.22s ease;
+  -webkit-tap-highlight-color: transparent;
+
+  &:hover {
+    background: ${({ accent, theme }) => accent ? `${accent}18` : theme.surfaceHover};
+    color: ${({ accent, theme }) => accent || theme.accent};
+    border-color: ${({ accent, theme }) => accent || theme.accent};
+  }
+`;
+
+/* ── Grid cards ── */
+const Grid = styled(motion.div)`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const Card = styled(motion.div)`
+  background: ${({ theme }) => theme.cardBg};
+  border: 1px solid ${({ theme }) => theme.cardBorder};
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(14px);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.accent};
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px ${({ theme }) => theme.glowColor};
+  }
+`;
+
+const CardImage = styled.img`
   width: 100%;
   height: 200px;
   object-fit: cover;
 `;
 
-const ProjectDetails = styled.div`
-  padding: 20px;
+const CardDetails = styled.div`
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 12px;
 `;
 
-const ProjectTitle = styled.h3`
-  font-size: 24px;
-  margin-bottom: 10px;
+const CardTitle = styled.h3`
+  font-size: 1.1rem;
+  font-weight: 700;
   color: ${({ theme }) => theme.text};
 `;
 
-const ProjectDescription = styled.p`
-  font-size: 18px;
-  line-height: 1.6;
-  margin-bottom: 20px;
+const CardDesc = styled.p`
+  font-size: 14px;
+  line-height: 1.7;
   color: ${({ theme }) => theme.secondaryText};
+  flex: 1;
+  margin: 0;
 `;
 
-const ProjectLink = styled.a`
-  display: inline-block;
-  color: ${({ theme }) => theme.accent};
-  text-decoration: none;
-  padding: 10px 20px;
-  border: 2px solid ${({ theme }) => theme.accent};
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  font-weight: 600;
+const ECOBARTER_STACK = ['SvelteKit 5', 'Go (Gin)', 'FastAPI', 'PostgreSQL', 'MongoDB', 'Redis', 'NATS', 'Docker', 'Traefik'];
 
-  &:hover,
-  &:focus {
-    background-color: ${({ theme }) => theme.accent};
-    color: ${({ theme }) => theme.buttonText || '#000'};
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(3, 255, 251, 0.3);
-  }
+const containerVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, staggerChildren: 0.12 } },
+};
 
-  &:focus {
-    outline: 2px solid ${({ theme }) => theme.accent};
-    outline-offset: 2px;
-  }
-`;
-
-const projects = [
-  {
-    title: 'Budget Management',
-    description: 'Spring Boot web app for creating budget categories, tracking allocations, transactions, and visualizing spending in an interactive dashboard.',
-    image: superBudgetAnimation,
-    githubUrl: 'https://github.com/Mandip77/Budget_Management',
-    imageAlt: 'Budget Management',
-  },
-   {
-    title: 'Simple Text Editor',
-    description: 'Lightweight Java Swing text editor with open/save, cut/copy/paste and custom formatting.',
-    image: textEditorGif,
-    githubUrl: 'https://github.com/Mandip77/Simple-TextEditor-Java',
-    imageAlt: 'Text Editor Demo',
-  },
-];
+const itemVariant = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+};
 
 function Projects() {
-  const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
-
-  const containerVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.9 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.5 },
-    },
-  };
+  const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.08, triggerOnce: true });
 
   return (
-    <ProjectsSection
+    <Section
       id="projects"
       ref={sectionRef}
       variants={containerVariants}
       initial="hidden"
-      animate={isSectionVisible ? "visible" : "hidden"}
+      animate={isSectionVisible ? 'visible' : 'hidden'}
     >
-      <div className="container">
-        <SectionTitle variants={itemVariants}>Projects</SectionTitle>
-        <ProjectsList variants={containerVariants}>
-          {projects.map((project) => (
-            <Project key={project.title} variants={itemVariants}>
-              <ProjectImage
-                src={project.image}
-                alt={project.imageAlt}
-                loading="lazy"
-              />
-              <ProjectDetails>
-                <ProjectTitle>{project.title}</ProjectTitle>
-                <ProjectDescription>
-                  {project.description}
-                </ProjectDescription>
-                <ProjectLink
-                  href={project.githubUrl}
+      <Inner>
+        <Header>
+          <SectionLabel>Work</SectionLabel>
+          <Heading>
+            Featured <GradientSpan>Projects</GradientSpan>
+          </Heading>
+        </Header>
+
+        {/* Featured */}
+        <FeaturedCard variants={itemVariant}>
+          <FeaturedBanner>
+            <FeaturedBannerBadge>Live · Full-Stack</FeaturedBannerBadge>
+            <FeaturedBannerTitle>EcoBarter</FeaturedBannerTitle>
+            <FeaturedBannerTagline>A sustainable, money-free marketplace powered by circular trade loops</FeaturedBannerTagline>
+          </FeaturedBanner>
+          <FeaturedDetails>
+            <FeaturedTitle>Circular Trade Platform</FeaturedTitle>
+            <FeaturedDesc>
+              Full-stack microservices platform where users trade goods and skills without money. A Go-based matching engine finds 2–4-way circular trade loops automatically. Physical handoffs are verified via QR codes, EigenTrust reputation tracks trust scores, and real-time chat keeps traders in sync.
+            </FeaturedDesc>
+            <TechTags>
+              {ECOBARTER_STACK.map((t) => (
+                <TechTag key={t} accent="#16a34a">{t}</TechTag>
+              ))}
+            </TechTags>
+            <BtnRow>
+              <PrimaryBtn
+                href="https://ecobarter.man-dip.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                accent="#16a34a"
+              >
+                Live Demo ↗
+              </PrimaryBtn>
+              <OutlineBtn
+                href="https://github.com/Mandip77/Eco-Barter"
+                target="_blank"
+                rel="noopener noreferrer"
+                accent="#16a34a"
+              >
+                GitHub
+              </OutlineBtn>
+            </BtnRow>
+          </FeaturedDetails>
+        </FeaturedCard>
+
+        {/* Grid */}
+        <Grid variants={containerVariants}>
+          <Card variants={itemVariant}>
+            <CardImage src={superBudgetAnimation} alt="Budget Management" loading="lazy" />
+            <CardDetails>
+              <CardTitle>Budget Management</CardTitle>
+              <CardDesc>
+                Spring Boot web app for creating budget categories, tracking allocations, transactions, and visualizing spending in an interactive dashboard.
+              </CardDesc>
+              <BtnRow>
+                <OutlineBtn
+                  href="https://github.com/Mandip77/Budget_Management"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`View ${project.title} project on GitHub`}
                 >
-                  View on GitHub
-                </ProjectLink>
-              </ProjectDetails>
-            </Project>
-          ))}
-        </ProjectsList>
-      </div>
-    </ProjectsSection>
+                  GitHub
+                </OutlineBtn>
+              </BtnRow>
+            </CardDetails>
+          </Card>
+
+          <Card variants={itemVariant}>
+            <CardImage src={textEditorGif} alt="Simple Text Editor" loading="lazy" />
+            <CardDetails>
+              <CardTitle>Simple Text Editor</CardTitle>
+              <CardDesc>
+                Lightweight Java Swing text editor with open/save, cut/copy/paste, and custom formatting built from scratch.
+              </CardDesc>
+              <BtnRow>
+                <OutlineBtn
+                  href="https://github.com/Mandip77/Simple-TextEditor-Java"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  GitHub
+                </OutlineBtn>
+              </BtnRow>
+            </CardDetails>
+          </Card>
+        </Grid>
+      </Inner>
+    </Section>
   );
 }
 

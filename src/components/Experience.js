@@ -1,149 +1,190 @@
-import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { FaGraduationCap, FaCertificate } from 'react-icons/fa';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
-const ExperienceSection = styled(motion.section)`
+const Section = styled(motion.section)`
   background-color: ${({ theme }) => theme.body};
-  padding: 100px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  @media (max-width: 768px) {
-    padding: 50px 20px;
-  }
 `;
 
-const SectionTitle = styled(motion.h2)`
-  font-size: 36px;
-  margin-bottom: 60px;
-  color: ${({ theme }) => theme.accent};
-  text-align: center;
-`;
-
-const TimelineContainer = styled.div`
+const Inner = styled.div`
   max-width: 800px;
-  width: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+`;
+
+const Header = styled.div`
+  text-align: center;
+  margin-bottom: 64px;
+`;
+
+const SectionLabel = styled.div`
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.accent};
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 12px;
+`;
+
+const Heading = styled.h2`
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: ${({ theme }) => theme.text};
+`;
+
+const GradientSpan = styled.span`
+  background: linear-gradient(135deg, ${({ theme }) => theme.accent} 0%, ${({ theme }) => theme.accentCyan} 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+`;
+
+const Timeline = styled.div`
   position: relative;
-  
-  &::after {
+  padding-left: 44px;
+
+  @media (max-width: 480px) {
+    padding-left: 36px;
+  }
+
+  &::before {
     content: '';
     position: absolute;
+    left: 15px;
+    top: 8px;
+    bottom: 8px;
     width: 2px;
-    background-color: ${({ theme }) => theme.cardBorder};
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    margin-left: -1px;
-
-    @media (max-width: 768px) {
-      left: 20px;
-    }
+    background: linear-gradient(
+      to bottom,
+      ${({ theme }) => theme.accent},
+      ${({ theme }) => theme.accentCyan}
+    );
+    opacity: 0.3;
+    border-radius: 2px;
   }
 `;
 
 const TimelineItem = styled(motion.div)`
-  padding: 10px 40px;
   position: relative;
-  background-color: inherit;
-  width: 50%;
-  left: ${({ position }) => (position === 'left' ? '0' : '50%')};
+  margin-bottom: 40px;
 
-  @media (max-width: 768px) {
-    left: 0;
-    width: 100%;
-    padding-left: 70px;
-    padding-right: 25px;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    right: -10px;
-    background-color: ${({ theme }) => theme.body};
-    border: 3px solid ${({ theme }) => theme.accent};
-    top: 15px;
-    border-radius: 50%;
-    z-index: 1;
-
-    ${({ position }) =>
-    position === 'right' &&
-    `
-      left: -10px;
-    `}
-
-    @media (max-width: 768px) {
-      left: 10px;
-    }
+  &:last-child {
+    margin-bottom: 0;
   }
 `;
 
-const ContentBox = styled.div`
-  padding: 20px 30px;
-  background-color: ${({ theme }) => theme.cardBg};
-  position: relative;
-  border-radius: 6px;
+const Dot = styled.div`
+  position: absolute;
+  left: -36px;
+  top: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: ${({ theme }) => theme.cardBg};
+  border: 2px solid ${({ theme }) => theme.accent};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: ${({ theme }) => theme.accent};
+  backdrop-filter: blur(8px);
+  z-index: 1;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+
+  ${TimelineItem}:hover & {
+    background: ${({ theme }) => theme.accent};
+    color: #fff;
+    box-shadow: 0 0 20px ${({ theme }) => theme.glowColor};
+  }
+
+  @media (max-width: 480px) {
+    left: -30px;
+    width: 36px;
+    height: 36px;
+    font-size: 13px;
+  }
+`;
+
+const Card = styled.div`
+  background: ${({ theme }) => theme.cardBg};
   border: 1px solid ${({ theme }) => theme.cardBorder};
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 16px;
+  padding: 24px 28px;
+  backdrop-filter: blur(14px);
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(3, 255, 251, 0.1);
     border-color: ${({ theme }) => theme.accent};
+    transform: translateX(4px);
+    box-shadow: 0 8px 32px ${({ theme }) => theme.glowColor};
+  }
+
+  @media (max-width: 480px) {
+    padding: 18px 16px;
+    border-radius: 12px;
   }
 `;
 
-const DateText = styled.span`
-  color: #07d20d;
-  font-size: 14px;
-  font-weight: bold;
-  display: block;
-  margin-bottom: 8px;
+const DateBadge = styled.span`
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-family: 'JetBrains Mono', monospace;
+  color: ${({ theme }) => theme.accentCyan};
+  background: ${({ theme }) => `${theme.accentCyan}18`};
+  border: 1px solid ${({ theme }) => `${theme.accentCyan}35`};
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 12px;
 `;
 
 const Title = styled.h3`
+  font-size: 1.15rem;
+  font-weight: 700;
   color: ${({ theme }) => theme.text};
-  font-size: 20px;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 `;
 
-const Subtitle = styled.h4`
-  color: ${({ theme }) => theme.secondaryText};
-  font-size: 16px;
+const Subtitle = styled.p`
+  font-size: 14px;
   font-weight: 500;
-  margin-bottom: 15px;
+  color: ${({ theme }) => theme.accent};
+  margin-bottom: 10px;
 `;
 
-const Description = styled.p`
+const Desc = styled.p`
+  font-size: 14px;
+  line-height: 1.7;
   color: ${({ theme }) => theme.secondaryText};
-  font-size: 15px;
-  line-height: 1.5;
+  margin: 0;
 `;
 
 const experienceData = [
   {
     type: 'school',
     title: 'Northeastern University',
-    subtitle: 'Bachelor of Science in Information Technology',
-    date: '2023 - Present',
-    description: 'Focusing on Systems Administration, Cloud Computing, and Software Development.',
+    subtitle: 'B.S. in Information Technology',
+    date: '2023 – Present',
+    description: 'Focusing on Systems Administration, Cloud Computing, and Software Development. Active cybersecurity researcher.',
   },
   {
     type: 'school',
     title: 'Bunker Hill Community College',
-    subtitle: 'Associate in Science in Computer Science',
+    subtitle: 'A.S. in Computer Science',
     date: 'Graduated 2023',
-    description: 'Built a strong foundation in algorithms, data structures, and object-oriented programming (Java/C++).',
+    description: 'Built a strong foundation in algorithms, data structures, and object-oriented programming with Java and C++.',
   },
   {
     type: 'certificate',
     title: 'Google IT Support',
     subtitle: 'Professional Certificate',
     date: 'Issued 2022',
-    description: 'Comprehensive training in troubleshooting, customer service, networking, operating systems, and system administration.',
+    description: 'Comprehensive training in troubleshooting, networking, operating systems, and system administration.',
   },
   {
     type: 'certificate',
@@ -154,56 +195,50 @@ const experienceData = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
+};
+
+const itemVariant = {
+  hidden: { opacity: 0, x: -24 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+};
+
 function Experience() {
-  const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
+  const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.08, triggerOnce: true });
 
   return (
-    <ExperienceSection
+    <Section
       id="experience"
       ref={sectionRef}
+      variants={containerVariants}
       initial="hidden"
       animate={isSectionVisible ? 'visible' : 'hidden'}
-      variants={containerVariants}
     >
-      <div className="container" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <SectionTitle variants={itemVariants}>Experience & Education</SectionTitle>
-        <TimelineContainer>
-          {experienceData.map((item, index) => (
-            <TimelineItem
-              key={index}
-              position={index % 2 === 0 ? 'left' : 'right'}
-              variants={itemVariants}
-            >
-              <ContentBox>
-                <DateText>{item.date}</DateText>
+      <Inner>
+        <Header>
+          <SectionLabel>Background</SectionLabel>
+          <Heading>
+            Experience &amp; <GradientSpan>Education</GradientSpan>
+          </Heading>
+        </Header>
+
+        <Timeline>
+          {experienceData.map((item, i) => (
+            <TimelineItem key={i} variants={itemVariant}>
+              <Dot>{item.type === 'school' ? <FaGraduationCap /> : <FaCertificate />}</Dot>
+              <Card>
+                <DateBadge>{item.date}</DateBadge>
                 <Title>{item.title}</Title>
                 <Subtitle>{item.subtitle}</Subtitle>
-                <Description>{item.description}</Description>
-              </ContentBox>
+                <Desc>{item.description}</Desc>
+              </Card>
             </TimelineItem>
           ))}
-        </TimelineContainer>
-      </div>
-    </ExperienceSection>
+        </Timeline>
+      </Inner>
+    </Section>
   );
 }
 

@@ -1,254 +1,291 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
-import contactGif from '../assets/happy-hacker.gif';
-
-const ContactSection = styled(motion.section)`
+const Section = styled(motion.section)`
   background-color: ${({ theme }) => theme.body};
-  padding: 100px;
+`;
+
+const Inner = styled.div`
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+`;
+
+const Header = styled.div`
   text-align: center;
-  @media (max-width: 768px) {
-    padding: 50px;
+  margin-bottom: 64px;
+`;
+
+const SectionLabel = styled.div`
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.accent};
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 12px;
+`;
+
+const Heading = styled.h2`
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: ${({ theme }) => theme.text};
+`;
+
+const GradientSpan = styled.span`
+  background: linear-gradient(135deg, ${({ theme }) => theme.accent} 0%, ${({ theme }) => theme.accentCyan} 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+`;
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 56px;
+  align-items: start;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+    gap: 48px;
   }
 `;
 
-const SectionTitle = styled(motion.h2)`
-  font-size: 36px;
-  margin-bottom: 40px;
-  color: ${({ theme }) => theme.accent};
+const InfoCol = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 `;
 
-const ContactContainer = styled(motion.div)`
+const InfoHeading = styled.h3`
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: ${({ theme }) => theme.text};
+  letter-spacing: -0.02em;
+`;
+
+const InfoText = styled.p`
+  font-size: 15px;
+  line-height: 1.75;
+  color: ${({ theme }) => theme.secondaryText};
+`;
+
+const SocialList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+`;
+
+const SocialLink = styled.a`
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-direction: column-reverse;
-  @media (min-width: 769px) {
-    flex-direction: row;
+  gap: 14px;
+  padding: 14px 18px;
+  background: ${({ theme }) => theme.cardBg};
+  border: 1px solid ${({ theme }) => theme.cardBorder};
+  border-radius: 12px;
+  text-decoration: none;
+  color: ${({ theme }) => theme.secondaryText};
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.22s ease;
+  backdrop-filter: blur(12px);
+
+  svg {
+    font-size: 18px;
+    color: ${({ theme }) => theme.accent};
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    border-color: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.text};
+    transform: translateX(4px);
+    box-shadow: 0 4px 20px ${({ theme }) => theme.glowColor};
   }
 `;
 
-const ContactGif = styled(motion.img)`
-  width: 80%;
-  max-width: 300px;
-  margin: 20px 0;
-  @media (min-width: 769px) {
-    margin-right: 40px;
-    width: 300px;
-  }
-`;
-
-const ContactForm = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-`;
+const FormCol = styled(motion.div)``;
 
 const Form = styled.form`
-  width: 100%;
-  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
-const FormInput = styled.input`
-  width: 100%;
-  padding: 12px;
-  margin-bottom: ${({ $hasError }) => ($hasError ? '5px' : '20px')};
-  border-radius: 4px;
-  border: 1px solid ${({ $hasError, theme }) => ($hasError ? '#ff6b6b' : theme.cardBorder)};
-  background-color: ${({ theme }) => theme.cardBg};
-  color: ${({ theme }) => theme.text};
-  font-size: 16px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-
-  &:focus {
-    outline: none;
-    border-color: ${({ $hasError, theme }) => ($hasError ? '#ff6b6b' : theme.accent)};
-    box-shadow: 0 0 0 2px ${({ $hasError, theme }) => ($hasError ? 'rgba(255, 107, 107, 0.2)' : theme.accent + '33')};
-  }
-
-  &::placeholder {
-    color: ${({ theme }) => theme.secondaryText};
-  }
+const FieldWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 `;
 
-const FormTextarea = styled.textarea`
+const Label = styled.label`
+  font-size: 13px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.secondaryText};
+  letter-spacing: 0.03em;
+`;
+
+const inputBase = ({ $hasError, theme }) => `
   width: 100%;
-  height: 150px;
-  padding: 12px;
-  margin-bottom: ${({ $hasError }) => ($hasError ? '5px' : '20px')};
-  border-radius: 4px;
-  border: 1px solid ${({ $hasError, theme }) => ($hasError ? '#ff6b6b' : theme.cardBorder)};
-  background-color: ${({ theme }) => theme.cardBg};
-  color: ${({ theme }) => theme.text};
+  min-height: 48px;
+  padding: 13px 16px;
+  background: ${theme.cardBg};
+  border: 1px solid ${$hasError ? '#f87171' : theme.cardBorder};
+  border-radius: 12px;
+  color: ${theme.text};
   font-size: 16px;
   font-family: inherit;
-  resize: vertical;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+  backdrop-filter: blur(12px);
+  -webkit-appearance: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &::placeholder { color: ${theme.secondaryText}; opacity: 0.6; }
 
   &:focus {
-    outline: none;
-    border-color: ${({ $hasError, theme }) => ($hasError ? '#ff6b6b' : theme.accent)};
-    box-shadow: 0 0 0 2px ${({ $hasError, theme }) => ($hasError ? 'rgba(255, 107, 107, 0.2)' : theme.accent + '33')};
-  }
-
-  &::placeholder {
-    color: ${({ theme }) => theme.secondaryText};
+    border-color: ${$hasError ? '#f87171' : theme.accent};
+    box-shadow: 0 0 0 3px ${$hasError ? 'rgba(248,113,113,0.15)' : `${theme.accent}25`};
   }
 `;
 
-const ErrorMessage = styled.p`
-  color: #ff6b6b;
-  font-size: 14px;
-  margin-bottom: 15px;
-  text-align: left;
+const Input = styled.input`${(props) => inputBase(props)}`;
+const Textarea = styled.textarea`
+  ${(props) => inputBase(props)}
+  height: 140px;
+  resize: vertical;
 `;
 
-const CharacterCount = styled.p`
-  color: ${({ theme }) => theme.secondaryText};
+const ErrorMsg = styled.p`
   font-size: 12px;
-  margin-bottom: 20px;
-  text-align: right;
-  margin-top: -15px;
+  color: #f87171;
+  margin: 0;
 `;
 
-const FormButton = styled.button`
-  background-color: ${({ theme }) => theme.buttonBg};
-  color: ${({ theme }) => theme.buttonText};
-  padding: 12px 24px;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
+const CharCount = styled.p`
+  font-size: 12px;
+  color: ${({ theme }) => theme.secondaryText};
+  text-align: right;
+  margin: 0;
+`;
+
+const SubmitBtn = styled.button`
+  min-height: 48px;
+  padding: 14px 32px;
+  background: ${({ theme }) => theme.accent};
+  color: #fff;
+  font-size: 15px;
   font-weight: 600;
-  font-size: 16px;
-  transition: all 0.3s ease;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  align-self: flex-start;
+  -webkit-tap-highlight-color: transparent;
 
   &:hover:not(:disabled) {
     opacity: 0.9;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(3, 255, 251, 0.3);
+    box-shadow: 0 8px 28px ${({ theme }) => theme.glowColor};
   }
 
   &:disabled {
-    opacity: 0.6;
+    opacity: 0.55;
     cursor: not-allowed;
   }
 
-  &:focus {
-    outline: 2px solid ${({ theme }) => theme.accent};
-    outline-offset: 2px;
+  @media (max-width: 480px) {
+    width: 100%;
   }
 `;
 
-const StatusMessage = styled.p`
-  margin-top: 12px;
-  color: ${({ $error }) => ($error ? '#ff6b6b' : '#20d62f')};
+const StatusMsg = styled.p`
+  font-size: 14px;
+  font-weight: 500;
+  color: ${({ $error }) => $error ? '#f87171' : '#4ade80'};
+  margin: 0;
 `;
 
-// Email validation regex
-const validateEmail = (email) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+const MIN_MSG = 10;
+const MAX_MSG = 1000;
+
+const socialLinks = [
+  { icon: FaGithub, label: 'GitHub', href: 'https://github.com/Mandip77', text: 'github.com/Mandip77' },
+  { icon: FaLinkedin, label: 'LinkedIn', href: 'https://linkedin.com/in/mandip-amgain', text: 'linkedin.com/in/mandip-amgain' },
+  { icon: FaTwitter, label: 'Twitter', href: 'https://twitter.com/renderingsoul8', text: '@renderingsoul8' },
+  { icon: FaEnvelope, label: 'Email', href: 'mailto:amgain.m@northeastern.edu', text: 'amgain.m@northeastern.edu' },
+];
+
+const containerVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, staggerChildren: 0.15 } },
 };
 
-// Message length constants
-const MIN_MESSAGE_LENGTH = 10;
-const MAX_MESSAGE_LENGTH = 1000;
+const slideLeft = {
+  hidden: { opacity: 0, x: -30 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const slideRight = {
+  hidden: { opacity: 0, x: 30 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+};
 
 function Contact() {
   const [isSending, setIsSending] = useState(false);
   const [status, setStatus] = useState({ type: null, message: '' });
   const [errors, setErrors] = useState({ name: '', email: '', message: '' });
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
+  const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.08, triggerOnce: true });
 
-  // Client-side EmailJS configuration (if using EmailJS service)
   const emailServiceId = process.env.REACT_APP_EMAILJS_SERVICE_ID;
   const emailTemplateId = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
   const emailPublicKey = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
 
-  // Validate form fields
   const validateField = (name, value) => {
-    let error = '';
-
-    switch (name) {
-      case 'name':
-        if (!value.trim()) {
-          error = 'Name is required';
-        } else if (value.trim().length < 2) {
-          error = 'Name must be at least 2 characters';
-        }
-        break;
-      case 'email':
-        if (!value.trim()) {
-          error = 'Email is required';
-        } else if (!validateEmail(value.trim())) {
-          error = 'Please enter a valid email address';
-        }
-        break;
-      case 'message':
-        if (!value.trim()) {
-          error = 'Message is required';
-        } else if (value.trim().length < MIN_MESSAGE_LENGTH) {
-          error = `Message must be at least ${MIN_MESSAGE_LENGTH} characters`;
-        } else if (value.trim().length > MAX_MESSAGE_LENGTH) {
-          error = `Message must be no more than ${MAX_MESSAGE_LENGTH} characters`;
-        }
-        break;
-      default:
-        break;
+    if (name === 'name') {
+      if (!value.trim()) return 'Name is required';
+      if (value.trim().length < 2) return 'Name must be at least 2 characters';
     }
-
-    return error;
-  };
-
-  // Handle input change
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-
-    // Validate on blur or after user starts typing
-    if (errors[name]) {
-      const error = validateField(name, value);
-      setErrors(prev => ({ ...prev, [name]: error }));
+    if (name === 'email') {
+      if (!value.trim()) return 'Email is required';
+      if (!validateEmail(value.trim())) return 'Please enter a valid email address';
     }
+    if (name === 'message') {
+      if (!value.trim()) return 'Message is required';
+      if (value.trim().length < MIN_MSG) return `Message must be at least ${MIN_MSG} characters`;
+      if (value.trim().length > MAX_MSG) return `Message cannot exceed ${MAX_MSG} characters`;
+    }
+    return '';
   };
 
-  // Handle blur event for validation
-  const handleBlur = (event) => {
-    const { name, value } = event.target;
-    const error = validateField(name, value);
-    setErrors(prev => ({ ...prev, [name]: error }));
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((p) => ({ ...p, [name]: value }));
+    if (errors[name]) setErrors((p) => ({ ...p, [name]: validateField(name, value) }));
   };
 
-  // Validate entire form
-  const validateForm = () => {
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    setErrors((p) => ({ ...p, [name]: validateField(name, value) }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const newErrors = {
       name: validateField('name', formData.name),
       email: validateField('email', formData.email),
       message: validateField('message', formData.message),
     };
-
     setErrors(newErrors);
-    return !newErrors.name && !newErrors.email && !newErrors.message;
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    // Update form data from form
-    const formDataObj = new FormData(event.target);
-    const updatedFormData = {
-      name: formDataObj.get('name'),
-      email: formDataObj.get('email'),
-      message: formDataObj.get('message'),
-    };
-    setFormData(updatedFormData);
-
-    // Validate form
-    if (!validateForm()) {
-      setStatus({ type: 'error', message: 'Please fix the errors before submitting.' });
+    if (newErrors.name || newErrors.email || newErrors.message) {
+      setStatus({ type: 'error', message: 'Please fix the errors above.' });
       return;
     }
 
@@ -256,152 +293,137 @@ function Contact() {
     setStatus({ type: null, message: '' });
 
     if (!emailServiceId || !emailTemplateId || !emailPublicKey) {
-      setStatus({ type: 'error', message: 'Email service not configured. Please set EmailJS env vars.' });
+      setStatus({ type: 'error', message: 'Email service not configured.' });
       setIsSending(false);
       return;
     }
 
     try {
-      const payload = {
-        service_id: emailServiceId,
-        template_id: emailTemplateId,
-        user_id: emailPublicKey,
-        template_params: {
-          name: updatedFormData.name,
-          email: updatedFormData.email,
-          message: updatedFormData.message,
-        },
-      };
-
-      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          service_id: emailServiceId,
+          template_id: emailTemplateId,
+          user_id: emailPublicKey,
+          template_params: formData,
+        }),
       });
-
-      if (!response.ok) {
-        const text = await response.text().catch(() => '');
-        throw new Error(text || 'Failed to send message');
-      }
-
-      setStatus({ type: 'success', message: 'Message sent! I will get back to you soon.' });
-      event.target.reset();
+      if (!res.ok) throw new Error();
+      setStatus({ type: 'success', message: 'Message sent! I\'ll get back to you soon.' });
+      e.target.reset();
       setFormData({ name: '', email: '', message: '' });
       setErrors({ name: '', email: '', message: '' });
-    } catch (error) {
-      setStatus({ type: 'error', message: 'Something went wrong. Please try again later.' });
+    } catch {
+      setStatus({ type: 'error', message: 'Something went wrong. Please try again.' });
     } finally {
       setIsSending(false);
     }
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
-
   return (
-    <ContactSection
+    <Section
       id="contact"
       ref={sectionRef}
       variants={containerVariants}
       initial="hidden"
-      animate={isSectionVisible ? "visible" : "hidden"}
+      animate={isSectionVisible ? 'visible' : 'hidden'}
     >
-      <div className="container">
-        <SectionTitle variants={itemVariants}>Contact</SectionTitle>
-        <ContactContainer variants={containerVariants}>
-          <ContactGif
-            src={contactGif}
-            alt="Happy Hacker GIF"
-            loading="lazy"
-            variants={itemVariants}
-          />
-          <ContactForm>
-            <Form id="contact-form" onSubmit={handleSubmit}>
-              <div>
-                <FormInput
+      <Inner>
+        <Header>
+          <SectionLabel>Get In Touch</SectionLabel>
+          <Heading>
+            Let's <GradientSpan>Connect</GradientSpan>
+          </Heading>
+        </Header>
+
+        <Grid>
+          <InfoCol variants={slideLeft}>
+            <InfoHeading>Open to opportunities</InfoHeading>
+            <InfoText>
+              I'm actively looking for entry-level security analyst and penetration testing roles. Whether you have a job opportunity, want to collaborate on a project, or just want to say hi — my inbox is always open.
+            </InfoText>
+            <SocialList>
+              {socialLinks.map(({ icon: Icon, label, href, text }) => (
+                <SocialLink key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
+                  <Icon />
+                  {text}
+                </SocialLink>
+              ))}
+            </SocialList>
+          </InfoCol>
+
+          <FormCol variants={slideRight}>
+            <Form id="contact-form" onSubmit={handleSubmit} noValidate>
+              <FieldWrap>
+                <Label htmlFor="name">Your Name</Label>
+                <Input
+                  id="name"
                   type="text"
                   name="name"
-                  placeholder="Your Name"
+                  placeholder="John Doe"
                   value={formData.name}
-                  onChange={handleInputChange}
+                  onChange={handleChange}
                   onBlur={handleBlur}
                   $hasError={!!errors.name}
-                  required
-                  aria-label="Your Name"
                   aria-invalid={!!errors.name}
                   aria-describedby={errors.name ? 'name-error' : undefined}
+                  required
                 />
-                {errors.name && <ErrorMessage id="name-error">{errors.name}</ErrorMessage>}
-              </div>
-              <div>
-                <FormInput
+                {errors.name && <ErrorMsg id="name-error">{errors.name}</ErrorMsg>}
+              </FieldWrap>
+
+              <FieldWrap>
+                <Label htmlFor="email">Email Address</Label>
+                <Input
+                  id="email"
                   type="email"
                   name="email"
-                  placeholder="Your Email"
+                  placeholder="john@example.com"
                   value={formData.email}
-                  onChange={handleInputChange}
+                  onChange={handleChange}
                   onBlur={handleBlur}
                   $hasError={!!errors.email}
-                  required
-                  aria-label="Your Email"
                   aria-invalid={!!errors.email}
                   aria-describedby={errors.email ? 'email-error' : undefined}
+                  required
                 />
-                {errors.email && <ErrorMessage id="email-error">{errors.email}</ErrorMessage>}
-              </div>
-              <div>
-                <FormTextarea
+                {errors.email && <ErrorMsg id="email-error">{errors.email}</ErrorMsg>}
+              </FieldWrap>
+
+              <FieldWrap>
+                <Label htmlFor="message">Message</Label>
+                <Textarea
+                  id="message"
                   name="message"
-                  placeholder="Your Message"
+                  placeholder="Tell me about the opportunity or project..."
                   value={formData.message}
-                  onChange={handleInputChange}
+                  onChange={handleChange}
                   onBlur={handleBlur}
                   $hasError={!!errors.message}
-                  required
-                  aria-label="Your Message"
                   aria-invalid={!!errors.message}
                   aria-describedby={errors.message ? 'message-error' : 'message-count'}
-                  maxLength={MAX_MESSAGE_LENGTH}
+                  maxLength={MAX_MSG}
+                  required
                 />
-                {errors.message ? (
-                  <ErrorMessage id="message-error">{errors.message}</ErrorMessage>
-                ) : (
-                  <CharacterCount id="message-count">
-                    {formData.message.length} / {MAX_MESSAGE_LENGTH} characters
-                  </CharacterCount>
-                )}
-              </div>
-              <FormButton type="submit" disabled={isSending}>
-                {isSending ? 'Sending...' : 'Send Message'}
-              </FormButton>
+                {errors.message
+                  ? <ErrorMsg id="message-error">{errors.message}</ErrorMsg>
+                  : <CharCount id="message-count">{formData.message.length} / {MAX_MSG}</CharCount>
+                }
+              </FieldWrap>
+
+              <SubmitBtn type="submit" disabled={isSending}>
+                {isSending ? 'Sending…' : 'Send Message →'}
+              </SubmitBtn>
+
               {status.message && (
-                <StatusMessage $error={status.type === 'error'}>
-                  {status.message}
-                </StatusMessage>
+                <StatusMsg $error={status.type === 'error'}>{status.message}</StatusMsg>
               )}
             </Form>
-          </ContactForm>
-        </ContactContainer>
-      </div>
-    </ContactSection>
+          </FormCol>
+        </Grid>
+      </Inner>
+    </Section>
   );
 }
 

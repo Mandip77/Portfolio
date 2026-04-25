@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
@@ -14,146 +13,239 @@ import firebaseIcon from '../assets/firebase.svg';
 import reactIcon from '../assets/react.svg';
 import postmanIcon from '../assets/postman.svg';
 
-const TechStackSection = styled(motion.section)`
+const Section = styled(motion.section)`
   background-color: ${({ theme }) => theme.body};
-  padding: 100px;
+`;
+
+const Inner = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+`;
+
+const Header = styled.div`
   text-align: center;
-  @media (max-width: 768px) {
-    padding: 50px 20px;
-  }
+  margin-bottom: 64px;
 `;
 
-const SectionTitle = styled(motion.h2)`
-  font-size: 36px;
-  margin-bottom: 40px;
+const SectionLabel = styled.div`
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
   color: ${({ theme }) => theme.accent};
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 12px;
 `;
 
-const TechStackList = styled(motion.div)`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 50px;
-`;
-
-const TechItem = styled(motion.div)`
-  width: 200px;
-  margin: 10px;
-  padding: 20px;
-  border: 1px solid ${({ theme }) => theme.cardBorder};
-  border-radius: 4px;
-  background-color: ${({ theme }) => theme.cardBg};
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-  }
-`;
-
-const TechIcon = styled.img`
-  width: 100px;
-  height: 100px;
-  margin-bottom: 20px;
-`;
-
-const TechName = styled.h3`
-  font-size: 24px;
-  margin-bottom: 10px;
+const Heading = styled.h2`
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
   color: ${({ theme }) => theme.text};
 `;
 
-const TechProgress = styled.div`
-  height: 10px;
-  background-color: ${({ theme }) => theme.cardBorder};
-  border-radius: 4px;
-  overflow: hidden;
+const GradientSpan = styled.span`
+  background: linear-gradient(135deg, ${({ theme }) => theme.accent} 0%, ${({ theme }) => theme.accentCyan} 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 `;
 
-const TechBar = styled(motion.div)`
-  height: 100%;
-  background-color: ${({ theme }) => theme.accent};
-  border-radius: 4px;
+const CategorySection = styled.div`
+  margin-bottom: 52px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
-const skills = [
-  { name: 'Java', icon: javaIcon, progress: 90 },
-  { name: 'Python', icon: pythonIcon, progress: 85 },
-  { name: 'HTML', icon: htmlIcon, progress: 80 },
-  { name: 'CSS', icon: cssIcon, progress: 80 },
-  { name: 'JavaScript', icon: jsIcon, progress: 70 },
-  { name: 'MySQL', icon: mysqlIcon, progress: 75 },
-  { name: 'Kotlin', icon: kotlinIcon, progress: 70 },
-  { name: 'Firebase', icon: firebaseIcon, progress: 80 },
-  { name: 'React', icon: reactIcon, progress: 60 },
-  { name: 'Postman', icon: postmanIcon, progress: 70 },
+const CategoryLabel = styled.h3`
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.secondaryText};
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: ${({ theme }) => theme.cardBorder};
+  }
+`;
+
+const SkillsGrid = styled(motion.div)`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 16px;
+
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  @media (max-width: 360px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+`;
+
+const SkillCard = styled(motion.div)`
+  background: ${({ theme }) => theme.cardBg};
+  border: 1px solid ${({ theme }) => theme.cardBorder};
+  border-radius: 14px;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  backdrop-filter: blur(12px);
+  cursor: default;
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.accent};
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px ${({ theme }) => theme.glowColor};
+  }
+
+  @media (max-width: 480px) {
+    padding: 14px 10px;
+    gap: 8px;
+    border-radius: 10px;
+  }
+`;
+
+const IconWrap = styled.div`
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SkillIcon = styled.img`
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+`;
+
+const SkillName = styled.span`
+  font-size: 13px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.text};
+  text-align: center;
+`;
+
+const DotsRow = styled.div`
+  display: flex;
+  gap: 4px;
+`;
+
+const Dot = styled.div`
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: ${({ filled, theme }) => filled ? theme.accent : theme.cardBorder};
+  transition: background 0.2s ease;
+
+  ${SkillCard}:hover & {
+    background: ${({ filled, theme }) => filled ? theme.accentLight : theme.cardBorder};
+  }
+`;
+
+const categories = [
+  {
+    label: 'Languages',
+    skills: [
+      { name: 'Java', icon: javaIcon, level: 5 },
+      { name: 'Python', icon: pythonIcon, level: 4 },
+      { name: 'JavaScript', icon: jsIcon, level: 4 },
+      { name: 'Kotlin', icon: kotlinIcon, level: 3 },
+    ],
+  },
+  {
+    label: 'Frontend',
+    skills: [
+      { name: 'HTML', icon: htmlIcon, level: 5 },
+      { name: 'CSS', icon: cssIcon, level: 4 },
+      { name: 'React', icon: reactIcon, level: 3 },
+    ],
+  },
+  {
+    label: 'Backend & Data',
+    skills: [
+      { name: 'MySQL', icon: mysqlIcon, level: 4 },
+      { name: 'Firebase', icon: firebaseIcon, level: 4 },
+    ],
+  },
+  {
+    label: 'Tools',
+    skills: [
+      { name: 'Postman', icon: postmanIcon, level: 4 },
+    ],
+  },
 ];
 
-function TechStack() {
-  const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
-  const [animatedProgress, setAnimatedProgress] = useState({});
+const containerVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, staggerChildren: 0.08 } },
+};
 
-  useEffect(() => {
-    if (isSectionVisible) {
-      skills.forEach((skill, index) => {
-        setTimeout(() => {
-          setAnimatedProgress(prev => ({
-            ...prev,
-            [skill.name]: skill.progress,
-          }));
-        }, index * 100);
-      });
-    }
-  }, [isSectionVisible]);
+const cardVariant = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } },
+};
 
-  const containerVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
+function Skills() {
+  const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.08, triggerOnce: true });
 
   return (
-    <TechStackSection
+    <Section
       id="skills"
       ref={sectionRef}
       variants={containerVariants}
       initial="hidden"
-      animate={isSectionVisible ? "visible" : "hidden"}
+      animate={isSectionVisible ? 'visible' : 'hidden'}
     >
-      <div className="container">
-        <SectionTitle variants={itemVariants}>Tech Stack</SectionTitle>
-        <TechStackList variants={containerVariants}>
-          {skills.map((skill) => (
-            <TechItem key={skill.name} variants={itemVariants}>
-              <TechIcon src={skill.icon} alt={skill.name} loading="lazy" decoding="async" />
-              <TechName>{skill.name}</TechName>
-              <TechProgress>
-                <TechBar
-                  initial={{ width: 0 }}
-                  animate={{ width: `${animatedProgress[skill.name] || 0}%` }}
-                  transition={{ duration: 1, ease: "easeOut" }}
-                />
-              </TechProgress>
-            </TechItem>
-          ))}
-        </TechStackList>
-      </div>
-    </TechStackSection>
+      <Inner>
+        <Header>
+          <SectionLabel>Tech Stack</SectionLabel>
+          <Heading>
+            Tools I <GradientSpan>work with</GradientSpan>
+          </Heading>
+        </Header>
+
+        {categories.map((cat) => (
+          <CategorySection key={cat.label}>
+            <CategoryLabel>{cat.label}</CategoryLabel>
+            <SkillsGrid variants={containerVariants}>
+              {cat.skills.map((skill) => (
+                <SkillCard key={skill.name} variants={cardVariant}>
+                  <IconWrap>
+                    <SkillIcon src={skill.icon} alt={skill.name} loading="lazy" decoding="async" />
+                  </IconWrap>
+                  <SkillName>{skill.name}</SkillName>
+                  <DotsRow>
+                    {[1, 2, 3, 4, 5].map((n) => (
+                      <Dot key={n} filled={n <= skill.level} />
+                    ))}
+                  </DotsRow>
+                </SkillCard>
+              ))}
+            </SkillsGrid>
+          </CategorySection>
+        ))}
+      </Inner>
+    </Section>
   );
 }
 
-export default TechStack;
+export default Skills;

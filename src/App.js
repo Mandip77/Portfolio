@@ -25,11 +25,13 @@ const LoadingFallback = () => (
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    // We can't use theme context here easily without another wrapper, so use neutral colors or keeping previous default
-    backgroundColor: '#000',
-    color: '#03fffb'
+    backgroundColor: '#07070f',
+    color: '#6366f1',
+    fontFamily: "'JetBrains Mono', monospace",
+    fontSize: '14px',
+    letterSpacing: '0.1em',
   }}>
-    Loading...
+    loading…
   </div>
 );
 
