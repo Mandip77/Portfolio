@@ -2,13 +2,12 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
-import { SiKalilinux, SiAmazonaws, SiDocker, SiGithub } from 'react-icons/si';
+import { SiKalilinux, SiAmazonaws, SiDocker, SiGithub, SiCplusplus, SiVirtualbox, SiSplunk } from 'react-icons/si';
 
 import javaIcon from '../assets/java-svgrepo-com.svg';
 import pythonIcon from '../assets/python.png';
 import htmlIcon from '../assets/html-5-svgrepo-com.svg';
 import cssIcon from '../assets/css-3-svgrepo-com.svg';
-import jsIcon from '../assets/js-svgrepo-com.svg';
 import mysqlIcon from '../assets/sql-server-icon-png-11359.png';
 import kotlinIcon from '../assets/kotlin.svg';
 import reactIcon from '../assets/react.svg';
@@ -180,7 +179,7 @@ const categories = [
     skills: [
       { name: 'Java', icon: javaIcon, level: 2 },
       { name: 'Python', icon: pythonIcon, level: 2 },
-      { name: 'JavaScript', icon: jsIcon, level: 2 },
+      { name: 'C++', SvgIcon: SiCplusplus, level: 2 },
       { name: 'Kotlin', icon: kotlinIcon, level: 2 },
     ],
   },
@@ -204,6 +203,8 @@ const categories = [
     label: 'Security & Tools',
     skills: [
       { name: 'Kali Linux', SvgIcon: SiKalilinux, level: 2 },
+      { name: 'VirtualBox', SvgIcon: SiVirtualbox, level: 2 },
+      { name: 'Splunk', SvgIcon: SiSplunk, level: 2 },
       { name: 'Postman', icon: postmanIcon, level: 2 },
       { name: 'GitHub', SvgIcon: SiGithub, level: 2 },
     ],
