@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
+import { SiKalilinux, SiAmazonaws, SiDocker, SiGithub } from 'react-icons/si';
+
 import javaIcon from '../assets/java-svgrepo-com.svg';
 import pythonIcon from '../assets/python.png';
 import htmlIcon from '../assets/html-5-svgrepo-com.svg';
@@ -9,7 +11,6 @@ import cssIcon from '../assets/css-3-svgrepo-com.svg';
 import jsIcon from '../assets/js-svgrepo-com.svg';
 import mysqlIcon from '../assets/sql-server-icon-png-11359.png';
 import kotlinIcon from '../assets/kotlin.svg';
-import firebaseIcon from '../assets/firebase.svg';
 import reactIcon from '../assets/react.svg';
 import postmanIcon from '../assets/postman.svg';
 
@@ -137,6 +138,18 @@ const SkillIcon = styled.img`
   object-fit: contain;
 `;
 
+const SkillSvgIcon = styled.span`
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${({ theme }) => theme.secondaryText};
+
+  ${SkillCard}:hover & {
+    color: ${({ theme }) => theme.accent};
+  }
+`;
+
 const SkillName = styled.span`
   font-size: 13px;
   font-weight: 600;
@@ -165,31 +178,34 @@ const categories = [
   {
     label: 'Languages',
     skills: [
-      { name: 'Java', icon: javaIcon, level: 5 },
-      { name: 'Python', icon: pythonIcon, level: 4 },
-      { name: 'JavaScript', icon: jsIcon, level: 4 },
-      { name: 'Kotlin', icon: kotlinIcon, level: 3 },
+      { name: 'Java', icon: javaIcon, level: 2 },
+      { name: 'Python', icon: pythonIcon, level: 2 },
+      { name: 'JavaScript', icon: jsIcon, level: 2 },
+      { name: 'Kotlin', icon: kotlinIcon, level: 2 },
     ],
   },
   {
     label: 'Frontend',
     skills: [
-      { name: 'HTML', icon: htmlIcon, level: 5 },
-      { name: 'CSS', icon: cssIcon, level: 4 },
-      { name: 'React', icon: reactIcon, level: 3 },
+      { name: 'HTML', icon: htmlIcon, level: 2 },
+      { name: 'CSS', icon: cssIcon, level: 2 },
+      { name: 'React', icon: reactIcon, level: 2 },
     ],
   },
   {
-    label: 'Backend & Data',
+    label: 'Backend & Infrastructure',
     skills: [
-      { name: 'MySQL', icon: mysqlIcon, level: 4 },
-      { name: 'Firebase', icon: firebaseIcon, level: 4 },
+      { name: 'MySQL', icon: mysqlIcon, level: 2 },
+      { name: 'Docker', SvgIcon: SiDocker, level: 2 },
+      { name: 'AWS', SvgIcon: SiAmazonaws, level: 2 },
     ],
   },
   {
-    label: 'Tools',
+    label: 'Security & Tools',
     skills: [
-      { name: 'Postman', icon: postmanIcon, level: 4 },
+      { name: 'Kali Linux', SvgIcon: SiKalilinux, level: 2 },
+      { name: 'Postman', icon: postmanIcon, level: 2 },
+      { name: 'GitHub', SvgIcon: SiGithub, level: 2 },
     ],
   },
 ];
@@ -230,7 +246,10 @@ function Skills() {
               {cat.skills.map((skill) => (
                 <SkillCard key={skill.name} variants={cardVariant}>
                   <IconWrap>
-                    <SkillIcon src={skill.icon} alt={skill.name} loading="lazy" decoding="async" />
+                    {skill.SvgIcon
+                      ? <SkillSvgIcon><skill.SvgIcon /></SkillSvgIcon>
+                      : <SkillIcon src={skill.icon} alt={skill.name} loading="lazy" decoding="async" />
+                    }
                   </IconWrap>
                   <SkillName>{skill.name}</SkillName>
                   <DotsRow>
