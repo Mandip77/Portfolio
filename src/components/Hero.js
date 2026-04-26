@@ -1,6 +1,11 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { motion } from 'framer-motion';
 import backgroundVideo from '../assets/video (2160p).mp4';
+
+const scanline = keyframes`
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+`;
 
 const HeroSection = styled.section`
   position: relative;
@@ -19,7 +24,7 @@ const HeroVideo = styled.video`
   height: 100%;
   object-fit: cover;
   z-index: 0;
-  opacity: 0.35;
+  opacity: 0.25;
 `;
 
 const Overlay = styled.div`
@@ -27,67 +32,106 @@ const Overlay = styled.div`
   inset: 0;
   z-index: 1;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(99,102,241,0.18) 0%, transparent 70%),
-    linear-gradient(to bottom, rgba(7,7,15,0.4) 0%, rgba(7,7,15,0.75) 60%, rgba(7,7,15,0.98) 100%);
+    radial-gradient(ellipse 80% 55% at 50% -10%, ${({ theme }) => theme.accent}28 0%, transparent 65%),
+    linear-gradient(to bottom, rgba(8,8,14,0.3) 0%, rgba(8,8,14,0.72) 60%, rgba(8,8,14,1) 100%);
+`;
+
+/* Very subtle moving scanline for depth */
+const Scanline = styled.div`
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, transparent, ${({ theme }) => theme.accent}06, transparent);
+    animation: ${scanline} 8s linear infinite;
+  }
 `;
 
 const Content = styled.div`
   position: relative;
-  z-index: 2;
-  max-width: 860px;
+  z-index: 3;
+  max-width: 900px;
   width: 100%;
   padding: 0 24px;
   text-align: center;
 `;
 
-const Label = styled(motion.div)`
+const Prompt = styled(motion.div)`
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
   font-weight: 500;
-  color: ${({ theme }) => theme.accent};
-  letter-spacing: 0.1em;
-  margin-bottom: 24px;
+  color: ${({ theme }) => theme.accentLime};
+  letter-spacing: 0.06em;
+  margin-bottom: 28px;
+`;
 
-  &::before, &::after {
-    content: '';
-    width: 32px;
-    height: 1px;
-    background: ${({ theme }) => theme.accent};
-    opacity: 0.6;
+const PromptCursor = styled.span`
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: ${({ theme }) => theme.accentLime};
+  border-radius: 1px;
+  animation: blink 1.1s step-end infinite;
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
   }
 `;
 
-const Name = styled(motion.h1)`
-  font-size: clamp(3rem, 8vw, 6rem);
+const NameRow = styled(motion.div)`
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: clamp(12px, 2.5vw, 24px);
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  line-height: 1;
+`;
+
+const NameSolid = styled.span`
+  font-size: clamp(3.2rem, 9vw, 7rem);
   font-weight: 900;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  margin-bottom: 8px;
+  letter-spacing: -0.04em;
   color: #fff;
 `;
 
-const GradientSpan = styled.span`
-  background: linear-gradient(135deg, ${({ theme }) => theme.accent} 0%, ${({ theme }) => theme.accentCyan} 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Outlined / stroke-only text — the visual signature */
+const NameOutline = styled.span`
+  font-size: clamp(3.2rem, 9vw, 7rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  -webkit-text-stroke: 2px ${({ theme }) => theme.accent};
+  color: transparent;
+
+  @media (max-width: 480px) {
+    -webkit-text-stroke: 1.5px ${({ theme }) => theme.accent};
+  }
 `;
 
 const Subtitle = styled(motion.p)`
-  font-size: clamp(1rem, 2.5vw, 1.2rem);
-  color: rgba(255, 255, 255, 0.65);
-  max-width: 600px;
-  margin: 0 auto 40px;
-  line-height: 1.7;
+  font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+  color: rgba(240, 240, 250, 0.58);
+  max-width: 580px;
+  margin: 0 auto 44px;
+  line-height: 1.75;
   font-weight: 400;
 `;
 
 const ButtonRow = styled(motion.div)`
   display: flex;
-  gap: 12px;
+  gap: 14px;
   justify-content: center;
   flex-wrap: wrap;
 
@@ -104,27 +148,25 @@ const PrimaryBtn = styled.a`
   justify-content: center;
   gap: 8px;
   min-height: 48px;
-  padding: 12px 28px;
+  padding: 12px 30px;
   background: ${({ theme }) => theme.accent};
   color: #fff;
-  font-size: 15px;
-  font-weight: 600;
-  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 10px;
   text-decoration: none;
+  letter-spacing: 0.02em;
   transition: all 0.25s ease;
   -webkit-tap-highlight-color: transparent;
 
   &:hover {
     background: ${({ theme }) => theme.accentLight};
     color: #fff;
-    box-shadow: 0 0 32px ${({ theme }) => theme.glowColor};
+    box-shadow: 0 0 36px ${({ theme }) => theme.glowColor};
     transform: translateY(-2px);
   }
 
-  @media (max-width: 480px) {
-    width: 100%;
-    font-size: 14px;
-  }
+  @media (max-width: 480px) { width: 100%; font-size: 13px; }
 `;
 
 const OutlineBtn = styled.a`
@@ -133,14 +175,15 @@ const OutlineBtn = styled.a`
   justify-content: center;
   gap: 8px;
   min-height: 48px;
-  padding: 12px 28px;
+  padding: 12px 30px;
   background: transparent;
   color: ${({ theme }) => theme.accentCyan};
-  font-size: 15px;
-  font-weight: 600;
-  border-radius: 12px;
-  border: 1px solid ${({ theme }) => theme.accentCyan}60;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 10px;
+  border: 1px solid ${({ theme }) => theme.accentCyan}55;
   text-decoration: none;
+  letter-spacing: 0.02em;
   transition: all 0.25s ease;
   -webkit-tap-highlight-color: transparent;
 
@@ -149,45 +192,43 @@ const OutlineBtn = styled.a`
     border-color: ${({ theme }) => theme.accentCyan};
     color: ${({ theme }) => theme.accentCyan};
     transform: translateY(-2px);
-    box-shadow: 0 0 24px ${({ theme }) => theme.accentCyan}30;
+    box-shadow: 0 0 28px ${({ theme }) => theme.accentCyan}30;
   }
 
-  @media (max-width: 480px) {
-    width: 100%;
-    font-size: 14px;
-  }
+  @media (max-width: 480px) { width: 100%; font-size: 13px; }
 `;
 
-const ScrollIndicator = styled(motion.div)`
+const ScrollHint = styled(motion.div)`
   position: absolute;
-  bottom: 36px;
+  bottom: 32px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 2;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  color: rgba(255,255,255,0.35);
-  font-size: 11px;
+  color: rgba(255,255,255,0.22);
+  font-size: 10px;
   font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 `;
 
-const ScrollDot = styled(motion.div)`
+const ScrollLine = styled(motion.div)`
   width: 1px;
-  height: 40px;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+  height: 36px;
+  background: linear-gradient(to bottom, ${({ theme }) => theme.accent}80, transparent);
 `;
 
 const containerVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
+  visible: { transition: { staggerChildren: 0.13 } },
 };
 
 const fadeUpVariant = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] } },
 };
 
 function Hero() {
@@ -197,6 +238,7 @@ function Hero() {
     <HeroSection id="hero">
       <HeroVideo src={backgroundVideo} autoPlay loop muted playsInline preload="auto" aria-hidden="true" />
       <Overlay />
+      <Scanline />
 
       <motion.div
         style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
@@ -205,13 +247,20 @@ function Hero() {
         animate="visible"
       >
         <Content>
-          <Label variants={fadeUpVariant}>IT &amp; Cybersecurity</Label>
-          <Name variants={fadeUpVariant}>
-            Mandip <GradientSpan>Amgain</GradientSpan>
-          </Name>
+          <Prompt variants={fadeUpVariant}>
+            ~/portfolio<PromptCursor />
+          </Prompt>
+
+          <NameRow variants={fadeUpVariant}>
+            <NameSolid>Mandip</NameSolid>
+            <NameOutline>Amgain</NameOutline>
+          </NameRow>
+
           <Subtitle variants={fadeUpVariant}>
-            Aspiring penetration tester and full-stack builder. I secure systems by day and ship microservices by night.
+            IT &amp; Cybersecurity Professional — aspiring penetration tester and full-stack
+            builder. I secure systems and ship products.
           </Subtitle>
+
           <ButtonRow variants={fadeUpVariant}>
             <PrimaryBtn href={resumeLink} download="Mandip_Amgain_Resume.pdf" aria-label="Download resume">
               Download Resume
@@ -220,7 +269,6 @@ function Hero() {
               href="https://Mandip77.github.io/cyber-blog/"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Visit Cybersecurity Research Lab"
             >
               Cyber Research Lab ↗
             </OutlineBtn>
@@ -228,17 +276,17 @@ function Hero() {
         </Content>
       </motion.div>
 
-      <ScrollIndicator
+      <ScrollHint
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 0.6 }}
+        transition={{ delay: 1.6, duration: 0.6 }}
       >
-        <ScrollDot
-          animate={{ scaleY: [1, 0.4, 1], opacity: [0.4, 1, 0.4] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+        <ScrollLine
+          animate={{ scaleY: [0.4, 1, 0.4], opacity: [0.3, 1, 0.3] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
         />
         scroll
-      </ScrollIndicator>
+      </ScrollHint>
     </HeroSection>
   );
 }

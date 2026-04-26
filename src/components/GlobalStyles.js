@@ -1,39 +1,43 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const darkTheme = {
-  body: '#07070f',
-  text: '#e8eaf6',
-  accent: '#6366f1',
-  accentLight: '#818cf8',
+  body: '#08080e',
+  text: '#f0f0fa',
+  accent: '#8b5cf6',
+  accentLight: '#a78bfa',
   accentCyan: '#22d3ee',
-  secondaryText: '#8892a4',
-  cardBg: 'rgba(13, 13, 30, 0.92)',
-  cardBorder: 'rgba(99, 102, 241, 0.18)',
-  buttonBg: '#6366f1',
+  accentLime: '#a3e635',
+  secondaryText: '#8890a0',
+  cardBg: 'rgba(14, 14, 26, 0.94)',
+  cardBorder: 'rgba(139, 92, 246, 0.16)',
+  buttonBg: '#8b5cf6',
   buttonText: '#ffffff',
-  navBg: 'rgba(7, 7, 15, 0.85)',
-  glowColor: 'rgba(99, 102, 241, 0.4)',
-  surfaceHover: 'rgba(99, 102, 241, 0.08)',
+  navBg: 'rgba(8, 8, 14, 0.88)',
+  glowColor: 'rgba(139, 92, 246, 0.38)',
+  surfaceHover: 'rgba(139, 92, 246, 0.09)',
+  gridDot: 'rgba(139, 92, 246, 0.10)',
 };
 
 export const lightTheme = {
-  body: '#f3f3ff',
-  text: '#0f0f2e',
-  accent: '#4f46e5',
-  accentLight: '#6366f1',
+  body: '#f8f7ff',
+  text: '#0e0e28',
+  accent: '#7c3aed',
+  accentLight: '#8b5cf6',
   accentCyan: '#0891b2',
-  secondaryText: '#525270',
-  cardBg: 'rgba(255, 255, 255, 0.92)',
-  cardBorder: 'rgba(79, 70, 229, 0.15)',
-  buttonBg: '#4f46e5',
+  accentLime: '#65a30d',
+  secondaryText: '#52527a',
+  cardBg: 'rgba(255, 255, 255, 0.94)',
+  cardBorder: 'rgba(124, 58, 237, 0.14)',
+  buttonBg: '#7c3aed',
   buttonText: '#ffffff',
-  navBg: 'rgba(243, 243, 255, 0.85)',
-  glowColor: 'rgba(99, 102, 241, 0.2)',
-  surfaceHover: 'rgba(79, 70, 229, 0.06)',
+  navBg: 'rgba(248, 247, 255, 0.88)',
+  glowColor: 'rgba(139, 92, 246, 0.22)',
+  surfaceHover: 'rgba(124, 58, 237, 0.07)',
+  gridDot: 'rgba(124, 58, 237, 0.07)',
 };
 
 const GlobalStyles = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
   *, *::before, *::after {
     box-sizing: border-box;
@@ -52,6 +56,9 @@ const GlobalStyles = createGlobalStyle`
     line-height: 1.6;
     font-weight: 400;
     background-color: ${({ theme }) => theme.body};
+    /* Dot grid signature pattern */
+    background-image: radial-gradient(circle, ${({ theme }) => theme.gridDot} 1px, transparent 1px);
+    background-size: 26px 26px;
     color: ${({ theme }) => theme.text};
     transition: background-color 0.3s ease, color 0.3s ease;
     overflow-x: hidden;
@@ -82,81 +89,73 @@ const GlobalStyles = createGlobalStyle`
     text-decoration: none;
     transition: color 0.2s ease;
   }
+  a:hover { color: ${({ theme }) => theme.accentLight}; }
 
-  a:hover {
-    color: ${({ theme }) => theme.accentLight};
-  }
-
-  button {
-    font-family: inherit;
-    cursor: pointer;
-  }
-
-  img, video {
-    max-width: 100%;
-    display: block;
-  }
+  button { font-family: inherit; cursor: pointer; }
+  img, video { max-width: 100%; display: block; }
 
   /* Scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.body};
-  }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb {
     background: ${({ theme }) => theme.accent};
     border-radius: 3px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: ${({ theme }) => theme.accentLight};
+    opacity: 0.6;
   }
 
   /* Section base */
   section {
     padding: 100px 0;
-
-    @media (max-width: 768px) {
-      padding: 64px 0;
-    }
-
-    @media (max-width: 480px) {
-      padding: 48px 0;
-    }
+    @media (max-width: 768px) { padding: 64px 0; }
+    @media (max-width: 480px) { padding: 48px 0; }
   }
 
-  /* Offset for sticky 68px nav */
-  section[id] {
-    scroll-margin-top: 80px;
-  }
+  /* Sticky nav offset */
+  section[id] { scroll-margin-top: 80px; }
 
-  /* Section label */
-  .section-label {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: ${({ theme }) => theme.accent};
-    margin-bottom: 12px;
+  /* Section number decoration — add data-num="01" to Header wrapper */
+  [data-num] {
+    position: relative;
+    overflow: visible;
+  }
+  [data-num]::before {
+    content: attr(data-num);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    font-size: clamp(80px, 18vw, 160px);
+    font-weight: 900;
     font-family: 'JetBrains Mono', monospace;
+    color: ${({ theme }) => theme.accent};
+    opacity: 0.045;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.06em;
+    line-height: 1;
+    white-space: nowrap;
+    z-index: 0;
   }
 
-  /* Gradient text utility */
+  /* All direct children inside [data-num] sit above the ghost number */
+  [data-num] > * { position: relative; z-index: 1; }
+
+  /* Outline text utility — transparent fill, colored stroke */
+  .text-outline {
+    -webkit-text-stroke: 2px ${({ theme }) => theme.accent};
+    color: transparent;
+  }
+  .text-outline-light {
+    -webkit-text-stroke: 2px #ffffff60;
+    color: transparent;
+  }
+
+  /* Gradient text */
   .gradient-text {
     background: linear-gradient(135deg, ${({ theme }) => theme.accent} 0%, ${({ theme }) => theme.accentCyan} 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-  }
-
-  /* Glass card base */
-  .glass {
-    background: ${({ theme }) => theme.cardBg};
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid ${({ theme }) => theme.cardBorder};
-    border-radius: 16px;
   }
 
   /* Glow line separator */

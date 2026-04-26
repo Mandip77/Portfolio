@@ -5,7 +5,7 @@ import textEditorGif from '../assets/text_editor.gif';
 import superBudgetAnimation from '../assets/SuperBudget_Animation.webp';
 
 const Section = styled(motion.section)`
-  background-color: ${({ theme }) => theme.body};
+  background-color: transparent;
 `;
 
 const Inner = styled.div`
@@ -346,7 +346,7 @@ function Projects() {
       animate={isSectionVisible ? 'visible' : 'hidden'}
     >
       <Inner>
-        <Header>
+        <Header data-num="03">
           <SectionLabel>Work</SectionLabel>
           <Heading>
             Featured <GradientSpan>Projects</GradientSpan>

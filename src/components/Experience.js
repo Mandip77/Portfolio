@@ -4,7 +4,7 @@ import { FaGraduationCap, FaCertificate } from 'react-icons/fa';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 const Section = styled(motion.section)`
-  background-color: ${({ theme }) => theme.body};
+  background-color: transparent;
 `;
 
 const Inner = styled.div`
@@ -217,7 +217,7 @@ function Experience() {
       animate={isSectionVisible ? 'visible' : 'hidden'}
     >
       <Inner>
-        <Header>
+        <Header data-num="02">
           <SectionLabel>Background</SectionLabel>
           <Heading>
             Experience &amp; <GradientSpan>Education</GradientSpan>

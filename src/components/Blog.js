@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 const Section = styled(motion.section)`
-  background-color: ${({ theme }) => theme.body};
+  background-color: transparent;
 `;
 
 const Inner = styled.div`
@@ -173,7 +173,7 @@ function Blog() {
       animate={isSectionVisible ? 'visible' : 'hidden'}
     >
       <Inner>
-        <Header>
+        <Header data-num="05">
           <SectionLabel>Writing</SectionLabel>
           <Heading>
             Latest <GradientSpan>Thoughts</GradientSpan>

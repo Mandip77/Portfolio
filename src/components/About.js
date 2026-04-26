@@ -6,7 +6,7 @@ import postmanCertBadge from '../assets/postman_badge.png';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 const Section = styled(motion.section)`
-  background-color: ${({ theme }) => theme.body};
+  background-color: transparent;
 `;
 
 const Inner = styled.div`
@@ -15,15 +15,17 @@ const Inner = styled.div`
   padding: 0 24px;
 `;
 
-const Grid = styled.div`
+const TopGrid = styled.div`
   display: grid;
-  grid-template-columns: 340px 1fr;
-  gap: 80px;
+  grid-template-columns: 300px 1fr;
+  gap: 72px;
   align-items: center;
+  margin-bottom: 72px;
 
-  @media (max-width: 960px) {
+  @media (max-width: 940px) {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 44px;
+    margin-bottom: 52px;
   }
 `;
 
@@ -31,17 +33,17 @@ const ImageCol = styled(motion.div)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  gap: 0;
 
-  @media (max-width: 960px) {
+  @media (max-width: 940px) {
     align-items: center;
   }
 `;
 
-const ProfileWrap = styled.div`
+const ProfileRing = styled.div`
   position: relative;
-  width: clamp(200px, 60vw, 280px);
-  height: clamp(200px, 60vw, 280px);
+  width: clamp(200px, 55vw, 280px);
+  height: clamp(200px, 55vw, 280px);
 
   &::before {
     content: '';
@@ -58,8 +60,8 @@ const ProfileWrap = styled.div`
     inset: -3px;
     border-radius: 50%;
     background: linear-gradient(135deg, ${({ theme }) => theme.accent}, ${({ theme }) => theme.accentCyan});
-    filter: blur(20px);
-    opacity: 0.4;
+    filter: blur(22px);
+    opacity: 0.35;
     z-index: -1;
   }
 `;
@@ -74,125 +76,243 @@ const ProfileImg = styled.img`
   border: 3px solid ${({ theme }) => theme.body};
 `;
 
-const BadgesRow = styled.div`
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-`;
-
-const BadgeImg = styled.img`
-  width: clamp(70px, 20vw, 90px);
-  height: auto;
-  border-radius: 8px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-
-  &:hover {
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-  }
-`;
-
 const TextCol = styled(motion.div)`
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 22px;
 `;
 
 const SectionLabel = styled.span`
   display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.accent};
+  color: ${({ theme }) => theme.accentLime};
   font-family: 'JetBrains Mono', monospace;
 `;
 
 const Heading = styled.h2`
-  font-size: clamp(2rem, 4vw, 2.8rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
   color: ${({ theme }) => theme.text};
-  line-height: 1.15;
 `;
 
-const GradientSpan = styled.span`
-  background: linear-gradient(135deg, ${({ theme }) => theme.accent} 0%, ${({ theme }) => theme.accentCyan} 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-`;
-
-const Body = styled.p`
-  font-size: 1.05rem;
-  line-height: 1.8;
-  color: ${({ theme }) => theme.secondaryText};
-`;
-
-const StatsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 8px;
+const OutlineWord = styled.span`
+  -webkit-text-stroke: 2px ${({ theme }) => theme.accent};
+  color: transparent;
 
   @media (max-width: 480px) {
-    grid-template-columns: repeat(2, 1fr);
+    -webkit-text-stroke: 1.5px ${({ theme }) => theme.accent};
   }
 `;
 
-const StatCard = styled.div`
+const Body = styled.p`
+  font-size: 1.02rem;
+  line-height: 1.82;
+  color: ${({ theme }) => theme.secondaryText};
+`;
+
+const StatsRow = styled.div`
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+`;
+
+const StatPill = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 20px;
   background: ${({ theme }) => theme.cardBg};
   border: 1px solid ${({ theme }) => theme.cardBorder};
   border-radius: 12px;
-  padding: 16px;
-  text-align: center;
   backdrop-filter: blur(12px);
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  min-width: 80px;
+  transition: border-color 0.2s ease;
+
+  &:hover { border-color: ${({ theme }) => theme.accent}; }
+`;
+
+const StatNum = styled.span`
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: ${({ theme }) => theme.accent};
+  letter-spacing: -0.03em;
+  font-family: 'JetBrains Mono', monospace;
+`;
+
+const StatLabel = styled.span`
+  font-size: 11px;
+  color: ${({ theme }) => theme.secondaryText};
+  margin-top: 3px;
+  font-weight: 500;
+`;
+
+/* ── Certifications ── */
+const CertsHeading = styled.h3`
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.secondaryText};
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: ${({ theme }) => theme.cardBorder};
+  }
+`;
+
+const CertsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const CertCard = styled(motion.div)`
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 20px;
+  background: ${({ theme }) => theme.cardBg};
+  border: 1px solid ${({ theme }) => theme.cardBorder};
+  border-radius: 14px;
+  backdrop-filter: blur(14px);
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 
   &:hover {
     border-color: ${({ theme }) => theme.accent};
     transform: translateY(-3px);
+    box-shadow: 0 10px 28px ${({ theme }) => theme.glowColor};
   }
 `;
 
-const StatNumber = styled.div`
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: ${({ theme }) => theme.accent};
-  letter-spacing: -0.03em;
+const BadgeWrap = styled.div`
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 480px) {
+    width: 58px;
+    height: 58px;
+  }
 `;
 
-const StatLabel = styled.div`
+const BadgeImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+`;
+
+const CertInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+`;
+
+const CertName = styled.span`
+  font-size: 14px;
+  font-weight: 700;
+  color: ${({ theme }) => theme.text};
+  line-height: 1.3;
+`;
+
+const CertIssuer = styled.span`
   font-size: 12px;
   color: ${({ theme }) => theme.secondaryText};
-  margin-top: 4px;
-  font-weight: 500;
+`;
+
+const CertMeta = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+`;
+
+const CertDateBadge = styled.span`
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  font-family: 'JetBrains Mono', monospace;
+  color: ${({ theme }) => theme.accentCyan};
+  background: ${({ theme }) => `${theme.accentCyan}15`};
+  border: 1px solid ${({ theme }) => `${theme.accentCyan}30`};
+  padding: 2px 8px;
+  border-radius: 20px;
+`;
+
+const VerifiedBadge = styled.span`
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: ${({ theme }) => theme.accentLime};
+  background: ${({ theme }) => `${theme.accentLime}15`};
+  border: 1px solid ${({ theme }) => `${theme.accentLime}30`};
+  padding: 2px 8px;
+  border-radius: 20px;
 `;
 
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
+  visible: { opacity: 1, transition: { staggerChildren: 0.14 } },
 };
 
 const slideLeft = {
   hidden: { opacity: 0, x: -40 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.72, ease: [0.22, 1, 0.36, 1] } },
 };
 
 const slideRight = {
   hidden: { opacity: 0, x: 40 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.72, ease: [0.22, 1, 0.36, 1] } },
 };
 
-const stats = [
-  { number: '3+', label: 'Years Coding' },
-  { number: '10+', label: 'Projects Built' },
-  { number: '2', label: 'Certifications' },
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const certs = [
+  {
+    name: 'Google IT Support',
+    issuer: 'Google / Coursera',
+    date: 'Issued 2022',
+    image: googleCertBadge,
+    alt: 'Google IT Support Professional Certificate badge',
+  },
+  {
+    name: 'Postman API Fundamentals',
+    issuer: 'Postman · Student Expert',
+    date: 'Issued 2023',
+    image: postmanCertBadge,
+    alt: 'Postman API Fundamentals Student Expert badge',
+  },
 ];
 
 function About() {
-  const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
+  const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.08, triggerOnce: true });
 
   return (
     <Section
@@ -203,41 +323,63 @@ function About() {
       animate={isSectionVisible ? 'visible' : 'hidden'}
     >
       <Inner>
-        <Grid>
+        <TopGrid>
           <ImageCol variants={slideLeft}>
-            <ProfileWrap>
+            <ProfileRing>
               <ProfileImg src={profile} alt="Mandip Amgain" loading="lazy" decoding="async" />
-            </ProfileWrap>
-            <BadgesRow>
-              <BadgeImg src={googleCertBadge} alt="Google IT Support Certificate" loading="lazy" decoding="async" />
-              <BadgeImg src={postmanCertBadge} alt="Postman API Fundamentals Certificate" loading="lazy" decoding="async" />
-            </BadgesRow>
+            </ProfileRing>
           </ImageCol>
 
           <TextCol variants={slideRight}>
-            <div>
-              <SectionLabel>About Me</SectionLabel>
-            </div>
+            <SectionLabel>About Me</SectionLabel>
             <Heading>
-              Builder by craft,<br />
-              <GradientSpan>defender by calling</GradientSpan>
+              Builder by craft,{' '}
+              <OutlineWord>defender</OutlineWord>{' '}
+              by calling
             </Heading>
             <Body>
-              I'm Mandip Amgain — an IT and cybersecurity professional actively pursuing entry-level security analyst and penetration testing roles. Currently finishing my B.S. in Information Technology at Northeastern University, I focus on uncovering vulnerabilities and securing digital systems.
+              I'm Mandip Amgain — an IT and cybersecurity professional actively pursuing
+              entry-level security analyst and penetration testing roles. Currently finishing
+              my B.S. in Information Technology at Northeastern University, I focus on
+              uncovering vulnerabilities and securing digital systems.
             </Body>
             <Body>
-              With a strong foundation in software development — from Java microservices to full-stack SvelteKit apps — I bring a builder's perspective to security. Whether I'm running independent lab research or architecting distributed systems, my goal is the same: understand how things break, then make them unbreakable.
+              With a strong foundation in software development — from Java microservices to
+              full-stack SvelteKit apps — I bring a builder's perspective to security.
+              Whether I'm running independent lab research or architecting distributed
+              systems, my goal is the same: understand how things break, then make them
+              unbreakable.
             </Body>
-            <StatsGrid>
-              {stats.map((s) => (
-                <StatCard key={s.label}>
-                  <StatNumber>{s.number}</StatNumber>
-                  <StatLabel>{s.label}</StatLabel>
-                </StatCard>
+            <StatsRow>
+              {[{ n: '3+', l: 'Years Coding' }, { n: '10+', l: 'Projects' }, { n: '2', l: 'Certifications' }].map(s => (
+                <StatPill key={s.l}>
+                  <StatNum>{s.n}</StatNum>
+                  <StatLabel>{s.l}</StatLabel>
+                </StatPill>
               ))}
-            </StatsGrid>
+            </StatsRow>
           </TextCol>
-        </Grid>
+        </TopGrid>
+
+        {/* Certification Cards */}
+        <CertsHeading>Certifications</CertsHeading>
+        <CertsGrid>
+          {certs.map((c) => (
+            <CertCard key={c.name} variants={fadeUp}>
+              <BadgeWrap>
+                <BadgeImg src={c.image} alt={c.alt} loading="lazy" decoding="async" />
+              </BadgeWrap>
+              <CertInfo>
+                <CertName>{c.name}</CertName>
+                <CertIssuer>{c.issuer}</CertIssuer>
+                <CertMeta>
+                  <CertDateBadge>{c.date}</CertDateBadge>
+                  <VerifiedBadge>✓ Verified</VerifiedBadge>
+                </CertMeta>
+              </CertInfo>
+            </CertCard>
+          ))}
+        </CertsGrid>
       </Inner>
     </Section>
   );

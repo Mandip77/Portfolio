@@ -5,7 +5,7 @@ import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 const Section = styled(motion.section)`
-  background-color: ${({ theme }) => theme.body};
+  background-color: transparent;
 `;
 
 const Inner = styled.div`
@@ -330,7 +330,7 @@ function Contact() {
       animate={isSectionVisible ? 'visible' : 'hidden'}
     >
       <Inner>
-        <Header>
+        <Header data-num="06">
           <SectionLabel>Get In Touch</SectionLabel>
           <Heading>
             Let's <GradientSpan>Connect</GradientSpan>

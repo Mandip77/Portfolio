@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 const Section = styled(motion.section)`
-  background-color: ${({ theme }) => theme.body};
+  background-color: transparent;
 `;
 
 const Inner = styled.div`
@@ -283,7 +283,7 @@ function VibeCodedApps() {
       animate={isSectionVisible ? 'visible' : 'hidden'}
     >
       <Inner>
-        <Header>
+        <Header data-num="04">
           <SectionLabel>Vibe-Coded Apps</SectionLabel>
           <Heading>
             AI-<GradientSpan>Assisted</GradientSpan> Builds

@@ -14,7 +14,7 @@ import reactIcon from '../assets/react.svg';
 import postmanIcon from '../assets/postman.svg';
 
 const Section = styled(motion.section)`
-  background-color: ${({ theme }) => theme.body};
+  background-color: transparent;
 `;
 
 const Inner = styled.div`
@@ -216,7 +216,7 @@ function Skills() {
       animate={isSectionVisible ? 'visible' : 'hidden'}
     >
       <Inner>
-        <Header>
+        <Header data-num="01">
           <SectionLabel>Tech Stack</SectionLabel>
           <Heading>
             Tools I <GradientSpan>work with</GradientSpan>
