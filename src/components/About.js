@@ -338,14 +338,14 @@ function About() {
               by calling
             </Heading>
             <Body>
-              I'm Mandip Amgain — an IT and cybersecurity professional actively pursuing
+              I'm Mandip Amgain, an IT and cybersecurity professional actively pursuing
               entry-level security analyst and penetration testing roles. Currently finishing
               my B.S. in Information Technology at Northeastern University, I focus on
               uncovering vulnerabilities and securing digital systems.
             </Body>
             <Body>
-              With a strong foundation in software development — from Java microservices to
-              full-stack SvelteKit apps — I bring a builder's perspective to security.
+              With a strong foundation in software development from Java microservices to
+              full-stack SvelteKit apps, I bring a builder's perspective to security.
               Whether I'm running independent lab research or architecting distributed
               systems, my goal is the same: understand how things break, then make them
               unbreakable.

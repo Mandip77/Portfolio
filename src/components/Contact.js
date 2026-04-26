@@ -341,7 +341,7 @@ function Contact() {
           <InfoCol variants={slideLeft}>
             <InfoHeading>Open to opportunities</InfoHeading>
             <InfoText>
-              I'm actively looking for entry-level security analyst and penetration testing roles. Whether you have a job opportunity, want to collaborate on a project, or just want to say hi — my inbox is always open.
+              I'm actively looking for entry-level security analyst and penetration testing roles. Whether you have a job opportunity, want to collaborate on a project, or just want to say hi my inbox is always open.
             </InfoText>
             <SocialList>
               {socialLinks.map(({ icon: Icon, label, href, text }) => (
