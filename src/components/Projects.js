@@ -44,7 +44,7 @@ const GradientSpan = styled.span`
   background-clip: text;
 `;
 
-/* ── Featured (EcoBarter) ── */
+/* ── Featured card (reused for EcoBarter + Awn Creel) ── */
 const FeaturedCard = styled(motion.div)`
   background: ${({ theme }) => theme.cardBg};
   border: 1px solid ${({ theme }) => theme.cardBorder};
@@ -57,8 +57,8 @@ const FeaturedCard = styled(motion.div)`
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 
   &:hover {
-    border-color: #16a34a80;
-    box-shadow: 0 16px 48px rgba(22, 163, 74, 0.15);
+    border-color: ${({ $accent }) => $accent ? `${$accent}80` : '#16a34a80'};
+    box-shadow: 0 16px 48px ${({ $accent }) => $accent ? `${$accent}25` : 'rgba(22,163,74,0.15)'};
   }
 
   @media (max-width: 860px) {
@@ -273,7 +273,56 @@ const CardDesc = styled.p`
   margin: 0;
 `;
 
+const RoleBadge = styled.span`
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: ${({ accent }) => `${accent}20`};
+  color: ${({ accent }) => accent};
+  border: 1px solid ${({ accent }) => `${accent}45`};
+  font-family: 'JetBrains Mono', monospace;
+`;
+
+const HighlightList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+`;
+
+const HighlightItem = styled.li`
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: ${({ theme }) => theme.secondaryText};
+  line-height: 1.5;
+
+  &::before {
+    content: '→';
+    color: ${({ accent }) => accent || 'inherit'};
+    font-size: 11px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+`;
+
 const ECOBARTER_STACK = ['SvelteKit 5', 'Go (Gin)', 'FastAPI', 'PostgreSQL', 'MongoDB', 'Redis', 'NATS', 'Docker', 'Traefik'];
+const AWNCREEL_STACK = ['Node.js', 'Express', 'AWS Lightsail', 'AWS S3', 'Docker', 'AWS Amplify', 'CI/CD'];
+const AWNCREEL_HIGHLIGHTS = [
+  'Architected AWS Lightsail migration for the Node.js/Express backend',
+  'Engineered S3 presigned URLs middleware to prevent unauthorized access to proprietary patterns',
+  'Containerized full stack with Docker for dev/prod environment parity',
+  'Orchestrated automated CI/CD pipeline via AWS Amplify from GitHub',
+  'Implemented XSS sitewide mitigation — escapeHtml helper, textContent/createElement refactor',
+  'Hardened checkout flow to block unauthorized order creation without verified session',
+];
 
 const containerVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -304,8 +353,8 @@ function Projects() {
           </Heading>
         </Header>
 
-        {/* Featured */}
-        <FeaturedCard variants={itemVariant}>
+        {/* Featured — EcoBarter */}
+        <FeaturedCard variants={itemVariant} $accent="#16a34a">
           <FeaturedBanner>
             <FeaturedBannerBadge>Live · Full-Stack</FeaturedBannerBadge>
             <FeaturedBannerTitle>EcoBarter</FeaturedBannerTitle>
@@ -338,6 +387,43 @@ function Projects() {
               >
                 GitHub
               </OutlineBtn>
+            </BtnRow>
+          </FeaturedDetails>
+        </FeaturedCard>
+
+        {/* Featured — Awn Creel */}
+        <FeaturedCard variants={itemVariant} $accent="#d97706">
+          <FeaturedBanner style={{ background: 'linear-gradient(135deg, #1c1007 0%, #451a03 50%, #78350f 100%)' }}>
+            <FeaturedBannerBadge style={{ background: 'rgba(217,119,6,0.25)', color: '#fbbf24', border: '1px solid rgba(251,191,36,0.4)' }}>
+              Live · Capstone · Real Client
+            </FeaturedBannerBadge>
+            <FeaturedBannerTitle>Awn Creel</FeaturedBannerTitle>
+            <FeaturedBannerTagline>Boutique design business digitalized into a secure cloud marketplace</FeaturedBannerTagline>
+          </FeaturedBanner>
+          <FeaturedDetails>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+              <FeaturedTitle style={{ marginBottom: 0 }}>Lead Full-Stack &amp; Security Engineer</FeaturedTitle>
+              <RoleBadge accent="#d97706">College Capstone</RoleBadge>
+            </div>
+            <HighlightList>
+              {AWNCREEL_HIGHLIGHTS.map((h) => (
+                <HighlightItem key={h} accent="#d97706">{h}</HighlightItem>
+              ))}
+            </HighlightList>
+            <TechTags>
+              {AWNCREEL_STACK.map((t) => (
+                <TechTag key={t} accent="#d97706">{t}</TechTag>
+              ))}
+            </TechTags>
+            <BtnRow>
+              <PrimaryBtn
+                href="https://awncreel.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                accent="#d97706"
+              >
+                Live Site ↗
+              </PrimaryBtn>
             </BtnRow>
           </FeaturedDetails>
         </FeaturedCard>
