@@ -15,6 +15,7 @@ const HeroSection = styled.section`
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background: #08080e;
 `;
 
 const HeroVideo = styled.video`
@@ -24,7 +25,7 @@ const HeroVideo = styled.video`
   height: 100%;
   object-fit: cover;
   z-index: 0;
-  opacity: 0.25;
+  opacity: 0.35;
 `;
 
 const Overlay = styled.div`
@@ -32,8 +33,8 @@ const Overlay = styled.div`
   inset: 0;
   z-index: 1;
   background:
-    radial-gradient(ellipse 80% 55% at 50% -10%, ${({ theme }) => theme.accent}28 0%, transparent 65%),
-    linear-gradient(to bottom, rgba(8,8,14,0.3) 0%, rgba(8,8,14,0.72) 60%, rgba(8,8,14,1) 100%);
+    radial-gradient(ellipse 80% 55% at 50% -10%, ${({ theme }) => theme.accent}38 0%, transparent 65%),
+    linear-gradient(to bottom, rgba(8,8,14,0.45) 0%, rgba(8,8,14,0.80) 60%, rgba(8,8,14,1) 100%);
 `;
 
 /* Very subtle moving scanline for depth */
