@@ -69,7 +69,7 @@ const Grid = styled(motion.div)`
 
 const Card = styled(motion.div)`
   background: ${({ theme }) => theme.cardBg};
-  border: 1px solid ${({ theme }) => theme.cardBorder};
+  border: 1px solid ${({ $accent, theme }) => $accent ? `${$accent}40` : theme.cardBorder};
   border-radius: 18px;
   overflow: hidden;
   backdrop-filter: blur(14px);
@@ -78,9 +78,9 @@ const Card = styled(motion.div)`
   transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 
   &:hover {
-    border-color: ${({ theme }) => theme.accent};
+    border-color: ${({ $accent, theme }) => $accent || theme.accent};
     transform: translateY(-6px);
-    box-shadow: 0 16px 40px ${({ theme }) => theme.glowColor};
+    box-shadow: 0 16px 40px ${({ $accent, theme }) => $accent ? `${$accent}40` : theme.glowColor};
   }
 `;
 
@@ -234,6 +234,22 @@ const OutlineBtn = styled.a`
 
 const apps = [
   {
+    title: 'Lurk — AI Security Scanner',
+    tagline: 'Production SaaS that detects security vulnerabilities in AI-generated code before it ships.',
+    status: 'Live',
+    accent: '#22d3ee',
+    highlights: [
+      'GitHub App scans every PR — posts findings as a comment within seconds',
+      'Claude AI detects SQL injection, broken auth, hardcoded secrets, prompt injection & more',
+      'Live dashboard with severity gauges, trend charts, and finding suppression',
+      'Stripe billing (Free / Pro / Agency), API key management, weekly digest emails',
+      'HMAC webhook validation, SSRF blocklist, RLS on all tables, sliding-window rate limits',
+    ],
+    techStack: ['Next.js', 'TypeScript', 'Claude AI', 'Supabase', 'Stripe', 'Inngest', 'Upstash Redis', 'Vercel'],
+    liveUrl: 'https://lurk-cyan.vercel.app',
+    repoUrl: 'https://github.com/Mandip77/Lurk',
+  },
+  {
     title: 'CSV Merger Desktop App',
     tagline: 'A modern desktop tool for filtering, mapping, and combining bulk CSV data.',
     status: 'Live',
@@ -245,19 +261,6 @@ const apps = [
     techStack: ['Python', 'Pandas', 'Tkinter', 'PyInstaller'],
     liveUrl: 'https://mandip77.github.io/csv-merger/',
     repoUrl: 'https://github.com/Mandip77/csv-merger',
-  },
-  {
-    title: 'AI Content Repurposer',
-    tagline: 'AI-powered content repurposing with robust authentication and security.',
-    status: 'Live',
-    highlights: [
-      'Protected routes and user authentication',
-      'Hybrid hosting strategy for reliability',
-      'Scalable monorepo architecture',
-    ],
-    techStack: ['React', 'Node.js', 'AI Integration', 'Cybersecurity'],
-    liveUrl: 'https://vibe-coding-apps.vercel.app/',
-    repoUrl: 'https://github.com/Mandip77/Vibe-Coding-Apps',
   },
 ];
 
@@ -284,9 +287,9 @@ function VibeCodedApps() {
     >
       <Inner>
         <Header data-num="04">
-          <SectionLabel>Vibe-Coded Apps</SectionLabel>
+          <SectionLabel>AI-Assisted Builds</SectionLabel>
           <Heading>
-            AI-<GradientSpan>Assisted</GradientSpan> Builds
+            Shipped with <GradientSpan>AI</GradientSpan>
           </Heading>
         </Header>
         <Intro>
@@ -295,7 +298,7 @@ function VibeCodedApps() {
 
         <Grid variants={containerVariants}>
           {apps.map((app) => (
-            <Card key={app.title} variants={itemVariant}>
+            <Card key={app.title} variants={itemVariant} $accent={app.accent}>
               <CardTop>
                 <CardTitle>{app.title}</CardTitle>
                 <StatusBadge status={app.status}>{app.status}</StatusBadge>
