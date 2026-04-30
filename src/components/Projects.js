@@ -320,7 +320,7 @@ const AWNCREEL_HIGHLIGHTS = [
   'Engineered S3 presigned URLs middleware to prevent unauthorized access to proprietary patterns',
   'Containerized full stack with Docker for dev/prod environment parity',
   'Orchestrated automated CI/CD pipeline via AWS Amplify from GitHub',
-  'Implemented XSS sitewide mitigation — escapeHtml helper, textContent/createElement refactor',
+  'Implemented XSS sitewide mitigation: escapeHtml helper, textContent/createElement refactor',
   'Hardened checkout flow to block unauthorized order creation without verified session',
 ];
 
@@ -353,7 +353,7 @@ function Projects() {
           </Heading>
         </Header>
 
-        {/* Featured — EcoBarter */}
+        {/* Featured: EcoBarter */}
         <FeaturedCard variants={itemVariant} $accent="#16a34a">
           <FeaturedBanner>
             <FeaturedBannerBadge>Live · Full-Stack</FeaturedBannerBadge>
@@ -391,7 +391,7 @@ function Projects() {
           </FeaturedDetails>
         </FeaturedCard>
 
-        {/* Featured — Awn Creel */}
+        {/* Featured: Awn Creel */}
         <FeaturedCard variants={itemVariant} $accent="#d97706">
           <FeaturedBanner style={{ background: 'linear-gradient(135deg, #1c1007 0%, #451a03 50%, #78350f 100%)' }}>
             <FeaturedBannerBadge style={{ background: 'rgba(217,119,6,0.25)', color: '#fbbf24', border: '1px solid rgba(251,191,36,0.4)' }}>

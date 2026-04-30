@@ -24,11 +24,11 @@ Welcome to my personal developer portfolio! This is a responsive web application
 
 Typical structure (`react/myprofile/src`):
 
-- `components/` — UI components (About, Contact, Footer, Hero, Navigation, Projects, Skills, etc.)
-- `hooks/` — custom hooks such as `useIntersectionObserver.js`
-- `App.js` — application bootstrap (uses `ErrorBoundary` and lazy-loaded sections)
-- `index.js` — React entry point
-- `GlobalStyles.js` — styled-components global styles
+- `components/`: UI components (About, Contact, Footer, Hero, Navigation, Projects, Skills, etc.)
+- `hooks/`: custom hooks such as `useIntersectionObserver.js`
+- `App.js`: application bootstrap (uses `ErrorBoundary` and lazy-loaded sections)
+- `index.js`: React entry point
+- `GlobalStyles.js`: styled-components global styles
 
 
 ## 🚀 Getting Started

@@ -107,7 +107,7 @@ const NameSolid = styled.span`
   color: #fff;
 `;
 
-/* Outlined / stroke-only text — the visual signature */
+/* Outlined / stroke-only text */
 const NameOutline = styled.span`
   font-size: clamp(3.2rem, 9vw, 7rem);
   font-weight: 900;

@@ -113,7 +113,7 @@ const GlobalStyles = createGlobalStyle`
   /* Sticky nav offset */
   section[id] { scroll-margin-top: 80px; }
 
-  /* Section number decoration — add data-num="01" to Header wrapper */
+  /* Section number decoration: add data-num="01" to Header wrapper */
   [data-num] {
     position: relative;
     overflow: visible;
@@ -140,7 +140,7 @@ const GlobalStyles = createGlobalStyle`
   /* All direct children inside [data-num] sit above the ghost number */
   [data-num] > * { position: relative; z-index: 1; }
 
-  /* Outline text utility — transparent fill, colored stroke */
+  /* Outline text utility: transparent fill, colored stroke */
   .text-outline {
     -webkit-text-stroke: 2px ${({ theme }) => theme.accent};
     color: transparent;

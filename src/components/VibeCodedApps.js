@@ -234,12 +234,12 @@ const OutlineBtn = styled.a`
 
 const apps = [
   {
-    title: 'Lurk — AI Security Scanner',
+    title: 'Lurk: AI Security Scanner',
     tagline: 'Production SaaS that detects security vulnerabilities in AI-generated code before it ships.',
     status: 'Live',
     accent: '#22d3ee',
     highlights: [
-      'GitHub App scans every PR — posts findings as a comment within seconds',
+      'GitHub App scans every PR and posts findings as a comment within seconds',
       'Claude AI detects SQL injection, broken auth, hardcoded secrets, prompt injection & more',
       'Live dashboard with severity gauges, trend charts, and finding suppression',
       'Stripe billing (Free / Pro / Agency), API key management, weekly digest emails',
