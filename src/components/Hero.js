@@ -258,8 +258,9 @@ function Hero() {
           </NameRow>
 
           <Subtitle variants={fadeUpVariant}>
-            IT &amp; Cybersecurity Professional, aspiring penetration tester and full-stack
-            builder. I secure systems and ship products.
+            Software Developer &amp; IT Professional with a passion for cybersecurity.
+            I build resilient full-stack applications, architect cloud infrastructure,
+            and write clean, secure code.
           </Subtitle>
 
           <ButtonRow variants={fadeUpVariant}>

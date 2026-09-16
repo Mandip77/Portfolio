@@ -169,7 +169,7 @@ const experienceData = [
     type: 'school',
     title: 'Northeastern University',
     subtitle: 'B.S. in Information Technology',
-    date: '2023 – Present',
+    date: '2023 – 2026',
     description: 'Focusing on Systems Administration, Cloud Computing, and Software Development. Active cybersecurity researcher.',
   },
   {

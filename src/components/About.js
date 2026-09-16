@@ -333,22 +333,21 @@ function About() {
           <TextCol variants={slideRight}>
             <SectionLabel>About Me</SectionLabel>
             <Heading>
-              Builder by craft,{' '}
-              <OutlineWord>defender</OutlineWord>{' '}
-              by calling
+              Full-stack builder,{' '}
+              <OutlineWord>security-minded</OutlineWord>{' '}
+              by design
             </Heading>
             <Body>
-              I'm Mandip Amgain, an IT and cybersecurity professional actively pursuing
-              entry-level security analyst and penetration testing roles. Currently finishing
-              my B.S. in Information Technology at Northeastern University, I focus on
-              uncovering vulnerabilities and securing digital systems.
+              I'm Mandip Amgain, an Information Technology graduate from Northeastern University
+              actively seeking Software Developer, Full-Stack Engineer, and IT Specialist roles.
+              I build scalable web applications, streamline cloud infrastructure, and turn
+              complex problems into clean, robust production software.
             </Body>
             <Body>
-              With a strong foundation in software development from Java microservices to
-              full-stack SvelteKit apps, I bring a builder's perspective to security.
-              Whether I'm running independent lab research or architecting distributed
-              systems, my goal is the same: understand how things break, then make them
-              unbreakable.
+              With hands-on experience spanning Java microservices, React/Next.js applications,
+              and cloud architectures, my side passion for cybersecurity gives me a distinct edge:
+              I don't just build features—I write defensive code, eliminate vulnerabilities early,
+              and architect systems that are resilient under pressure.
             </Body>
             <StatsRow>
               {[{ n: '3+', l: 'Years Coding' }, { n: '10+', l: 'Projects' }, { n: '2', l: 'Certifications' }].map(s => (

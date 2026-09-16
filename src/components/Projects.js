@@ -402,7 +402,7 @@ function Projects() {
           </FeaturedBanner>
           <FeaturedDetails>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-              <FeaturedTitle style={{ marginBottom: 0 }}>Lead Full-Stack &amp; Security Engineer</FeaturedTitle>
+              <FeaturedTitle style={{ marginBottom: 0 }}>Lead Full-Stack &amp; Cloud Engineer</FeaturedTitle>
               <RoleBadge accent="#d97706">College Capstone</RoleBadge>
             </div>
             <HighlightList>

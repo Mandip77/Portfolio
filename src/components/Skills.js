@@ -184,29 +184,29 @@ const categories = [
     ],
   },
   {
-    label: 'Frontend',
+    label: 'Frontend & UI',
     skills: [
+      { name: 'React', icon: reactIcon, level: 2 },
       { name: 'HTML', icon: htmlIcon, level: 2 },
       { name: 'CSS', icon: cssIcon, level: 2 },
-      { name: 'React', icon: reactIcon, level: 2 },
     ],
   },
   {
-    label: 'Backend & Infrastructure',
+    label: 'Backend, Cloud & IT Infrastructure',
     skills: [
       { name: 'MySQL', icon: mysqlIcon, level: 2 },
-      { name: 'Docker', SvgIcon: SiDocker, level: 2 },
       { name: 'AWS', SvgIcon: SiAmazonaws, level: 2 },
+      { name: 'Docker', SvgIcon: SiDocker, level: 2 },
+      { name: 'Postman', icon: postmanIcon, level: 2 },
+      { name: 'GitHub', SvgIcon: SiGithub, level: 2 },
     ],
   },
   {
-    label: 'Security & Tools',
+    label: 'Cybersecurity & Systems (Side Passion)',
     skills: [
       { name: 'Kali Linux', SvgIcon: SiKalilinux, level: 2 },
-      { name: 'VirtualBox', SvgIcon: SiVirtualbox, level: 2 },
       { name: 'Splunk', SvgIcon: SiSplunk, level: 2 },
-      { name: 'Postman', icon: postmanIcon, level: 2 },
-      { name: 'GitHub', SvgIcon: SiGithub, level: 2 },
+      { name: 'VirtualBox', SvgIcon: SiVirtualbox, level: 2 },
     ],
   },
 ];
